@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity(name="account")
+@Entity(name="user")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,6 +29,9 @@ public class User {
 
     @Column(name="signup_date")
     private Timestamp signUpDate;
+
+    @OneToOne(mappedBy = "user")
+    private Email email;
 
     public User() {
     }
