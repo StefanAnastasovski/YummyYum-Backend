@@ -56,7 +56,7 @@ public class UserController {
         User user1 = UserService.createNewUser(user.getFirstName(), user.getLastName(),
                 user.getUsername(), user.getPassword(), user.getSignUpDate());
 
-        response.setHeader("Location", builder.path("/api/createsignup/" + user.getId()).
+        response.setHeader("Location", builder.path("/api/users/" + user.getId()).
                 buildAndExpand(user1.getId()).toUriString());
 
         return user1;
