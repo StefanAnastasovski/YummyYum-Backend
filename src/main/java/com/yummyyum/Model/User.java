@@ -1,17 +1,17 @@
 package com.yummyyum.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
-@Entity(name="signup")
+@Entity(name="account")
 @Getter
 @Setter
 @AllArgsConstructor
-public class SignUp {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,26 +27,19 @@ public class SignUp {
 
     private String password;
 
-    private String email;
-
     @Column(name="signup_date")
-    private String signUpDate;
+    private Timestamp signUpDate;
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "signUp")
-//    private Account account;
-
-    public SignUp() {
+    public User() {
     }
 
-    public SignUp(String firstName, String lastName, String username,
-                  String password, String email, String signUpDate) {
+    public User(String firstName, String lastName, String username,
+                String password, Timestamp signUpDate) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.email = email;
         this.signUpDate = signUpDate;
     }
 
@@ -56,7 +49,6 @@ public class SignUp {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
                 ", signUpDate='" + signUpDate + '\'' +
                 '}';
     }
@@ -66,9 +58,9 @@ public class SignUp {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SignUp signUp = (SignUp) o;
+        User user = (User) o;
 
-        return id != null ? id.equals(signUp.id) : signUp.id == null;
+        return id != null ? id.equals(user.id) : user.id == null;
     }
 
     @Override
