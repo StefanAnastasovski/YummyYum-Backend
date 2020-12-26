@@ -13,6 +13,8 @@ public interface UserService {
 
     Optional<User> getUserByUsername(String username);
 
+    Optional<User> getUserByEmail(String email);
+
     Boolean existsUserByUsername(String username);
 
     User createNewUser(String firstName, String lastName,

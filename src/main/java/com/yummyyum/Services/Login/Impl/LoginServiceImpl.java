@@ -1,7 +1,9 @@
 package com.yummyyum.Services.Login.Impl;
 
 import com.yummyyum.Model.Login;
+import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.LoginRepository;
+import com.yummyyum.Repositories.UserRepository;
 import com.yummyyum.Services.Login.LoginService;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class LoginServiceImpl implements LoginService {
 
     private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
 
-    public LoginServiceImpl(LoginRepository loginRepository) {
+    public LoginServiceImpl(LoginRepository loginRepository, UserRepository userRepository) {
         this.loginRepository = loginRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -33,6 +37,8 @@ public class LoginServiceImpl implements LoginService {
     public Login createNewLogin(String email, Timestamp loginDate) {
 
         Login login = new Login(email, loginDate);
+        Optional<User> userData = userRepository.getUserByEmail(email);
+        login.setUser(userData.get());
 
         return loginRepository.save(login);
 

@@ -34,6 +34,11 @@ public class UserController {
         return userService.getUserByUsername(username);
     }
 
+    @GetMapping("/users/email/{email}")
+    public Optional<User> getUserByEmail(@PathVariable("email") String email) {
+        return userService.getUserByEmail(email);
+    }
+
     @GetMapping("/users/username={username}")
     @ResponseBody
     public Map<String, Boolean> existsUserByUsername(@PathVariable String username) {
@@ -50,8 +55,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createNewUser(@RequestBody User user,
-                                HttpServletResponse response,
-                                UriComponentsBuilder builder) {
+                              HttpServletResponse response,
+                              UriComponentsBuilder builder) {
 
         response.setHeader("Location", builder.path("/api/users/" + user.getId()).
                 buildAndExpand(user.getId()).toUriString());

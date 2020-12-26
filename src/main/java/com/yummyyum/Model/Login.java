@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity(name="login")
+@Entity(name = "login")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,12 +18,15 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="login_date")
+    @Column(name = "login_date")
     private Timestamp loginDate;
 
+    @OneToOne
+    @JoinColumn(name = "sign_up", referencedColumnName = "id")
+    private User user;
 
     public Login() {
 

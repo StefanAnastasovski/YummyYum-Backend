@@ -20,22 +20,25 @@ public class LoginController {
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
-    @GetMapping("/getalllogins")
+
+    @GetMapping("/logins")
     public List<Login> getAllLogins() {
         return loginService.getAllLogins();
     }
 
-    @GetMapping("/getloginbyemail/{email}")
-    public Optional<Login> getLoginByEmail(@PathVariable String email) {
-        return loginService.getLoginByEmail(email);
+    @GetMapping("/logins/email/{email}")
+    public Object getLoginByEmail(@PathVariable String email){
+
+        Optional<Login> login = loginService.getLoginByEmail(email);
+        return login;
     }
 
-    @PostMapping("/createlogin")
+    @PostMapping("/logins")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Login createNewLogin(@RequestBody Login login,
-                                  HttpServletResponse response,
-                                  UriComponentsBuilder builder) {
+                                HttpServletResponse response,
+                                UriComponentsBuilder builder) {
 
         Login login1 = loginService.createNewLogin(login.getEmail(), login.getLoginDate());
 
