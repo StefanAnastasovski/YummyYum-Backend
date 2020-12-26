@@ -1,12 +1,13 @@
 package com.yummyyum.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name="email")
+@Entity(name = "email")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,16 +20,19 @@ public class Email {
     @Column
     private String email;
 
-    @Column(name="is_account")
-    private Boolean isAccount;
+    @Column(name = "is_user")
+    private Boolean isUser;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "email")
+    private User user;
 
     public Email() {
     }
 
-    public Email(String email, Boolean isAccount) {
+    public Email(String email, Boolean isUser) {
         this.email = email;
-        this.isAccount = isAccount;
+        this.isUser = isUser;
     }
 
     @Override

@@ -17,28 +17,28 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
 
-    private final UserService UserService;
+    private final UserService userService;
 
     public UserController(UserService UserService) {
-        this.UserService = UserService;
+        this.userService = UserService;
 
     }
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return UserService.getAllUsers();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/users/username/{username}")
     public Optional<User> getUserByUsername(@PathVariable String username) {
-        return UserService.getUserByUsername(username);
+        return userService.getUserByUsername(username);
     }
 
     @GetMapping("/users/username={username}")
     @ResponseBody
     public Map<String, Boolean> existsUserByUsername(@PathVariable String username) {
         Map<String, Boolean> resultMap = new HashMap<>();
-        if (UserService.existsUserByUsername(username)) {
+        if (userService.existsUserByUsername(username)) {
             resultMap.put("success", true);
         } else {
             resultMap.put("success", false);
@@ -53,12 +53,10 @@ public class UserController {
                                 HttpServletResponse response,
                                 UriComponentsBuilder builder) {
 
-        User user1 = UserService.createNewUser(user.getFirstName(), user.getLastName(),
-                user.getUsername(), user.getPassword(), user.getSignUpDate());
-
         response.setHeader("Location", builder.path("/api/users/" + user.getId()).
-                buildAndExpand(user1.getId()).toUriString());
+                buildAndExpand(user.getId()).toUriString());
 
-        return user1;
+        return userService.createNewUser(user.getFirstName(), user.getLastName(),
+                user.getUsername(), user.getPassword(), user.getSignUpDate(), user.getEmail());
     }
 }

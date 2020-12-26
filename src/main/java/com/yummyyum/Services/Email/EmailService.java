@@ -11,8 +11,12 @@ public interface EmailService {
 
     Optional<Email> getEmailByEmail(String email);
 
-    List<Email> getEmailsByIsAccount(Boolean isAccount);
+    List<Email> getEmailsByIsUser(Boolean isUser);
 
-    Email createNewEmail(String email, Boolean isAccount);
+    Optional<Email> getEmailByEmailAndIsUser(String email, Boolean isUser);
+
+    Boolean existsEmailByEmail(String email);
+
+    Email createNewEmail(String email, Boolean isUser);
     
 }

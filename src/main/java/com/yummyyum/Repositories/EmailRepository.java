@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmailRepository extends JpaRepository<Email, Long> {
+
     Optional<Email> getEmailByEmail(String email);
 
-    List<Email> getEmailsByIsAccount(Boolean isAccount);
+    Boolean existsEmailByEmail(String email);
+
+    Optional<Email> getEmailByEmailAndIsUser(String email, Boolean isUser);
+
+    List<Email> getEmailsByIsUser(Boolean isUser);
 
 }

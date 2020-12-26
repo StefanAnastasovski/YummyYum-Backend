@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Email.Impl;
 
 import com.yummyyum.Model.Email;
+import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.EmailRepository;
 import com.yummyyum.Services.Email.EmailService;
 import org.springframework.stereotype.Service;
@@ -29,15 +30,24 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public List<Email> getEmailsByIsAccount(Boolean isAccount) {
-        return emailRepository.getEmailsByIsAccount(isAccount);
+    public List<Email> getEmailsByIsUser(Boolean isUser) {
+        return emailRepository.getEmailsByIsUser(isUser);
     }
 
+    @Override
+    public Optional<Email> getEmailByEmailAndIsUser(String email, Boolean isUser) {
+        return emailRepository.getEmailByEmailAndIsUser(email, isUser);
+    }
 
     @Override
-    public Email createNewEmail(String email, Boolean isAccount) {
+    public Boolean existsEmailByEmail(String email) {
+        return emailRepository.existsEmailByEmail(email);
+    }
 
-        Email email1 = new Email(email, isAccount);
+    @Override
+    public Email createNewEmail(String email, Boolean isUser) {
+
+        Email email1 = new Email(email, isUser);
 
         return emailRepository.save(email1);
     }

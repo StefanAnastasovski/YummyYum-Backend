@@ -1,5 +1,6 @@
 package com.yummyyum.Services.User;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.User;
 
 import java.sql.Timestamp;
@@ -15,7 +16,7 @@ public interface UserService {
     Boolean existsUserByUsername(String username);
 
     User createNewUser(String firstName, String lastName,
-                         String username, String password,
-                       Timestamp signUpDate);
+                       String username, String password,
+                       Timestamp signUpDate, Email email);
 
 }

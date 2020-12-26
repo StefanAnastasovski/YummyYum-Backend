@@ -1,7 +1,9 @@
 package com.yummyyum.Services.User.Impl;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.User;
 
+import com.yummyyum.Repositories.EmailRepository;
 import com.yummyyum.Repositories.UserRepository;
 import com.yummyyum.Services.User.UserService;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final EmailRepository emailRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, EmailRepository emailRepository) {
         this.userRepository = userRepository;
+        this.emailRepository = emailRepository;
     }
 
     @Override
@@ -38,11 +42,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(String firstName, String lastName,
                               String username, String password,
-                              Timestamp userDate) {
+                              Timestamp userDate, Email email) {
 
         User user = new User(firstName, lastName, username, password, userDate);
 
-        return userRepository.save(user);
+        Email email1 = new Email(email.getEmail(), true);
+        emailRepository.save(email1);
+
+        user.setEmail(email1);
+
+        return this.userRepository.save(user);
 
     }
 }
