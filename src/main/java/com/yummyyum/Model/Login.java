@@ -24,8 +24,7 @@ public class Login {
     @Column(name = "login_date")
     private Timestamp loginDate;
 
-    @OneToOne
-    @JoinColumn(name = "sign_up", referencedColumnName = "id")
+    @ManyToOne
     private User user;
 
     public Login() {

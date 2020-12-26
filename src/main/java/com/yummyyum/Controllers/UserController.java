@@ -62,6 +62,6 @@ public class UserController {
                 buildAndExpand(user.getId()).toUriString());
 
         return userService.createNewUser(user.getFirstName(), user.getLastName(),
-                user.getUsername(), user.getPassword(), user.getSignUpDate(), user.getEmail());
+                user.getUsername(), user.getPassword(), user.getSignUpDate());
     }
 }
