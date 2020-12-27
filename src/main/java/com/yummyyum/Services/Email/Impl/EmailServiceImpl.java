@@ -1,7 +1,6 @@
 package com.yummyyum.Services.Email.Impl;
 
 import com.yummyyum.Model.Email;
-import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.EmailRepository;
 import com.yummyyum.Services.Email.EmailService;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public Optional<Email> getEmailByEmail(String email) {
-        return emailRepository.getEmailByEmail(email);
+    public Optional<Email> findEmailByEmail(String email) {
+        return emailRepository.findEmailByEmail(email);
     }
 
     @Override

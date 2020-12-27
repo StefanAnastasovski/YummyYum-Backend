@@ -1,6 +1,8 @@
 package com.yummyyum.Services.SubscribeEmail.Impl;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.SubscribeEmail;
+import com.yummyyum.Repositories.EmailRepository;
 import com.yummyyum.Repositories.SubscribeEmailRepository;
 import com.yummyyum.Services.SubscribeEmail.SubscribeEmailService;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class SubscribeEmailServiceImpl implements SubscribeEmailService {
 
     private final SubscribeEmailRepository subscribeEmailRepository;
+    private final EmailRepository emailRepository;
 
-    public SubscribeEmailServiceImpl(SubscribeEmailRepository subscribeEmailRepository) {
+    public SubscribeEmailServiceImpl(SubscribeEmailRepository subscribeEmailRepository, EmailRepository emailRepository) {
         this.subscribeEmailRepository = subscribeEmailRepository;
+        this.emailRepository = emailRepository;
     }
 
     @Override
@@ -29,10 +33,12 @@ public class SubscribeEmailServiceImpl implements SubscribeEmailService {
     }
 
     @Override
-    public SubscribeEmail createNewSubscribeEmail(String email, Timestamp subscribeDate) {
+    public SubscribeEmail createNewSubscribeEmail(Timestamp subscribeDate, Email email) {
 
-        SubscribeEmail subscribeEmail = new SubscribeEmail(email, subscribeDate);
-
+        SubscribeEmail subscribeEmail = new SubscribeEmail(subscribeDate);
+        Email email1 = new Email(email.getEmail(), false);
+        emailRepository.save(email1);
+        subscribeEmail.setEmail(email1);
         return subscribeEmailRepository.save(subscribeEmail);
     }
 

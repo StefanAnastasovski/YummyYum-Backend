@@ -41,8 +41,8 @@ public class EmailController {
     }
 
     @GetMapping("/emails/email/{email}")
-    public Optional<Email> getEmailByEmail(@PathVariable("email") String email) {
-        return emailService.getEmailByEmail(email);
+    public Optional<Email> findEmailByEmail(@PathVariable("email") String email) {
+        return emailService.findEmailByEmail(email);
     }
 
     @GetMapping("/emails/user/{isuser}")

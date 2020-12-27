@@ -9,8 +9,9 @@ public interface CookingStepsService {
 
     List<CookingSteps> getAllCookingSteps();
 
-    Optional<CookingSteps> getCookingStepsByMealName(String mealName);
+    List<CookingSteps> getCookingStepsByMealName(String mealName);
 
-    CookingSteps createNewCookingSteps(String stepTitle, String stepDescription, String imageUrls, String mealName);
+    CookingSteps createNewCookingSteps(Integer stepNumber, String stepTitle,
+                        String stepDescription, String mealName);
 
 }

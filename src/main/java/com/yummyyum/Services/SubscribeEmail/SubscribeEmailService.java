@@ -1,5 +1,6 @@
 package com.yummyyum.Services.SubscribeEmail;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.SubscribeEmail;
 
 import java.sql.Timestamp;
@@ -12,6 +13,6 @@ public interface SubscribeEmailService {
 
     Optional<SubscribeEmail> getSubscribeEmailByEmail(String email);
 
-    SubscribeEmail createNewSubscribeEmail(String email, Timestamp subscribeDate);
+    SubscribeEmail createNewSubscribeEmail(Timestamp subscribeDate, Email email);
 
 }

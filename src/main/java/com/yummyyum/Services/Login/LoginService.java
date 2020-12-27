@@ -1,5 +1,6 @@
 package com.yummyyum.Services.Login;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.Login;
 
 import java.sql.Timestamp;
@@ -9,8 +10,10 @@ import java.util.Optional;
 public interface LoginService {
     List<Login> getAllLogins();
 
-    Optional<Login> getLoginByEmail(String email);
+    Login createNewLogin(Timestamp loginDate, Email email);
 
-    Login createNewLogin(String email, Timestamp loginDate);
+    List<Login> findLoginsByEmail(String email);
+
+    Optional<Login> findLoginByEmailAndLoginDateContains(String email, String loginDate);
 
 }

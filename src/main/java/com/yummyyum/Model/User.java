@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Entity(name = "user")
 @Getter
@@ -31,12 +30,9 @@ public class User {
     @Column(name = "signup_date")
     private Timestamp signUpDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Login> logins;
-
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "user")
-//    private Login login;
+    @OneToOne
+    @JoinColumn(name = "email_id", referencedColumnName = "id")
+    private Email email;
 
     public User() {
     }

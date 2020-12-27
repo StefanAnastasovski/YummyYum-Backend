@@ -18,28 +18,23 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "login_date")
     private Timestamp loginDate;
 
     @ManyToOne
-    private User user;
+    private Email email;
 
     public Login() {
 
     }
 
-    public Login(String email, Timestamp loginDate) {
-        this.email = email;
+    public Login(Timestamp loginDate) {
         this.loginDate = loginDate;
     }
 
     @Override
     public String toString() {
         return "Login{" +
-                "email='" + email + '\'' +
                 ", loginDate='" + loginDate + '\'';
     }
 

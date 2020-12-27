@@ -1,5 +1,6 @@
 package com.yummyyum.Services.User.Impl;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.User;
 
 import com.yummyyum.Repositories.EmailRepository;
@@ -34,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email);
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
@@ -46,11 +47,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(String firstName, String lastName,
                               String username, String password,
-                              Timestamp userDate) {
+                              Timestamp userDate, Email email) {
 
         User user = new User(firstName, lastName, username, password, userDate);
+        Email email1 = new Email(email.getEmail(), true);
+        emailRepository.save(email1);
+        user.setEmail(email1);
 
         return this.userRepository.save(user);
 
     }
+
 }

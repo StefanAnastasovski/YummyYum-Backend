@@ -17,6 +17,7 @@ public class LoginController {
 
     private final LoginService loginService;
 
+
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
@@ -27,10 +28,14 @@ public class LoginController {
     }
 
     @GetMapping("/logins/email/{email}")
-    public Object getLoginByEmail(@PathVariable String email){
+    public List<Login> findLoginsByEmail(@PathVariable("email") String email) {
+        return loginService.findLoginsByEmail(email);
+    }
 
-        Optional<Login> login = loginService.getLoginByEmail(email);
-        return login;
+     @GetMapping("/logins/email/{email}/logindate/{logindate}")
+    public Optional<Login> findLoginByEmailAndLoginDateContains(@PathVariable("email") String email,
+                                                           @PathVariable("logindate") String loginDate) {
+        return loginService.findLoginByEmailAndLoginDateContains(email, loginDate);
     }
 
     @PostMapping("/logins")
@@ -40,9 +45,8 @@ public class LoginController {
                                 HttpServletResponse response,
                                 UriComponentsBuilder builder) {
 
-        Login login1 = loginService.createNewLogin(login.getEmail(), login.getLoginDate());
-
-        response.setHeader("Location", builder.path("/api/createlogin/" + login.getId()).
+        Login login1 = loginService.createNewLogin(login.getLoginDate(), login.getEmail());
+        response.setHeader("Location", builder.path("/api/logins/" + login.getId()).
                 buildAndExpand(login.getId()).toUriString());
 
         return login1;

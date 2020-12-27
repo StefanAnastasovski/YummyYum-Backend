@@ -23,26 +23,27 @@ public class SubscribeEmailController {
         this.subscribeEmailService = subscribeEmailService;
     }
 
-    @GetMapping("/getallsubscribeemails")
+    @GetMapping("/subscribes")
     public List<SubscribeEmail> getAllSubscribeEmails() {
         return subscribeEmailService.getAllSubscribeEmails();
     }
 
-    @GetMapping("/getallsubscribeemails/{email}")
-    public Optional<SubscribeEmail> getSubscribeEmailByEmail(@PathVariable String email) {
+    @GetMapping("/subscribes/email/{email}")
+    public Optional<SubscribeEmail> getSubscribeEmailByEmail(@PathVariable("email") String email) {
         return subscribeEmailService.getSubscribeEmailByEmail(email);
     }
 
-    @PostMapping("/createsubscribeemail")
+    @PostMapping("/subscribes")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public SubscribeEmail createNewSubscribeEmail(@RequestBody SubscribeEmail subscribeEmail,
                                   HttpServletResponse response,
                                   UriComponentsBuilder builder) {
 
-        SubscribeEmail subscribeEmail1 = subscribeEmailService.createNewSubscribeEmail(subscribeEmail.getEmail(), subscribeEmail.getSubscribeDate());
+        SubscribeEmail subscribeEmail1 = subscribeEmailService.createNewSubscribeEmail(
+                subscribeEmail.getSubscribeDate(), subscribeEmail.getEmail());
 
-        response.setHeader("Location", builder.path("/api/createsubscribeemail/" + subscribeEmail1.getId()).
+        response.setHeader("Location", builder.path("/api/subscribes/" + subscribeEmail1.getId()).
                 buildAndExpand(subscribeEmail1.getId()).toUriString());
 
         return subscribeEmail1;

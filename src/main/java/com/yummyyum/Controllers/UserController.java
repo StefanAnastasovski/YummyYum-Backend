@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -36,7 +33,7 @@ public class UserController {
 
     @GetMapping("/users/email/{email}")
     public Optional<User> getUserByEmail(@PathVariable("email") String email) {
-        return userService.getUserByEmail(email);
+        return userService.findUserByEmail(email);
     }
 
     @GetMapping("/users/username={username}")
@@ -62,6 +59,7 @@ public class UserController {
                 buildAndExpand(user.getId()).toUriString());
 
         return userService.createNewUser(user.getFirstName(), user.getLastName(),
-                user.getUsername(), user.getPassword(), user.getSignUpDate());
+                user.getUsername(), user.getPassword(), user.getSignUpDate(), user.getEmail());
     }
+
 }

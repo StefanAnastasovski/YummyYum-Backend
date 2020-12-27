@@ -10,11 +10,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> getUserByUsername(String username);
 
-    @Query(value = "SELECT * FROM user JOIN email e ON user.id = e.id",
+    @Query(value = "SELECT * FROM user as u JOIN email e ON u.id = e.id where e.email = :email",
             nativeQuery = true)
-    Optional<User> getUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
     Boolean existsUserByUsername(String username);
-
 
 }

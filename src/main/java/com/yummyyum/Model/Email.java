@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "email")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email", "is_user"}))
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,6 +24,14 @@ public class Email {
 
     @Column(name = "is_user")
     private Boolean isUser;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "email")
+    private SubscribeEmail subscribeEmail;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email")
+    private Set<Login> logins;
 
     @JsonIgnore
     @OneToOne(mappedBy = "email")

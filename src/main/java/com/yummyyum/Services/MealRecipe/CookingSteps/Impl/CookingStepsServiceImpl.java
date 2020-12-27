@@ -23,15 +23,15 @@ public class CookingStepsServiceImpl implements CookingStepsService {
     }
 
     @Override
-    public Optional<CookingSteps> getCookingStepsByMealName(String mealName) {
+    public List<CookingSteps> getCookingStepsByMealName(String mealName) {
         return cookingStepsRepository.getCookingStepsByMealName(mealName);
     }
 
     @Override
-    public CookingSteps createNewCookingSteps(String stepTitle, String stepDescription,
-                                              String imageUrls, String mealName) {
+    public CookingSteps createNewCookingSteps(Integer stepNumber, String stepTitle,
+                        String stepDescription, String mealName) {
 
-        CookingSteps cookingSteps = new CookingSteps(stepTitle, stepDescription, imageUrls, mealName);
+        CookingSteps cookingSteps = new CookingSteps(stepNumber, stepTitle, stepDescription, mealName);
 
         return cookingStepsRepository.save(cookingSteps);
     }

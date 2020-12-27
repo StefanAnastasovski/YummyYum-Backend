@@ -1,9 +1,9 @@
 package com.yummyyum.Services.Login.Impl;
 
+import com.yummyyum.Model.Email;
 import com.yummyyum.Model.Login;
-import com.yummyyum.Model.User;
+import com.yummyyum.Repositories.EmailRepository;
 import com.yummyyum.Repositories.LoginRepository;
-import com.yummyyum.Repositories.UserRepository;
 import com.yummyyum.Services.Login.LoginService;
 import org.springframework.stereotype.Service;
 
@@ -15,32 +15,39 @@ import java.util.Optional;
 public class LoginServiceImpl implements LoginService {
 
     private final LoginRepository loginRepository;
-    private final UserRepository userRepository;
+    private final EmailRepository emailRepository;
 
-    public LoginServiceImpl(LoginRepository loginRepository, UserRepository userRepository) {
+    public LoginServiceImpl(LoginRepository loginRepository,
+                            EmailRepository emailRepository) {
         this.loginRepository = loginRepository;
-        this.userRepository = userRepository;
+        this.emailRepository = emailRepository;
     }
 
     @Override
     public List<Login> getAllLogins() {
-
         return loginRepository.findAll();
     }
 
-    @Override
-    public Optional<Login> getLoginByEmail(String email) {
-        return loginRepository.getLoginByEmail(email);
-    }
 
     @Override
-    public Login createNewLogin(String email, Timestamp loginDate) {
+    public Login createNewLogin(Timestamp loginDate, Email email) {
 
-        Login login = new Login(email, loginDate);
-        Optional<User> userData = userRepository.getUserByEmail(email);
-        login.setUser(userData.get());
+        Login login = new Login(loginDate);
+        Optional<Email> emailData = emailRepository.findEmailByEmail(email.getEmail());
+        login.setEmail(emailData.get());
 
         return loginRepository.save(login);
 
     }
+
+    @Override
+    public List<Login> findLoginsByEmail(String email) {
+        return loginRepository.findLoginsByEmail(email);
+    }
+
+    @Override
+    public Optional<Login> findLoginByEmailAndLoginDateContains(String email, String loginDate) {
+        return loginRepository.findLoginByEmailAndLoginDateContains(email, loginDate);
+    }
+
 }

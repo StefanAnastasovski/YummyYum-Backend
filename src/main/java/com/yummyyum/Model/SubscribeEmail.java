@@ -6,9 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
-@Entity(name="subscribe_email")
+@Entity(name = "subscribe_email")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,24 +17,23 @@ public class SubscribeEmail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="email")
-    private String email;
-
-    @Column(name="subscribe_date")
+    @Column(name = "subscribe_date")
     private Timestamp subscribeDate;
+
+    @OneToOne
+    @JoinColumn(name = "email_id", referencedColumnName = "id")
+    private Email email;
 
     public SubscribeEmail() {
     }
 
-    public SubscribeEmail(String email, Timestamp subscribeDate) {
-        this.email = email;
+    public SubscribeEmail(Timestamp subscribeDate) {
         this.subscribeDate = subscribeDate;
     }
 
     @Override
     public String toString() {
         return "SubscribeEmail{" +
-                "email='" + email + '\'' +
                 ", subscribeDate=" + subscribeDate +
                 '}';
     }

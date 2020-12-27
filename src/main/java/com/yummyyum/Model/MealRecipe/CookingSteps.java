@@ -16,6 +16,9 @@ public class CookingSteps {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "step_number")
+    private Integer stepNumber;
+
     @Column(name = "step_title")
     @Lob
     private String stepTitle;
@@ -24,10 +27,6 @@ public class CookingSteps {
     @Lob
     private String stepDescription;
 
-    @Column(name = "image_urls")
-    @Lob
-    private String imageUrls;
-
     @Column(name = "meal_name_fk")
     private String mealName;
 
@@ -35,10 +34,11 @@ public class CookingSteps {
 
     }
 
-    public CookingSteps(String stepTitle, String stepDescription, String imageUrls, String mealName) {
+    public CookingSteps(Integer stepNumber, String stepTitle,
+                        String stepDescription, String mealName) {
+        this.stepNumber = stepNumber;
         this.stepTitle = stepTitle;
         this.stepDescription = stepDescription;
-        this.imageUrls = imageUrls;
         this.mealName = mealName;
     }
 

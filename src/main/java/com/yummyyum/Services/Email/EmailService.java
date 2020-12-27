@@ -9,7 +9,7 @@ public interface EmailService {
 
     List<Email> getAllEmails();
 
-    Optional<Email> getEmailByEmail(String email);
+    Optional<Email> findEmailByEmail(String email);
 
     List<Email> getEmailsByIsUser(Boolean isUser);
 
@@ -18,5 +18,5 @@ public interface EmailService {
     Boolean existsEmailByEmail(String email);
 
     Email createNewEmail(String email, Boolean isUser);
-    
+
 }

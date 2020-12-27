@@ -28,7 +28,7 @@ public class CookingStepsController {
     }
 
     @GetMapping("/getcookingstepsbymealname/{mealname}")
-    public Optional<CookingSteps> getCookingStepsByMealName(@PathVariable String mealName) {
+    public List<CookingSteps> getCookingStepsByMealName(@PathVariable("mealname") String mealName) {
         return cookingStepsService.getCookingStepsByMealName(mealName);
     }
 
@@ -39,8 +39,9 @@ public class CookingStepsController {
                                   HttpServletResponse response,
                                   UriComponentsBuilder builder) {
 
-        CookingSteps cookingSteps1 = cookingStepsService.createNewCookingSteps(cookingSteps.getStepTitle(),
-                cookingSteps.getStepDescription(), cookingSteps.getImageUrls(), cookingSteps.getMealName());
+        CookingSteps cookingSteps1 = cookingStepsService.createNewCookingSteps(cookingSteps.getStepNumber(),
+                cookingSteps.getStepTitle(), cookingSteps.getStepDescription(),
+                cookingSteps.getMealName());
 
         response.setHeader("Location", builder.path("/api/createcookingsteps/" + cookingSteps.getId()).
                 buildAndExpand(cookingSteps1.getId()).toUriString());
