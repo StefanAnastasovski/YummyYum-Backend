@@ -1,5 +1,6 @@
 package com.yummyyum.Model.MealRecipe;
 
+import com.yummyyum.Model.Meal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,19 +28,19 @@ public class CookingSteps {
     @Lob
     private String stepDescription;
 
-    @Column(name = "meal_name_fk")
-    private String mealName;
+    @OneToOne
+    @JoinColumn(name = "cooking_steps_id", referencedColumnName = "id")
+    private Meal meal;
 
     public CookingSteps() {
 
     }
 
     public CookingSteps(Integer stepNumber, String stepTitle,
-                        String stepDescription, String mealName) {
+                        String stepDescription) {
         this.stepNumber = stepNumber;
         this.stepTitle = stepTitle;
         this.stepDescription = stepDescription;
-        this.mealName = mealName;
     }
 
     @Override

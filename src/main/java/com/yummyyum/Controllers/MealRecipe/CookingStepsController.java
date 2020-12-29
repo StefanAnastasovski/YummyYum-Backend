@@ -22,17 +22,17 @@ public class CookingStepsController {
 
     }
 
-    @GetMapping("/getallcookingsteps")
+    @GetMapping("/cooking-steps")
     public List<CookingSteps> getAllCookingSteps() {
         return cookingStepsService.getAllCookingSteps();
     }
 
-    @GetMapping("/getcookingstepsbymealname/{mealname}")
-    public List<CookingSteps> getCookingStepsByMealName(@PathVariable("mealname") String mealName) {
-        return cookingStepsService.getCookingStepsByMealName(mealName);
+    @GetMapping("/cooking-steps/meal/{mealName}")
+    public List<CookingSteps> findCookingStepsByMealName(@PathVariable("mealName") String mealName) {
+        return cookingStepsService.findCookingStepsByMealName(mealName);
     }
 
-    @PostMapping("/createcookingsteps")
+    @PostMapping("/cooking-steps")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public CookingSteps createNewCookingSteps(@RequestBody CookingSteps cookingSteps,
@@ -41,9 +41,9 @@ public class CookingStepsController {
 
         CookingSteps cookingSteps1 = cookingStepsService.createNewCookingSteps(cookingSteps.getStepNumber(),
                 cookingSteps.getStepTitle(), cookingSteps.getStepDescription(),
-                cookingSteps.getMealName());
+                cookingSteps.getMeal());
 
-        response.setHeader("Location", builder.path("/api/createcookingsteps/" + cookingSteps.getId()).
+        response.setHeader("Location", builder.path("/api/cooking-steps/" + cookingSteps.getId()).
                 buildAndExpand(cookingSteps1.getId()).toUriString());
 
         return cookingSteps1;

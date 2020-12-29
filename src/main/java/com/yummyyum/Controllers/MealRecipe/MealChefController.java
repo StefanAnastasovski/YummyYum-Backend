@@ -22,26 +22,28 @@ public class MealChefController {
 
     }
 
-    @GetMapping("/getallmealchefs")
+    @GetMapping("/meal-chef")
     public List<MealChef> getAllMealChefs() {
         return mealChefService.getAllMealChefs();
     }
 
-    @GetMapping("/getmealchefbymealname/{mealName}")
-    public Optional<MealChef> getMealChefByMealName(@PathVariable String mealName) {
-        return mealChefService.getMealChefByMealName(mealName);
+    @GetMapping("/meal-chef/meal/{mealName}")
+    public Optional<MealChef> findMealChefByMealName(@PathVariable("mealName") String mealName) {
+        return mealChefService.findMealChefByMealName(mealName);
     }
 
-    @PostMapping("/createmealchef")
+    @PostMapping("/meal-chef")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public MealChef createNewMealChef(@RequestBody MealChef mealChef,
                                   HttpServletResponse response,
                                   UriComponentsBuilder builder) {
 
-        MealChef mealChef1 = mealChefService.createNewMealChef(mealChef.getFullName(), mealChef.getChefMealDescription(), mealChef.getMealName());
+        MealChef mealChef1 = mealChefService.createNewMealChef(mealChef.getFullName(),
+                mealChef.getChefMealDescription(), mealChef.getMeal());
 
-        response.setHeader("Location", builder.path("/api/createmealchef/" + mealChef.getId()).
+
+        response.setHeader("Location", builder.path("/api/meal-chef/" + mealChef.getId()).
                 buildAndExpand(mealChef1.getId()).toUriString());
 
         return mealChef1;

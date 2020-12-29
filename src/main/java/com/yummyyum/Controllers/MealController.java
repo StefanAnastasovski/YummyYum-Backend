@@ -22,17 +22,17 @@ public class MealController {
         this.mealService = mealService;
     }
 
-     @GetMapping("/getallmeals")
+     @GetMapping("/meals")
     public List<Meal> getAllMeals() {
         return mealService.getAllMeals();
     }
 
-    @GetMapping("/getmealbymealname/{mealname}")
-    public Optional<Meal> getMealByMealName(@PathVariable String mealName) {
+    @GetMapping("/meals/meal/{mealname}")
+    public Optional<Meal> getMealByMealName(@PathVariable("mealname") String mealName) {
         return mealService.getMealByMealName(mealName);
     }
 
-    @PostMapping("/createmeal")
+    @PostMapping("/meals")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Meal createNewMeal(@RequestBody Meal meal,
@@ -43,7 +43,7 @@ public class MealController {
                 meal.getMealTimeTag(), meal.getMealIngredientTag(),
                 meal.getPrice());
 
-        response.setHeader("Location", builder.path("/api/createmeal/" + meal.getId()).
+        response.setHeader("Location", builder.path("/api/meals/" + meal.getId()).
                 buildAndExpand(meal1.getId()).toUriString());
 
         return meal1;

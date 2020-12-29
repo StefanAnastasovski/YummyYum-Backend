@@ -22,29 +22,29 @@ public class RecipeInstructionsController {
 
     }
 
-    @GetMapping("/getallrecipeinstructionses")
+    @GetMapping("/recipe-instructions")
     public List<RecipeInstructions> getAllRecipeInstructionse() {
         return recipeInstructionsService.getAllRecipeInstructions();
     }
 
-    @GetMapping("/getrecipeinstructionsbymealname/{mealName}")
-    public Optional<RecipeInstructions> getRecipeInstructionsByMealName(@PathVariable String mealName) {
-        return recipeInstructionsService.getRecipeInstructionsByMealName(mealName);
+    @GetMapping("/recipe-instructions/meal/{mealName}")
+    public Optional<RecipeInstructions> findRecipeInstructionsByMealName(@PathVariable("mealName") String mealName) {
+        return recipeInstructionsService.findRecipeInstructionsByMealName(mealName);
     }
 
-    @PostMapping("/createrecipeinstructions")
+    @PostMapping("/recipe-instructions")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public RecipeInstructions createNewRecipeInstructions(@RequestBody RecipeInstructions recipeInstructions,
-                                  HttpServletResponse response,
-                                  UriComponentsBuilder builder) {
+                                                          HttpServletResponse response,
+                                                          UriComponentsBuilder builder) {
 
         RecipeInstructions recipeInstructions1 =
                 recipeInstructionsService.createNewRecipeInstructions(recipeInstructions.getCookSteps(),
-                recipeInstructions.getGuidelines(), recipeInstructions.getCustomizeInstructions(),
-                        recipeInstructions.getMealName());
+                        recipeInstructions.getGuidelines(), recipeInstructions.getCustomizeInstructions(),
+                        recipeInstructions.getMeal());
 
-        response.setHeader("Location", builder.path("/api/createrecipeinstructions/" + recipeInstructions.getId()).
+        response.setHeader("Location", builder.path("/api/recipe-instructions/" + recipeInstructions.getId()).
                 buildAndExpand(recipeInstructions1.getId()).toUriString());
 
         return recipeInstructions1;

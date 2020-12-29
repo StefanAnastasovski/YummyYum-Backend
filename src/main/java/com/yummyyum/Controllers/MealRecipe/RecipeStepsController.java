@@ -22,17 +22,17 @@ public class RecipeStepsController {
 
     }
 
-    @GetMapping("/getallrecipesteps")
+    @GetMapping("/recipe-steps")
     public List<RecipeSteps> getAllRecipeSteps() {
         return recipeStepsService.getAllRecipeSteps();
     }
 
-    @GetMapping("/getrecipestepsbymealname/{mealName}")
-    public Optional<RecipeSteps> getRecipeStepsByMealName(@PathVariable String mealName) {
-        return recipeStepsService.getRecipeStepsByMealName(mealName);
+    @GetMapping("/recipe-steps/meal/{mealName}")
+    public Optional<RecipeSteps> findRecipeStepsByMealName(@PathVariable("mealName") String mealName) {
+        return recipeStepsService.findRecipeStepsByMealName(mealName);
     }
 
-    @PostMapping("/createrecipesteps")
+    @PostMapping("/recipe-steps")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public RecipeSteps createNewRecipeSteps(@RequestBody RecipeSteps recipeSteps,
@@ -40,8 +40,8 @@ public class RecipeStepsController {
                                   UriComponentsBuilder builder) {
 
         RecipeSteps recipeSteps1 = recipeStepsService.createNewRecipeSteps(recipeSteps.getMealUtensilsRow1(),
-                recipeSteps.getMealUtensilsRow2(), recipeSteps.getMealName());
-        response.setHeader("Location", builder.path("/api/createrecipesteps/" + recipeSteps.getId()).
+                recipeSteps.getMealUtensilsRow2(), recipeSteps.getMeal());
+        response.setHeader("Location", builder.path("/api/recipe-steps/" + recipeSteps.getId()).
                 buildAndExpand(recipeSteps1.getId()).toUriString());
 
         return recipeSteps1;

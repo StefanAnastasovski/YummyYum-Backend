@@ -1,5 +1,7 @@
 package com.yummyyum.Model.MealRecipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealOverviewEnum.DifficultyLevelEnum;
 import com.yummyyum.Model.MealOverviewEnum.SpiceLevelEnum;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,7 @@ public class MealOverview {
     private DifficultyLevelEnum difficultyLevel;
 
     @Column(name = "spice_level")
-     @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private SpiceLevelEnum spiceLevel;
 
     @Column(name = "prep_cook_time")
@@ -32,21 +34,20 @@ public class MealOverview {
     @Column(name = "CookWithin")
     private Integer cookWithin;
 
-    @Column(name = "meal_name_fk")
-    private String mealName;
-
+    @OneToOne
+    @JoinColumn(name = "meal_overview_id", referencedColumnName = "id")
+    private Meal meal;
 
     public MealOverview() {
 
     }
 
     public MealOverview(DifficultyLevelEnum difficultyLevel, SpiceLevelEnum spiceLevel,
-                        String prepCookTime, Integer cookWithin, String mealName) {
+                        String prepCookTime, Integer cookWithin) {
         this.difficultyLevel = difficultyLevel;
         this.spiceLevel = spiceLevel;
         this.prepCookTime = prepCookTime;
         this.cookWithin = cookWithin;
-        this.mealName = mealName;
     }
 
     @Override
@@ -56,7 +57,6 @@ public class MealOverview {
                 ", spiceLevel=" + spiceLevel +
                 ", prepCookTime='" + prepCookTime + '\'' +
                 ", cookWithin=" + cookWithin +
-                ", mealName=" + mealName +
                 '}';
     }
 

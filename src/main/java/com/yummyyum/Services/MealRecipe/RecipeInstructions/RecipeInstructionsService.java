@@ -1,5 +1,6 @@
 package com.yummyyum.Services.MealRecipe.RecipeInstructions;
 
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealRecipe.RecipeInstructions;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface RecipeInstructionsService {
 
     List<RecipeInstructions> getAllRecipeInstructions();
 
-    Optional<RecipeInstructions> getRecipeInstructionsByMealName(String mealName);
+    Optional<RecipeInstructions> findRecipeInstructionsByMealName(String mealName);
 
     RecipeInstructions createNewRecipeInstructions(String cookSteps, String guidelines,
-                                                   String customizeInstructions, String mealName);
+                                                   String customizeInstructions, Meal meal);
 
 }

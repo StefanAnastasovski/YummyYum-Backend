@@ -1,5 +1,6 @@
 package com.yummyyum.Model.MealRecipe;
 
+import com.yummyyum.Model.Meal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,20 +29,20 @@ public class MealBoxNutrition {
     @Column
     private Integer fat;
 
-    @Column(name = "meal_name_fk")
-    private String mealName;
+    @OneToOne
+    @JoinColumn(name = "meal_box_nutrition_id", referencedColumnName = "id")
+    private Meal meal;
 
     public MealBoxNutrition() {
 
     }
 
     public MealBoxNutrition(Integer calories, Integer protein,
-                            Integer carbohydrates, Integer fat, String mealName) {
+                            Integer carbohydrates, Integer fat) {
         this.calories = calories;
         this.protein = protein;
         this.carbohydrates = carbohydrates;
         this.fat = fat;
-        this.mealName = mealName;
     }
 
     @Override
@@ -51,7 +52,6 @@ public class MealBoxNutrition {
                 ", protein=" + protein +
                 ", carbohydrates=" + carbohydrates +
                 ", fat=" + fat +
-                ", mealName='" + mealName + '\'' +
                 '}';
     }
 

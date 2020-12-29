@@ -1,5 +1,6 @@
 package com.yummyyum.Services.MealRecipe.CookingSteps;
 
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealRecipe.CookingSteps;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface CookingStepsService {
 
     List<CookingSteps> getAllCookingSteps();
 
-    List<CookingSteps> getCookingStepsByMealName(String mealName);
+    List<CookingSteps> findCookingStepsByMealName(String mealName);
 
     CookingSteps createNewCookingSteps(Integer stepNumber, String stepTitle,
-                        String stepDescription, String mealName);
+                        String stepDescription, Meal meal);
 
 }

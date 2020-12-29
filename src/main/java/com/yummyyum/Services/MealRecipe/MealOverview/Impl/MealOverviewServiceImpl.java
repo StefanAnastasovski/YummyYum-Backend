@@ -1,9 +1,11 @@
 package com.yummyyum.Services.MealRecipe.MealOverview.Impl;
 
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealRecipe.MealOverview;
 import com.yummyyum.Model.MealOverviewEnum.DifficultyLevelEnum;
 import com.yummyyum.Model.MealOverviewEnum.SpiceLevelEnum;
 import com.yummyyum.Repositories.MealRecipe.MealOverviewRepository;
+import com.yummyyum.Repositories.MealRepository;
 import com.yummyyum.Services.MealRecipe.MealOverview.MealOverviewService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class MealOverviewServiceImpl implements MealOverviewService {
 
     private final MealOverviewRepository mealOverviewRepository;
+    private final MealRepository mealRepository;
 
-    public MealOverviewServiceImpl(MealOverviewRepository mealOverviewRepository) {
+    public MealOverviewServiceImpl(MealOverviewRepository mealOverviewRepository, MealRepository mealRepository) {
         this.mealOverviewRepository = mealOverviewRepository;
+        this.mealRepository = mealRepository;
     }
 
     @Override
@@ -25,16 +29,17 @@ public class MealOverviewServiceImpl implements MealOverviewService {
     }
 
     @Override
-    public Optional<MealOverview> getMealOverviewByMealName(String mealName) {
-        return mealOverviewRepository.getMealOverviewByMealName(mealName);
+    public Optional<MealOverview> findMealOverviewByMealName(String mealName) {
+        return mealOverviewRepository.findMealOverviewByMealName(mealName);
     }
 
     @Override
     public MealOverview createNewMealOverview(DifficultyLevelEnum difficultyLevel, SpiceLevelEnum spiceLevel,
-                                              String prepCookTime, Integer cookWithin, String mealName) {
+                                              String prepCookTime, Integer cookWithin, Meal meal) {
 
-        MealOverview mealOverview1 = new MealOverview(difficultyLevel, spiceLevel, prepCookTime, cookWithin, mealName);
-
+        MealOverview mealOverview1 = new MealOverview(difficultyLevel, spiceLevel, prepCookTime, cookWithin);
+        Optional<Meal> meal1 = mealRepository.getMealByMealName(meal.getMealName());
+        mealOverview1.setMeal(meal1.get());
         return mealOverviewRepository.save(mealOverview1);
     }
 

@@ -1,12 +1,13 @@
 package com.yummyyum.Model.MealRecipe;
 
+import com.yummyyum.Model.Meal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name="meal_box")
+@Entity(name = "meal_box")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,24 +17,24 @@ public class MealBox {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="serve_quantity")
+    @Column(name = "serve_quantity")
     private Integer serveQuantity;
 
-    @Column(name="meal_ingredients")
+    @Column(name = "meal_ingredients")
     @Lob
     private String mealIngredients;
 
-    @Column(name="meal_name_fk")
-    private String mealName;
+    @OneToOne
+    @JoinColumn(name = "meal_box_id", referencedColumnName = "id")
+    private Meal meal;
 
     public MealBox() {
 
     }
 
-    public MealBox(Integer serveQuantity, String mealIngredients, String mealName) {
+    public MealBox(Integer serveQuantity, String mealIngredients) {
         this.serveQuantity = serveQuantity;
         this.mealIngredients = mealIngredients;
-        this.mealName = mealName;
     }
 
     @Override
@@ -41,7 +42,6 @@ public class MealBox {
         return "MealBox{" +
                 "serveQuantity=" + serveQuantity +
                 ", mealIngredients='" + mealIngredients + '\'' +
-                ", mealName='" + mealName + '\'' +
                 '}';
     }
 

@@ -1,5 +1,6 @@
 package com.yummyyum.Services.MealRecipe.MealChef;
 
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealRecipe.MealChef;
 
 import java.util.List;
@@ -9,7 +10,8 @@ public interface MealChefService {
 
     List<MealChef> getAllMealChefs();
 
-    Optional<MealChef> getMealChefByMealName(String mealName);
+    Optional<MealChef> findMealChefByMealName(String mealName);
 
-    MealChef createNewMealChef(String fullName, String chefMealDescription, String mealName);
+    MealChef createNewMealChef(String fullName, String chefMealDescription, Meal meal);
+
 }

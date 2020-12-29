@@ -23,17 +23,17 @@ public class MealOverviewController {
 
     }
 
-    @GetMapping("/getallmealoverviews")
+    @GetMapping("/meal-overview")
     public List<MealOverview> getAllMealOverviews() {
         return mealOverviewService.getAllMealOverviews();
     }
 
-    @GetMapping("/getmealoverviewbymealname/{mealName}")
-    public Optional<MealOverview> getMealOverviewByMealName(@PathVariable String mealName) {
-        return mealOverviewService.getMealOverviewByMealName(mealName);
+    @GetMapping("/meal-overview/meal/{mealName}")
+    public Optional<MealOverview> findMealOverviewByMealName(@PathVariable("mealName") String mealName) {
+        return mealOverviewService.findMealOverviewByMealName(mealName);
     }
 
-    @PostMapping("/createmealoverview")
+    @PostMapping("/meal-overview")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public MealOverview createNewMealOverview(@RequestBody MealOverview mealOverview,
@@ -42,10 +42,9 @@ public class MealOverviewController {
 
         MealOverview mealOverview1 = mealOverviewService.createNewMealOverview(mealOverview.getDifficultyLevel(),
                 mealOverview.getSpiceLevel(), mealOverview.getPrepCookTime(),
-                mealOverview.getCookWithin(), mealOverview.getMealName());
+                mealOverview.getCookWithin(), mealOverview.getMeal());
 
-
-        response.setHeader("Location", builder.path("/api/createmealoverview/" + mealOverview.getId()).
+        response.setHeader("Location", builder.path("/api/meal-overview/" + mealOverview.getId()).
                 buildAndExpand(mealOverview1.getId()).toUriString());
 
         return mealOverview1;

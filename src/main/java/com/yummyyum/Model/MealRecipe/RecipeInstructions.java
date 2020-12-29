@@ -1,5 +1,6 @@
 package com.yummyyum.Model.MealRecipe;
 
+import com.yummyyum.Model.Meal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,18 +29,18 @@ public class RecipeInstructions {
     @Lob
     private String customizeInstructions;
 
-    @Column(name = "meal_name_fk")
-    private String mealName;
+    @OneToOne
+    @JoinColumn(name = "recipe_instructions_id", referencedColumnName = "id")
+    private Meal meal;
 
     public RecipeInstructions() {
 
     }
 
-    public RecipeInstructions(String cookSteps, String guidelines, String customizeInstructions, String mealName) {
+    public RecipeInstructions(String cookSteps, String guidelines, String customizeInstructions) {
         this.cookSteps = cookSteps;
         this.guidelines = guidelines;
         this.customizeInstructions = customizeInstructions;
-        this.mealName = mealName;
     }
 
     @Override
@@ -48,7 +49,6 @@ public class RecipeInstructions {
                 "cookSteps='" + cookSteps + '\'' +
                 ", guidelines='" + guidelines + '\'' +
                 ", customizeInstructions='" + customizeInstructions + '\'' +
-                ", mealName='" + mealName + '\'' +
                 '}';
     }
 

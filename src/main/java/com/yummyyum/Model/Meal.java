@@ -1,5 +1,7 @@
 package com.yummyyum.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yummyyum.Model.MealRecipe.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +19,7 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "meal_name")
+    @Column(name = "meal_name", unique = true)
     private String mealName;
 
     @Column(name = "meal_description")
@@ -28,6 +30,34 @@ public class Meal {
 
     @Column(name = "meal_ingredient_tag")
     private String mealIngredientTag;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private MealOverview mealOverview;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private MealChef mealChef;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private MealBox mealBox;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private MealBoxNutrition mealBoxNutrition;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private RecipeSteps recipeSteps;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private RecipeInstructions recipeInstructions;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "meal")
+    private CookingSteps cookingSteps;
 
     @Column
     private Double price;

@@ -22,26 +22,27 @@ public class MealBoxController {
 
     }
 
-    @GetMapping("/getallmealboxes")
+    @GetMapping("/meal-box")
     public List<MealBox> getAllMealBoxes() {
         return mealBoxService.getAllMealBoxes();
     }
 
-    @GetMapping("/getmealboxbymealname/{mealName}")
-    public Optional<MealBox> getMealBoxByMealName(@PathVariable String mealName) {
-        return mealBoxService.getMealBoxByMealName(mealName);
+    @GetMapping("/meal-box/meal/{mealName}")
+    public Optional<MealBox> findMealBoxByMealName(@PathVariable("mealName") String mealName) {
+        return mealBoxService.findMealBoxByMealName(mealName);
     }
 
-    @PostMapping("/createmealbox")
+    @PostMapping("/meal-box")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public MealBox createNewMealBox(@RequestBody MealBox mealBox,
                                   HttpServletResponse response,
                                   UriComponentsBuilder builder) {
 
-        MealBox mealBox1 = mealBoxService.createNewMealBox(mealBox.getServeQuantity(), mealBox.getMealIngredients(), mealBox.getMealName());
+        MealBox mealBox1 = mealBoxService.createNewMealBox(mealBox.getServeQuantity(),
+                mealBox.getMealIngredients(), mealBox.getMeal());
 
-        response.setHeader("Location", builder.path("/api/createmealbox/" + mealBox.getId()).
+        response.setHeader("Location", builder.path("/api/meal-box/" + mealBox.getId()).
                 buildAndExpand(mealBox1.getId()).toUriString());
 
         return mealBox1;

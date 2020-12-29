@@ -1,7 +1,9 @@
 package com.yummyyum.Services.MealRecipe.RecipeInstructions.Impl;
 
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealRecipe.RecipeInstructions;
 import com.yummyyum.Repositories.MealRecipe.RecipeInstructionsRepository;
+import com.yummyyum.Repositories.MealRepository;
 import com.yummyyum.Services.MealRecipe.RecipeInstructions.RecipeInstructionsService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,12 @@ import java.util.Optional;
 public class RecipeInstructionsServiceImpl implements RecipeInstructionsService {
 
     private final RecipeInstructionsRepository  recipeInstructionsRepository;
+    private final MealRepository mealRepository;
 
-    public RecipeInstructionsServiceImpl(RecipeInstructionsRepository recipeInstructionsRepository) {
+    public RecipeInstructionsServiceImpl(RecipeInstructionsRepository recipeInstructionsRepository,
+                                         MealRepository mealRepository) {
         this.recipeInstructionsRepository = recipeInstructionsRepository;
+        this.mealRepository = mealRepository;
     }
 
 
@@ -24,15 +29,17 @@ public class RecipeInstructionsServiceImpl implements RecipeInstructionsService 
     }
 
     @Override
-    public Optional<RecipeInstructions> getRecipeInstructionsByMealName(String mealName) {
-        return recipeInstructionsRepository.getRecipeInstructionsByMealName(mealName);
+    public Optional<RecipeInstructions> findRecipeInstructionsByMealName(String mealName) {
+        return recipeInstructionsRepository.findRecipeInstructionsByMealName(mealName);
     }
 
     @Override
     public RecipeInstructions createNewRecipeInstructions(String cookSteps, String guidelines,
-                                                          String customizeInstructions, String mealName) {
+                                                          String customizeInstructions, Meal meal) {
         RecipeInstructions recipeInstructions = new RecipeInstructions(cookSteps, guidelines,
-                customizeInstructions, mealName);
+                customizeInstructions);
+        Optional<Meal> meal1 = mealRepository.getMealByMealName(meal.getMealName());
+        recipeInstructions.setMeal(meal1.get());
         return recipeInstructionsRepository.save(recipeInstructions);
     }
 
