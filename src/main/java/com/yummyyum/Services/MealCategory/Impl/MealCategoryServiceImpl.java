@@ -23,19 +23,15 @@ public class MealCategoryServiceImpl implements MealCategoryService {
     }
 
     @Override
-    public Optional<MealCategory> getMealCategoryByCategory(String category) {
-        return mealCategoryRepository.getMealCategoryByCategory(category);
+    public Optional<MealCategory> findMealCategoryByCategory(String category) {
+        return mealCategoryRepository.findMealCategoryByCategory(category);
     }
 
-    @Override
-    public Optional<MealCategory> getMealCategoryByCategoryCode(String categoryCode) {
-        return mealCategoryRepository.getMealCategoryByCategoryCode(categoryCode);
-    }
 
     @Override
-    public MealCategory createNewMealCategory(String category, String categoryCode) {
+    public MealCategory createNewMealCategory(String category) {
 
-        MealCategory mealCategory = new MealCategory(category, categoryCode);
+        MealCategory mealCategory = new MealCategory(category);
 
         return mealCategoryRepository.save(mealCategory);
 

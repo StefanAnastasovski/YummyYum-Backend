@@ -22,32 +22,27 @@ public class MealCategoryController {
 
     }
 
-    @GetMapping("/getallcategories")
+    @GetMapping("/meal-category")
     public List<MealCategory> getAllAllMealCategories() {
         return mealCategoryService.getAllMealCategories();
     }
 
-    @GetMapping("/getcategorybycategorycode/{categorycode}")
-    public Optional<MealCategory> getMealCategoryByCategoryCode(@PathVariable("categorycode") String categoryCode) {
-        return mealCategoryService.getMealCategoryByCategoryCode(categoryCode);
+
+    @GetMapping("/meal-category/category/{category}")
+    public Optional<MealCategory> findMealCategoryByCategory(@PathVariable String category) {
+        return mealCategoryService.findMealCategoryByCategory(category);
     }
 
-    @GetMapping("/getcategorybycategory/{category}")
-    public Optional<MealCategory> getMealCategoryByCategory(@PathVariable String category) {
-        return mealCategoryService.getMealCategoryByCategory(category);
-    }
-
-    @PostMapping("/createcategory")
+    @PostMapping("/meal-category")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public MealCategory createNewMealCategory(@RequestBody MealCategory mealCategory,
                                               HttpServletResponse response,
                                               UriComponentsBuilder builder) {
 
-        MealCategory mealCategory1 = mealCategoryService.createNewMealCategory(
-                mealCategory.getCategory(), mealCategory.getCategoryCode());
+        MealCategory mealCategory1 = mealCategoryService.createNewMealCategory(mealCategory.getCategory());
 
-        response.setHeader("Location", builder.path("/api/createcategory/" + mealCategory.getId()).
+        response.setHeader("Location", builder.path("/api/meal-category/" + mealCategory.getId()).
                 buildAndExpand(mealCategory1.getId()).toUriString());
 
         return mealCategory1;

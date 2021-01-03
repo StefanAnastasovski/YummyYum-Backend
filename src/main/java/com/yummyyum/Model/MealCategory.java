@@ -1,10 +1,12 @@
 package com.yummyyum.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "meal_category")
 @Getter
@@ -19,22 +21,22 @@ public class MealCategory {
     @Column(name = "category")
     private String category;
 
-    @Column(name = "category_code")
-    private String categoryCode;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "meal_category_id")
+    private Set<Meal> meals;
 
     public MealCategory() {
     }
 
-    public MealCategory(String category, String categoryCode) {
+    public MealCategory(String category) {
         this.category = category;
-        this.categoryCode = categoryCode;
     }
 
     @Override
     public String toString() {
         return "MealCategory{" +
                 "category='" + category + '\'' +
-                ", category_code='" + categoryCode + '\'' +
                 '}';
     }
 

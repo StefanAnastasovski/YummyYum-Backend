@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Meal;
 
 import com.yummyyum.Model.Meal;
+import com.yummyyum.Model.MealCategory;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,5 +14,5 @@ public interface MealService {
 
     Meal createNewMeal(String mealName, String mealDescription,
                        String mealTimeTag, String mealIngredientTag,
-                       Double price);
+                       Double price, MealCategory mealCategory);
 }

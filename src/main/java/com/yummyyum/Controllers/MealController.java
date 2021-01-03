@@ -41,7 +41,7 @@ public class MealController {
 
         Meal meal1 = mealService.createNewMeal(meal.getMealName(), meal.getMealDescription(),
                 meal.getMealTimeTag(), meal.getMealIngredientTag(),
-                meal.getPrice());
+                meal.getPrice(), meal.getMealCategory());
 
         response.setHeader("Location", builder.path("/api/meals/" + meal.getId()).
                 buildAndExpand(meal1.getId()).toUriString());

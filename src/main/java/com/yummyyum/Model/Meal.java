@@ -31,6 +31,10 @@ public class Meal {
     @Column(name = "meal_ingredient_tag")
     private String mealIngredientTag;
 
+    @Column
+    private Double price;
+
+    //Meal Recipe RSs
     @JsonIgnore
     @OneToOne(mappedBy = "meal")
     private MealOverview mealOverview;
@@ -59,8 +63,12 @@ public class Meal {
     @OneToOne(mappedBy = "meal")
     private CookingSteps cookingSteps;
 
-    @Column
-    private Double price;
+    //Meal Category RS
+
+    @ManyToOne
+    @JoinColumn(name = "meal_category_id", nullable = true)
+    private MealCategory mealCategory;
+
 
     public Meal() {
 
