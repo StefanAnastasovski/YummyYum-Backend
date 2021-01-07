@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "meal_category")
 @Getter
@@ -21,10 +22,15 @@ public class MealCategory {
     @Column(name = "category")
     private String category;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "meal_category_id")
-    private Set<Meal> meals;
+    private List<Meal> meals;
+
+
+    @ManyToMany(mappedBy = "mealCategories")
+    @JsonIgnore
+    private List<Menu> menus = new ArrayList<>();
 
     public MealCategory() {
     }

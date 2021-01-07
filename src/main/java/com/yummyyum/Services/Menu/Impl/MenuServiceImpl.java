@@ -6,8 +6,10 @@ import com.yummyyum.Repositories.MenuRepository;
 import com.yummyyum.Services.Menu.MenuService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -25,20 +27,21 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> getMenuByMenuName(String menuName) {
+    public Optional<Menu> getMenuByMenuName(String menuName) {
         return menuRepository.getMenuByMenuName(menuName);
     }
 
     @Override
-    public List<Menu> getMenuByReleaseDate(Date releaseDate) {
+    public Optional<Menu> getMenuByReleaseDate(LocalDate releaseDate) {
         return menuRepository.getMenuByReleaseDate(releaseDate);
     }
 
     @Override
-    public Menu createNewMenu(Date releaseDate, String mealName, String mealCategory, String menuName) {
+    public Menu createNewMenu(Date releaseDate, String menuName) {
 
-        Menu menu = new Menu(releaseDate, mealName, mealCategory, menuName);
+        Menu menu = new Menu(releaseDate, menuName);
 
         return menuRepository.save(menu);
     }
+
 }

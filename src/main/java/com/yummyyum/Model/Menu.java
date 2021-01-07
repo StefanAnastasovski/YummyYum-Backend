@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity(name = "menu")
 @Getter
@@ -22,22 +22,39 @@ public class Menu {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
 
-    @Column(name = "meal_name_fk")
-    private String mealName;
-
-    @Column(name = "meal_category_fk")
-    private String mealCategory;
-
-    @Column(name = "menu_name")
+    @Column(name = "menu_name", unique = true)
     private String menuName;
+
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "menu_meal_category",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_category_id"))
+    private List<MealCategory> mealCategories = new ArrayList<>();
+
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "menu_meal",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_id"))
+    private List<Meal> meals = new ArrayList<>();
+
+
+    public void addMealCategory(MealCategory mealCategory) {
+        this.mealCategories.add(mealCategory);
+        mealCategory.getMenus().add(this);
+    }
+
+    public void addMeal(Meal Meal) {
+        this.meals.add(Meal);
+        Meal.getMenus().add(this);
+    }
 
     public Menu() {
     }
 
-    public Menu(Date releaseDate, String mealName, String mealCategory, String menuName) {
+    public Menu(Date releaseDate, String menuName) {
         this.releaseDate = releaseDate;
-        this.mealName = mealName;
-        this.mealCategory = mealCategory;
         this.menuName = menuName;
     }
 
@@ -45,8 +62,6 @@ public class Menu {
     public String toString() {
         return "Menu{" +
                 "releaseDate='" + releaseDate + '\'' +
-                ", mealName='" + mealName + '\'' +
-                ", mealCategory='" + mealCategory + '\'' +
                 ", menuName='" + menuName + '\'' +
                 '}';
     }

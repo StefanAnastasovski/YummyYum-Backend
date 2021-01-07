@@ -2,18 +2,19 @@ package com.yummyyum.Services.Menu;
 
 import com.yummyyum.Model.Menu;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface MenuService {
 
     List<Menu> getAllMenus();
 
-    List<Menu> getMenuByMenuName(String menuName);
+    Optional<Menu> getMenuByMenuName(String menuName);
 
-    List<Menu> getMenuByReleaseDate(Date releaseDate);
+    Optional<Menu> getMenuByReleaseDate(LocalDate releaseDate);
 
-    Menu createNewMenu(Date releaseDate, String mealName,
-                       String mealCategory, String menuName);
+    Menu createNewMenu(Date releaseDate, String menuName);
 
 }

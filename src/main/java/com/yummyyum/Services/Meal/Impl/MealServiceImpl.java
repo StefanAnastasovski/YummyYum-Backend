@@ -32,6 +32,11 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
+    public List<Meal> getMealsByMealCategory(String category) {
+        return mealRepository.getMealsByMealCategory(category);
+    }
+
+    @Override
     public Meal createNewMeal(String mealName, String mealDescription,
                               String mealTimeTag, String mealIngredientTag,
                               Double price, MealCategory mealCategory) {

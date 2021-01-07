@@ -12,6 +12,8 @@ public interface MealService {
 
     Optional<Meal> getMealByMealName(String mealName);
 
+    List<Meal> getMealsByMealCategory(String category);
+
     Meal createNewMeal(String mealName, String mealDescription,
                        String mealTimeTag, String mealIngredientTag,
                        Double price, MealCategory mealCategory);

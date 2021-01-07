@@ -11,8 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class BootstrapData implements CommandLineRunner {
@@ -134,15 +136,188 @@ public class BootstrapData implements CommandLineRunner {
 //
 //        SubscribeEmail subscribeEmail1 = new SubscribeEmail(Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
 //        subscribeEmailRepository.save(subscribeEmail1);
+        MealCategory mealCategory1 = new MealCategory("Adventurous");
+        MealCategory mealCategory2 = new MealCategory("Quick and Simple");
+        MealCategory mealCategory3 = new MealCategory("Low-Cal");
+        MealCategory mealCategory4 = new MealCategory("Carb-Conscious");
+        MealCategory mealCategory5 = new MealCategory("Vegeterian");
+        List<MealCategory> mealCategories = Arrays.asList(mealCategory1, mealCategory2, mealCategory3,
+                mealCategory4, mealCategory5);
 
-        Meal meal1 = new Meal("Honey-Ginger Salmon", "with roasted sweet potatoes and bok choy",
+        mealCategoryRepository.saveAll(mealCategories);
+
+        Meal meal1 = new Meal("Honey-Ginger Salmon1", "with roasted sweet potatoes and bok choy",
                 "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        mealRepository.save(meal1);
+        Meal meal2 = new Meal("Honey-Ginger Salmon2", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal3 = new Meal("Honey-Ginger Salmon3", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal4 = new Meal("Honey-Ginger Salmon4", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal5 = new Meal("Honey-Ginger Salmon5", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal6 = new Meal("Honey-Ginger Salmon6", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal7 = new Meal("Honey-Ginger Salmon7", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal8 = new Meal("Honey-Ginger Salmon8", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal9 = new Meal("Honey-Ginger Salmon9", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal10 = new Meal("Honey-Ginger Salmon10", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+
+        meal1.setMealCategory(mealCategory1);
+        meal2.setMealCategory(mealCategory1);
+        meal3.setMealCategory(mealCategory1);
+        meal4.setMealCategory(mealCategory1);
+        meal5.setMealCategory(mealCategory1);
+        meal6.setMealCategory(mealCategory1);
+        meal7.setMealCategory(mealCategory1);
+        meal8.setMealCategory(mealCategory1);
+        meal9.setMealCategory(mealCategory1);
+        meal10.setMealCategory(mealCategory1);
+
+        Meal meal11 = new Meal("Honey-Ginger Salmon11", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal12 = new Meal("Honey-Ginger Salmon12", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal13 = new Meal("Honey-Ginger Salmon13", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal14 = new Meal("Honey-Ginger Salmon14", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal15 = new Meal("Honey-Ginger Salmon15", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal16 = new Meal("Honey-Ginger Salmon16", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal17 = new Meal("Honey-Ginger Salmon17", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal18 = new Meal("Honey-Ginger Salmon18", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal19 = new Meal("Honey-Ginger Salmon19", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal20 = new Meal("Honey-Ginger Salmon20", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+
+        meal11.setMealCategory(mealCategory2);
+        meal12.setMealCategory(mealCategory2);
+        meal13.setMealCategory(mealCategory2);
+        meal14.setMealCategory(mealCategory2);
+        meal15.setMealCategory(mealCategory2);
+        meal16.setMealCategory(mealCategory2);
+        meal17.setMealCategory(mealCategory2);
+        meal18.setMealCategory(mealCategory2);
+        meal19.setMealCategory(mealCategory2);
+        meal20.setMealCategory(mealCategory2);
+
+        Meal meal21 = new Meal("Honey-Ginger Salmon21", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal22 = new Meal("Honey-Ginger Salmon22", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal23 = new Meal("Honey-Ginger Salmon23", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal24 = new Meal("Honey-Ginger Salmon24", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal25 = new Meal("Honey-Ginger Salmon25", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal26 = new Meal("Honey-Ginger Salmon26", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal27 = new Meal("Honey-Ginger Salmon27", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal28 = new Meal("Honey-Ginger Salmon28", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal29 = new Meal("Honey-Ginger Salmon29", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal30 = new Meal("Honey-Ginger Salmon30", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+
+        meal21.setMealCategory(mealCategory3);
+        meal22.setMealCategory(mealCategory3);
+        meal23.setMealCategory(mealCategory3);
+        meal24.setMealCategory(mealCategory3);
+        meal25.setMealCategory(mealCategory3);
+        meal26.setMealCategory(mealCategory3);
+        meal27.setMealCategory(mealCategory3);
+        meal28.setMealCategory(mealCategory3);
+        meal29.setMealCategory(mealCategory3);
+        meal30.setMealCategory(mealCategory3);
+
+        Meal meal31 = new Meal("Honey-Ginger Salmon31", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal32 = new Meal("Honey-Ginger Salmon32", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal33 = new Meal("Honey-Ginger Salmon33", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal34 = new Meal("Honey-Ginger Salmon34", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal35 = new Meal("Honey-Ginger Salmon35", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal36 = new Meal("Honey-Ginger Salmon36", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal37 = new Meal("Honey-Ginger Salmon37", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal38 = new Meal("Honey-Ginger Salmon38", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal39 = new Meal("Honey-Ginger Salmon39", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal40 = new Meal("Honey-Ginger Salmon40", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+
+        meal31.setMealCategory(mealCategory4);
+        meal32.setMealCategory(mealCategory4);
+        meal33.setMealCategory(mealCategory4);
+        meal34.setMealCategory(mealCategory4);
+        meal35.setMealCategory(mealCategory4);
+        meal36.setMealCategory(mealCategory4);
+        meal37.setMealCategory(mealCategory4);
+        meal38.setMealCategory(mealCategory4);
+        meal39.setMealCategory(mealCategory4);
+        meal40.setMealCategory(mealCategory4);
+
+        Meal meal41 = new Meal("Honey-Ginger Salmon41", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal42 = new Meal("Honey-Ginger Salmon42", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal43 = new Meal("Honey-Ginger Salmon43", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal44 = new Meal("Honey-Ginger Salmon44", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal45 = new Meal("Honey-Ginger Salmon45", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal46 = new Meal("Honey-Ginger Salmon46", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal47 = new Meal("Honey-Ginger Salmon47", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal48 = new Meal("Honey-Ginger Salmon48", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal49 = new Meal("Honey-Ginger Salmon49", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        Meal meal50 = new Meal("Honey-Ginger Salmon50", "with roasted sweet potatoes and bok choy",
+                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+
+        meal41.setMealCategory(mealCategory5);
+        meal42.setMealCategory(mealCategory5);
+        meal43.setMealCategory(mealCategory5);
+        meal44.setMealCategory(mealCategory5);
+        meal45.setMealCategory(mealCategory5);
+        meal46.setMealCategory(mealCategory5);
+        meal47.setMealCategory(mealCategory5);
+        meal48.setMealCategory(mealCategory5);
+        meal49.setMealCategory(mealCategory5);
+        meal50.setMealCategory(mealCategory5);
+
+        List<Meal> meals = Arrays.asList(meal1, meal2, meal3, meal4, meal5, meal6, meal7, meal8, meal9, meal10,
+                meal11, meal12, meal13, meal14, meal15, meal16, meal17, meal18, meal19, meal20,
+                meal21, meal22, meal23, meal24, meal25, meal26, meal27, meal28, meal29, meal30,
+                meal31, meal32, meal33, meal34, meal35, meal36, meal37, meal38, meal39, meal40,
+                meal41, meal42, meal43, meal44, meal45, meal46, meal47, meal48, meal49, meal50);
+
+
+        mealRepository.saveAll(meals);
 
 
         MealOverview mealOverview1 = new MealOverview(DifficultyLevelEnum.ONE, SpiceLevelEnum.THREE,
-                "30-40 min.", 3, "Honey-Ginger Salmon");
-
+                "30-40 min.", 3);
         mealOverviewRepository.save(mealOverview1);
 
         MealChef mealChef1 = new MealChef("David Roaz",
@@ -154,8 +329,7 @@ public class BootstrapData implements CommandLineRunner {
                         " and easy-to-follow recipes and what do you get? This dinner, of course. " +
                         "Tip: Having trouble cutting that wobbly sweet potato? Trim off 1/4 along" +
                         " its length and cut that section into 1/2 dice. Turn sweet potato onto its flat side. " +
-                        "You now have a flat base to work from while you cut the remaining sweet potato.",
-                "Honey-Ginger Salmon");
+                        "You now have a flat base to work from while you cut the remaining sweet potato.");
 
         mealChefRepository.save(mealChef1);
 
@@ -168,19 +342,18 @@ public class BootstrapData implements CommandLineRunner {
                         " 18 oz. Sweet Potato |" +
                         " 1.26 oz. Mayonnaise |" +
                         " 3 oz. Shiitake Mushrooms |" +
-                        " 0.406 fl. oz. Tamari Soy Sauce", "Honey-Ginger Salmon");
+                        " 0.406 fl. oz. Tamari Soy Sauce");
 
         mealBoxRepository.save(mealBox1);
 
         MealBoxNutrition mealBoxNutrition1 = new MealBoxNutrition(842, 63,
-                46, 41, "Honey-Ginger Salmon");
+                46, 41);
         mealBoxNutritionRepository.save(mealBoxNutrition1);
 
         RecipeSteps recipeSteps1 = new RecipeSteps("Olive Oil |" +
                 " Salt  Pepper | Cooking Spray", "1 Medium Non-Stick Pan |" +
                 " 1 Baking Sheet | 2 Mixing Bowls" +
-                " | 1 Large Non-Stick Pan",
-                "Honey-Ginger Salmon");
+                " | 1 Large Non-Stick Pan");
         recipeStepsRepository.save(recipeSteps1);
 
         RecipeInstructions recipeInstructions1 = new RecipeInstructions(
@@ -198,8 +371,7 @@ public class BootstrapData implements CommandLineRunner {
                         " minimum internal temperature, 5-7 minutes per side." +
                         " | If using sirloin steaks, pat dry and season both sides with a pinch of salt and pepper." +
                         " Follow same instructions as salmon in Step 3, cooking until steak reaches minimum internal" +
-                        " temperature, 4-6 minutes per side.",
-                "Honey-Ginger Salmon"
+                        " temperature, 4-6 minutes per side."
         );
 
         recipeInstructionsRepository.save(recipeInstructions1);
@@ -244,54 +416,58 @@ public class BootstrapData implements CommandLineRunner {
                 "Quarter sweet potato and cut into ½ pieces. Place sweet potato pieces on prepared" +
                         " baking sheet and toss with 2 tsp. olive oil, ¼ tsp. salt, and ¼ tsp. pepper." +
                         " Massage oil and seasoning into potatoes. Spread into a single layer and roast" +
-                        " in hot oven until tender, 18-20 minutes. While sweet potato roasts, prepare ingredients.",
-                "Honey-Ginger Salmon");
+                        " in hot oven until tender, 18-20 minutes. While sweet potato roasts, prepare ingredients.");
 
         CookingSteps cookingSteps2 = new CookingSteps(2, "Prepare the Ingredients",
                 "Remove any discolored outer leaves from bok choy and trim ends. " +
                         "Cut stems into ½ slices and coarsely chop leaves. Stem mushrooms and cut caps into ¼ strips." +
                         "In a mixing bowl, combine honey and ginger. Set aside. In another mixing bowl, " +
                         "combine mayonnaise and Sriracha (to taste). Set aside. Pat salmon dry, and season " +
-                        "flesh side with a pinch of salt and pepper.",
-                "Honey-Ginger Salmon");
+                        "flesh side with a pinch of salt and pepper.");
 
         CookingSteps cookingSteps3 = new CookingSteps(3, "Cook the Salmon",
                 "Place a medium non-stick pan over medium heat and add 2 tsp. olive oil. " +
                         "Add salmon, skin side up, to hot pan and cook until golden brown and salmon reaches " +
                         "a minimum internal temperature of 145 degrees, 4-6 minutes per side. " +
                         "Remove from burner. Remove salmon to a plate and tent with foil. " +
-                        "While salmon cooks, cook vegetables.",
-                "Honey-Ginger Salmon");
+                        "While salmon cooks, cook vegetables.");
 
         CookingSteps cookingSteps4 = new CookingSteps(4, "Cook the Vegetables",
                 "Place a large non-stick pan over medium-high heat and add 1 tsp. olive oil." +
                         "Add mushrooms, bok choy, leaves and stems, soy sauce, and a pinch of pepper to hot pan. " +
-                        "Stir often until stems start to soften, 5-7 minutes. Remove from burner.",
-                "Honey-Ginger Salmon");
+                        "Stir often until stems start to soften, 5-7 minutes. Remove from burner.");
 
         CookingSteps cookingSteps5 = new CookingSteps(5, "Finish the Dish",
                 "Plate dish as pictured on front of card, topping salmon with honey-ginger sauce, " +
-                        "and sweet potatoes with Sriracha mayonnaise (to taste). Bon appétit!",
-                "Honey-Ginger Salmon");
+                        "and sweet potatoes with Sriracha mayonnaise (to taste). Bon appétit!");
 
         List<CookingSteps> cookingSteps = Arrays.asList(cookingSteps1, cookingSteps2, cookingSteps3,
                 cookingSteps4, cookingSteps5);
 
         cookingStepsRepository.saveAll(cookingSteps);
 
-        MealCategory mealCategory1 = new MealCategory("Adventurous", "Adv");
-        MealCategory mealCategory2 = new MealCategory("Quick and Simple", "QaS");
-        MealCategory mealCategory3 = new MealCategory("Low-Cal", "LC");
-        MealCategory mealCategory4 = new MealCategory("Carb-Conscious", "CC");
-        MealCategory mealCategory5 = new MealCategory("Vegeterian", "Veg");
-        List<MealCategory> mealCategories = Arrays.asList(mealCategory1, mealCategory2, mealCategory3,
-                mealCategory4, mealCategory5);
 
-        mealCategoryRepository.saveAll(mealCategories);
-
-        Menu menu1 = new Menu(Date.valueOf("2020-12-23"), "HoneyGingerSalmon", "Quick and Simple", "M1");
+        Menu menu1 = new Menu(Date.valueOf("2020-12-23"), "dasda");
 
         menuRepository.save(menu1);
+
+//        System.out.println("LLLLL" + menu1.getMealCategories().get(0));
+
+
+//        students.add(new Student("170001", "Petko", "Petkovski", new ArrayList<>()));
+//
+//        Professor dt = new Professor("dimitar.trajanov", "проф. д-р", "Димитар", "Трајанов", new ArrayList<>());
+//
+//        professors.add(dt);
+//
+//        students.get(0).follow(dt);
+
+//        MealCategory newMealCategory = new MealCategory("New Category");
+//
+//        Menu newMenu = new Menu(Date.valueOf("2021-01-03"), "M2");
+//
+//        mealCategories.add(newMealCategory);
+
 
     }
 
