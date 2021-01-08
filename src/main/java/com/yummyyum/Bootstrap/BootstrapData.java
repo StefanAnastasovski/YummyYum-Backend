@@ -10,11 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class BootstrapData implements CommandLineRunner {
@@ -33,6 +30,7 @@ public class BootstrapData implements CommandLineRunner {
     private final CookingStepsRepository cookingStepsRepository;
     private final MealCategoryRepository mealCategoryRepository;
     private final MenuRepository menuRepository;
+    private final ImageRepository imageRepository;
 
     public BootstrapData(EmailRepository emailRepository, UserRepository userRepository, LoginRepository loginRepository,
                          SubscribeEmailRepository subscribeEmailRepository, MealRepository mealRepository,
@@ -41,7 +39,7 @@ public class BootstrapData implements CommandLineRunner {
                          RecipeStepsRepository recipeStepsRepository,
                          RecipeInstructionsRepository recipeInstructionsRepository,
                          CookingStepsRepository cookingStepsRepository,
-                         MealCategoryRepository mealCategoryRepository, MenuRepository menuRepository) {
+                         MealCategoryRepository mealCategoryRepository, MenuRepository menuRepository, ImageRepository imageRepository) {
         this.emailRepository = emailRepository;
         this.userRepository = userRepository;
         this.loginRepository = loginRepository;
@@ -56,6 +54,7 @@ public class BootstrapData implements CommandLineRunner {
         this.cookingStepsRepository = cookingStepsRepository;
         this.mealCategoryRepository = mealCategoryRepository;
         this.menuRepository = menuRepository;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -451,22 +450,12 @@ public class BootstrapData implements CommandLineRunner {
 
         menuRepository.save(menu1);
 
-//        System.out.println("LLLLL" + menu1.getMealCategories().get(0));
+        Image image1 = new Image("url", "alt", null, true, false);
+        Image image2 = new Image("url", "alt", null, false, true);
+        Image image3 = new Image("url", "alt", 1, false, false);
 
-
-//        students.add(new Student("170001", "Petko", "Petkovski", new ArrayList<>()));
-//
-//        Professor dt = new Professor("dimitar.trajanov", "проф. д-р", "Димитар", "Трајанов", new ArrayList<>());
-//
-//        professors.add(dt);
-//
-//        students.get(0).follow(dt);
-
-//        MealCategory newMealCategory = new MealCategory("New Category");
-//
-//        Menu newMenu = new Menu(Date.valueOf("2021-01-03"), "M2");
-//
-//        mealCategories.add(newMealCategory);
+        List<Image> images = Arrays.asList(image1, image2, image3);
+        imageRepository.saveAll(images);
 
 
     }

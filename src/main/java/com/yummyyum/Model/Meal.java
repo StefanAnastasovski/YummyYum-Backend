@@ -71,6 +71,11 @@ public class Meal {
     @JoinColumn(name = "meal_category_id", nullable = true)
     private MealCategory mealCategory;
 
+    //    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "image_id")
+    private List<Image> images;
+
     @ManyToMany(mappedBy = "meals")
     @JsonIgnore
     private List<Menu> menus = new ArrayList<>();
