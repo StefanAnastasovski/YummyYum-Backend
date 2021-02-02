@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CookingStepsRepository extends JpaRepository<CookingSteps, Long> {
-    @Query(value = "SELECT * FROM cooking_steps as cs " +
+    @Query(value = "SELECT cs.* FROM cooking_steps as cs " +
             "JOIN meal m ON m.id = cs.cooking_steps_id " +
             "WHERE m.meal_name=:mealName",
             nativeQuery = true)

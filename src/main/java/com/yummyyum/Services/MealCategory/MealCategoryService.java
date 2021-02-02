@@ -13,4 +13,6 @@ public interface MealCategoryService {
 
     MealCategory createNewMealCategory(String category);
 
+    String getMealCategoryByMealName(String mealName);
+
 }

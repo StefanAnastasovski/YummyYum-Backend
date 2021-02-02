@@ -49,7 +49,8 @@ public class UserServiceImpl implements UserService {
                               String username, String password,
                               Timestamp userDate, Email email) {
 
-        User user = new User(firstName, lastName, username, password, userDate);
+        Timestamp timestamp = new Timestamp(userDate.getTime());
+        User user = new User(firstName, lastName, username, password, timestamp);
         Email email1 = new Email(email.getEmail(), true);
         emailRepository.save(email1);
         user.setEmail(email1);

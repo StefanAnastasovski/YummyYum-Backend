@@ -1,15 +1,17 @@
 package com.yummyyum.Controllers;
 
+import com.yummyyum.Model.DTO.ImageDTO;
 import com.yummyyum.Model.Image;
+import com.yummyyum.Model.Meal;
 import com.yummyyum.Services.Image.ImageService;
+import com.yummyyum.Services.Meal.MealService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -17,9 +19,12 @@ import java.util.regex.Pattern;
 public class ImageController {
 
     private final ImageService imageService;
+    private final MealService mealService;
 
-    public ImageController(ImageService imageService) {
+    public ImageController(ImageService imageService,
+                           MealService mealService) {
         this.imageService = imageService;
+        this.mealService = mealService;
     }
 
     @GetMapping("/images")
@@ -27,60 +32,35 @@ public class ImageController {
         return imageService.getAllImages();
     }
 
+    @GetMapping("/images/meal-name/{mealname}")
+    public List<Image> getImagesByMealName(@PathVariable("mealname") String mealName) {
+        return imageService.getImagesByMealName(mealName);
+    }
+
+    @GetMapping("/images/meal-name/{mealname}/chef-img")
+    public Optional<Image> getImageByMealNameAndIsChefImgTrue(@PathVariable("mealname") String mealName) {
+        return imageService.getImageByMealNameAndIsChefImgTrue(mealName);
+    }
+
+    @GetMapping("/images/meal-name/{mealname}/main-recipe-img")
+    public Optional<Image> getImageByMealNameAndIsMainRecipeImgTrue(@PathVariable("mealname") String mealName) {
+        return imageService.getImageByMealNameAndIsMainRecipeImgTrue(mealName);
+    }
+
+
     @PostMapping("/images")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Image createNewImage(@RequestBody Image image,
+    public Image createNewImage(@RequestBody ImageDTO imageDTO,
                                 HttpServletResponse response,
                                 UriComponentsBuilder builder) {
 
-        Boolean isChef = image.getIsChefImg();
-        Boolean isMain = image.getIsMainRecipeImg();
-        Pattern pattern = Pattern.compile("\\d+");
-        Boolean isStepOrder;
-//        Image image1 = null;
-         Image image1 = imageService.createNewImage(
-                image.getUrl(), image.getAlt(),
-                image.getStepOrderNumber(), image.getIsChefImg(),
-                image.getIsMainRecipeImg());
-//                 , image.getMeal());
-//        if (!(image.getStepOrderNumber() == null)) {
-//            isStepOrder = pattern.matcher(image.getStepOrderNumber().toString()).matches();
-//        } else {
-//            isStepOrder = false;
-//        }
-//        System.out.println(image);
-//        System.out.println(image.getMeal());
-//
-//        if (isChef && isMain ||
-//                isChef && isStepOrder ||
-//                isMain && isStepOrder) {
-//            System.out.println("both can't be true");
-//        } else {
-//            if (!isChef && !isMain) {
-//                if (isStepOrder) {
-//                    image1 = imageService.createNewImage(
-//                            image.getUrl(), image.getAlt(),
-//                            image.getStepOrderNumber(), image.getIsChefImg(),
-//                            image.getIsMainRecipeImg(), image.getMeal());
-//                }
-//            } else if (image.getStepOrderNumber() == null) {
-//                if (isChef) {
-//                    image1 = imageService.createNewImage(
-//                            image.getUrl(), image.getAlt(),
-//                            image.getStepOrderNumber(), image.getIsChefImg(),
-//                            image.getIsMainRecipeImg(), image.getMeal());
-//                } else if (isMain) {
-//                    image1 = imageService.createNewImage(
-//                            image.getUrl(), image.getAlt(),
-//                            image.getStepOrderNumber(), image.getIsChefImg(),
-//                            image.getIsMainRecipeImg(), image.getMeal());
-//                }
-//            }
-//        }
+        Image image1 = imageService.createNewImage(imageDTO.getUrl(), imageDTO.getAlt(),
+                imageDTO.getStepOrderNumber(), imageDTO.getIsChefImg(),
+                imageDTO.getIsMainRecipeImg(), imageDTO.getMeal());
 
-        response.setHeader("Location", builder.path("/api/images/" + image.getId()).
-                buildAndExpand(image.getId()).toUriString());
+        response.setHeader("Location", builder.path("/api/images/" + image1.getId()).
+                buildAndExpand(image1.getId()).toUriString());
 
         return image1;
     }

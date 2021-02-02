@@ -36,4 +36,9 @@ public class MealCategoryServiceImpl implements MealCategoryService {
         return mealCategoryRepository.save(mealCategory);
 
     }
+
+    @Override
+    public String getMealCategoryByMealName(String mealName) {
+        return mealCategoryRepository.getMealCategoryByMealName(mealName);
+    }
 }

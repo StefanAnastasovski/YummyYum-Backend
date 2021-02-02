@@ -226,8 +226,7 @@ public class MenuController {
         System.out.println(menuCategoryDTO.getMenu());
         Menu menu = menuCategoryDTO.getMenu();
         Optional<MealCategory> mealCategory =
-                mealCategoryService.findMealCategoryByCategory(
-                        menuCategoryDTO.getMealCategory().getCategory());
+                mealCategoryService.findMealCategoryByCategory(menuCategoryDTO.getMealCategory().getCategory());
 
         if (!(menu.getMealCategories().contains(mealCategory))) {
             menu.addMealCategory(mealCategory.get());

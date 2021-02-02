@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,13 +63,19 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //
-//        Email email1 = new Email("stefanA@mail.com", true);
-//        User user1 = new User("Stefan", "Annnnnnn", "Stevo",
-//                "1234", Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
-////        email1.setUser(user1);
-////        user1.setEmail(email1);
-//        emailRepository.save(email1);
-//        userRepository.save(user1);
+        Email email1 = new Email("stefanA@mail.com", true);
+        User user1 = new User("Stefan", "Annnnnnn", "Stevo",
+                "1234", Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
+        user1.setEmail(email1);
+        emailRepository.save(email1);
+        userRepository.save(user1);
+
+        Email email2 = new Email("admin@mail.com", true);
+        User user2 = new User("Admin", "Admin", "admin",
+                "admin", Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
+        user2.setEmail(email2);
+        emailRepository.save(email2);
+        userRepository.save(user2);
 
 //
 //         User user2 = new User("Petar", "Zdsae", "Petar",
@@ -139,316 +148,219 @@ public class BootstrapData implements CommandLineRunner {
         MealCategory mealCategory2 = new MealCategory("Quick and Simple");
         MealCategory mealCategory3 = new MealCategory("Low-Cal");
         MealCategory mealCategory4 = new MealCategory("Carb-Conscious");
-        MealCategory mealCategory5 = new MealCategory("Vegeterian");
+        MealCategory mealCategory5 = new MealCategory("Vegetarian");
         List<MealCategory> mealCategories = Arrays.asList(mealCategory1, mealCategory2, mealCategory3,
                 mealCategory4, mealCategory5);
 
         mealCategoryRepository.saveAll(mealCategories);
 
-        Meal meal1 = new Meal("Honey-Ginger Salmon1", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal2 = new Meal("Honey-Ginger Salmon2", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal3 = new Meal("Honey-Ginger Salmon3", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal4 = new Meal("Honey-Ginger Salmon4", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal5 = new Meal("Honey-Ginger Salmon5", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal6 = new Meal("Honey-Ginger Salmon6", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal7 = new Meal("Honey-Ginger Salmon7", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal8 = new Meal("Honey-Ginger Salmon8", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal9 = new Meal("Honey-Ginger Salmon9", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal10 = new Meal("Honey-Ginger Salmon10", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
+        ArrayList<Meal>[] mealList = new ArrayList[50];
 
-        meal1.setMealCategory(mealCategory1);
-        meal2.setMealCategory(mealCategory1);
-        meal3.setMealCategory(mealCategory1);
-        meal4.setMealCategory(mealCategory1);
-        meal5.setMealCategory(mealCategory1);
-        meal6.setMealCategory(mealCategory1);
-        meal7.setMealCategory(mealCategory1);
-        meal8.setMealCategory(mealCategory1);
-        meal9.setMealCategory(mealCategory1);
-        meal10.setMealCategory(mealCategory1);
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            mealList[i] = new ArrayList<Meal>();
+        }
 
-        Meal meal11 = new Meal("Honey-Ginger Salmon11", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal12 = new Meal("Honey-Ginger Salmon12", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal13 = new Meal("Honey-Ginger Salmon13", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal14 = new Meal("Honey-Ginger Salmon14", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal15 = new Meal("Honey-Ginger Salmon15", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal16 = new Meal("Honey-Ginger Salmon16", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal17 = new Meal("Honey-Ginger Salmon17", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal18 = new Meal("Honey-Ginger Salmon18", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal19 = new Meal("Honey-Ginger Salmon19", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal20 = new Meal("Honey-Ginger Salmon20", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-
-        meal11.setMealCategory(mealCategory2);
-        meal12.setMealCategory(mealCategory2);
-        meal13.setMealCategory(mealCategory2);
-        meal14.setMealCategory(mealCategory2);
-        meal15.setMealCategory(mealCategory2);
-        meal16.setMealCategory(mealCategory2);
-        meal17.setMealCategory(mealCategory2);
-        meal18.setMealCategory(mealCategory2);
-        meal19.setMealCategory(mealCategory2);
-        meal20.setMealCategory(mealCategory2);
-
-        Meal meal21 = new Meal("Honey-Ginger Salmon21", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal22 = new Meal("Honey-Ginger Salmon22", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal23 = new Meal("Honey-Ginger Salmon23", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal24 = new Meal("Honey-Ginger Salmon24", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal25 = new Meal("Honey-Ginger Salmon25", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal26 = new Meal("Honey-Ginger Salmon26", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal27 = new Meal("Honey-Ginger Salmon27", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal28 = new Meal("Honey-Ginger Salmon28", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal29 = new Meal("Honey-Ginger Salmon29", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal30 = new Meal("Honey-Ginger Salmon30", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-
-        meal21.setMealCategory(mealCategory3);
-        meal22.setMealCategory(mealCategory3);
-        meal23.setMealCategory(mealCategory3);
-        meal24.setMealCategory(mealCategory3);
-        meal25.setMealCategory(mealCategory3);
-        meal26.setMealCategory(mealCategory3);
-        meal27.setMealCategory(mealCategory3);
-        meal28.setMealCategory(mealCategory3);
-        meal29.setMealCategory(mealCategory3);
-        meal30.setMealCategory(mealCategory3);
-
-        Meal meal31 = new Meal("Honey-Ginger Salmon31", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal32 = new Meal("Honey-Ginger Salmon32", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal33 = new Meal("Honey-Ginger Salmon33", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal34 = new Meal("Honey-Ginger Salmon34", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal35 = new Meal("Honey-Ginger Salmon35", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal36 = new Meal("Honey-Ginger Salmon36", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal37 = new Meal("Honey-Ginger Salmon37", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal38 = new Meal("Honey-Ginger Salmon38", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal39 = new Meal("Honey-Ginger Salmon39", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal40 = new Meal("Honey-Ginger Salmon40", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-
-        meal31.setMealCategory(mealCategory4);
-        meal32.setMealCategory(mealCategory4);
-        meal33.setMealCategory(mealCategory4);
-        meal34.setMealCategory(mealCategory4);
-        meal35.setMealCategory(mealCategory4);
-        meal36.setMealCategory(mealCategory4);
-        meal37.setMealCategory(mealCategory4);
-        meal38.setMealCategory(mealCategory4);
-        meal39.setMealCategory(mealCategory4);
-        meal40.setMealCategory(mealCategory4);
-
-        Meal meal41 = new Meal("Honey-Ginger Salmon41", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal42 = new Meal("Honey-Ginger Salmon42", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal43 = new Meal("Honey-Ginger Salmon43", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal44 = new Meal("Honey-Ginger Salmon44", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal45 = new Meal("Honey-Ginger Salmon45", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal46 = new Meal("Honey-Ginger Salmon46", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal47 = new Meal("Honey-Ginger Salmon47", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal48 = new Meal("Honey-Ginger Salmon48", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal49 = new Meal("Honey-Ginger Salmon49", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-        Meal meal50 = new Meal("Honey-Ginger Salmon50", "with roasted sweet potatoes and bok choy",
-                "30-40 min.", "Eggs, Fish, Soy", 6.99);
-
-        meal41.setMealCategory(mealCategory5);
-        meal42.setMealCategory(mealCategory5);
-        meal43.setMealCategory(mealCategory5);
-        meal44.setMealCategory(mealCategory5);
-        meal45.setMealCategory(mealCategory5);
-        meal46.setMealCategory(mealCategory5);
-        meal47.setMealCategory(mealCategory5);
-        meal48.setMealCategory(mealCategory5);
-        meal49.setMealCategory(mealCategory5);
-        meal50.setMealCategory(mealCategory5);
-
-        List<Meal> meals = Arrays.asList(meal1, meal2, meal3, meal4, meal5, meal6, meal7, meal8, meal9, meal10,
-                meal11, meal12, meal13, meal14, meal15, meal16, meal17, meal18, meal19, meal20,
-                meal21, meal22, meal23, meal24, meal25, meal26, meal27, meal28, meal29, meal30,
-                meal31, meal32, meal33, meal34, meal35, meal36, meal37, meal38, meal39, meal40,
-                meal41, meal42, meal43, meal44, meal45, meal46, meal47, meal48, meal49, meal50);
+        for (int i = 0; i < 50; i++) {
+            Meal meal = new Meal();
+            meal.setMealName("Honey-Ginger Salmon" + (i + 1));
+            meal.setMealDescription("with roasted sweet potatoes and bok choy");
+            meal.setMealTimeTag("30-40 min.");
+            meal.setMealIngredientTag("Eggs, Fish, Soy");
+            meal.setPrice(6.99);
+            if (i < 10) {
+                meal.setMealCategory(mealCategory1);
+            } else if (i < 20) {
+                meal.setMealCategory(mealCategory2);
+            } else if (i < 30) {
+                meal.setMealCategory(mealCategory3);
+            } else if (i < 40) {
+                meal.setMealCategory(mealCategory4);
+            } else if (i < 50) {
+                meal.setMealCategory(mealCategory5);
+            }
+            mealList[i].add(meal);
+            mealRepository.save(meal);
+        }
 
 
-        mealRepository.saveAll(meals);
+        ArrayList<MealOverview>[] mealOverviewList = new ArrayList[50];
+
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            mealOverviewList[i] = new ArrayList<MealOverview>();
+        }
+
+        for (int i = 0; i < 50; i++) {
+            MealOverview mealOverview = new MealOverview();
+            mealOverview.setDifficultyLevel(DifficultyLevelEnum.ONE);
+            mealOverview.setSpiceLevel(SpiceLevelEnum.THREE);
+            mealOverview.setCookWithin(3);
+            mealOverview.setPrepCookTime("30-40 min.");
+
+            mealOverview.setMeal(mealList[i].get(0));
+            mealOverviewRepository.save(mealOverview);
+        }
 
 
-        MealOverview mealOverview1 = new MealOverview(DifficultyLevelEnum.ONE, SpiceLevelEnum.THREE,
-                "30-40 min.", 3);
-        mealOverviewRepository.save(mealOverview1);
+        ArrayList<MealChef>[] mealChefList = new ArrayList[50];
 
-        MealChef mealChef1 = new MealChef("David Roaz",
-                "What do you get when you mix " +
-                        "the sticky sweetness of honey with the pungent zest of ginger?" +
-                        " The perfect sauce to enrobe this delicate flakey salmon. " +
-                        "Second question: What do you get when you combine creamy mayonnaise with fiery Sriracha?" +
-                        " The perfect sauce to drizzle over these tender sweet potatoes. Last question… combine great flavors" +
-                        " and easy-to-follow recipes and what do you get? This dinner, of course. " +
-                        "Tip: Having trouble cutting that wobbly sweet potato? Trim off 1/4 along" +
-                        " its length and cut that section into 1/2 dice. Turn sweet potato onto its flat side. " +
-                        "You now have a flat base to work from while you cut the remaining sweet potato.");
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            mealChefList[i] = new ArrayList<MealChef>();
+        }
 
-        mealChefRepository.save(mealChef1);
+        for (int i = 0; i < 50; i++) {
+            MealChef mealChef = new MealChef();
+            mealChef.setFullName("David Roaz");
+            mealChef.setChefMealDescription("What do you get when you mix " +
+                    "the sticky sweetness of honey with the pungent zest of ginger?" +
+                    " The perfect sauce to enrobe this delicate flakey salmon. " +
+                    "Second question: What do you get when you combine creamy mayonnaise with fiery Sriracha?" +
+                    " The perfect sauce to drizzle over these tender sweet potatoes. Last question… combine great flavors" +
+                    " and easy-to-follow recipes and what do you get? This dinner, of course. " +
+                    "Tip: Having trouble cutting that wobbly sweet potato? Trim off 1/4 along" +
+                    " its length and cut that section into 1/2 dice. Turn sweet potato onto its flat side. " +
+                    "You now have a flat base to work from while you cut the remaining sweet potato.");
+            mealChef.setMeal(mealList[i].get(0));
+            mealChefRepository.save(mealChef);
+        }
 
-        MealBox mealBox1 = new MealBox(2,
-                "1 tsp. Minced Ginger |" +
-                        " 2 Heads of Baby Bok Choy |" +
-                        " 12 oz. Salmon Fillets |" +
-                        " 1 tsp. Sriracha |" +
-                        " ½ fl. oz. Honey |" +
-                        " 18 oz. Sweet Potato |" +
-                        " 1.26 oz. Mayonnaise |" +
-                        " 3 oz. Shiitake Mushrooms |" +
-                        " 0.406 fl. oz. Tamari Soy Sauce");
+        ArrayList<MealBox>[] mealBoxList = new ArrayList[50];
 
-        mealBoxRepository.save(mealBox1);
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            mealBoxList[i] = new ArrayList<MealBox>();
+        }
 
-        MealBoxNutrition mealBoxNutrition1 = new MealBoxNutrition(842, 63,
-                46, 41);
-        mealBoxNutritionRepository.save(mealBoxNutrition1);
+        for (int i = 0; i < 50; i++) {
+            MealBox mealBox = new MealBox();
+            mealBox.setMealIngredients("1 tsp. Minced Ginger |" +
+                    " 2 Heads of Baby Bok Choy |" +
+                    " 12 oz. Salmon Fillets |" +
+                    " 1 tsp. Sriracha |" +
+                    " ½ fl. oz. Honey |" +
+                    " 18 oz. Sweet Potato |" +
+                    " 1.26 oz. Mayonnaise |" +
+                    " 3 oz. Shiitake Mushrooms |" +
+                    " 0.406 fl. oz. Tamari Soy Sauce");
+            mealBox.setServeQuantity(2);
 
-        RecipeSteps recipeSteps1 = new RecipeSteps("Olive Oil |" +
-                " Salt  Pepper | Cooking Spray", "1 Medium Non-Stick Pan |" +
-                " 1 Baking Sheet | 2 Mixing Bowls" +
-                " | 1 Large Non-Stick Pan");
-        recipeStepsRepository.save(recipeSteps1);
-
-        RecipeInstructions recipeInstructions1 = new RecipeInstructions(
-                "Preheat oven to 425 degrees |" +
-                        " If using any fresh produce, thoroughly rinse and pat dry |" +
-                        " Prepare a baking sheet with foil and cooking spray",
-                "Steak and Pork 145° F (rest cooked meat, 3 minutes) |" +
-                        " Seafood 145° F |" +
-                        " Chicken 165° F |" +
-                        " Ground Beef 160° F |" +
-                        " Ground Turkey 165° F |" +
-                        " Ground Pork 160° F",
-                "If using chicken breasts, pat dry and season both sides with a pinch of salt and pepper." +
-                        " Follow same instructions as salmon in Step 3, cooking until chicken reaches" +
-                        " minimum internal temperature, 5-7 minutes per side." +
-                        " | If using sirloin steaks, pat dry and season both sides with a pinch of salt and pepper." +
-                        " Follow same instructions as salmon in Step 3, cooking until steak reaches minimum internal" +
-                        " temperature, 4-6 minutes per side."
-        );
-
-        recipeInstructionsRepository.save(recipeInstructions1);
-
-//        CookingSteps cookingSteps1 = new CookingSteps(
-//                "1.Roast the Sweet Potatoes | 2.Prepare the Ingredients |" +
-//                        " 3.Cook the Salmon | 4.Cook the Vegetables | 5.Finish the Dish",
-//                "Quarter sweet potato and cut into ½ pieces. Place sweet potato pieces on prepared" +
-//                        " baking sheet and toss with 2 tsp. olive oil, ¼ tsp. salt, and ¼ tsp. pepper." +
-//                        " Massage oil and seasoning into potatoes. Spread into a single layer and roast" +
-//                        " in hot oven until tender, 18-20 minutes. While sweet potato roasts, prepare ingredients." +
-//                        " | Remove any discolored outer leaves from bok choy and trim ends. " +
-//                        "Cut stems into ½ slices and coarsely chop leaves. Stem mushrooms and cut caps into ¼ strips." +
-//                        "In a mixing bowl, combine honey and ginger. Set aside. In another mixing bowl, " +
-//                        "combine mayonnaise and Sriracha (to taste). Set aside. Pat salmon dry, and season " +
-//                        "flesh side with a pinch of salt and pepper. | Place a medium non-stick pan over medium " +
-//                        "heat and add 2 tsp. olive oil. Add salmon, skin side up, to hot pan and cook until golden " +
-//                        "brown and salmon reaches a minimum internal temperature of 145 degrees, 4-6 minutes per side. " +
-//                        "Remove from burner. Remove salmon to a plate and tent with foil. While salmon cooks, cook " +
-//                        "vegetables. | Place a large non-stick pan over medium-high heat and add 1 tsp. olive oil." +
-//                        "Add mushrooms, bok choy, leaves and stems, soy sauce, and a pinch of pepper to hot pan. " +
-//                        "Stir often until stems start to soften, 5-7 minutes. Remove from burner. | " +
-//                        "Plate dish as pictured on front of card, topping salmon with honey-ginger sauce, " +
-//                        "and sweet potatoes with Sriracha mayonnaise (to taste). Bon appétit!",
-//                "https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F42385%2F107430" +
-//                        "HoneyGingerSalmonStepsFinal-3.jpg?ixlib=rails-1.1.0" +
-//                        "&w=1500&auto=format&s=0368f9dcebf33edc17c5025383ee84f8 |" +
-//                        " https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%" +
-//                        "2F42386%2F107430HoneyGingerSalmonStepsFinal-2.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=" +
-//                        "6ab6a4f318f3655d4d7ba7594d42c76a | https://homechef.imgix.net/https%3A%2F%2Fasset." +
-//                        "homechef.com%2Fuploads%2Frecipe%2Fimage%2F42387%2Fsalmon_in_pan.jpg?ixlib=rails-1.1.0&w=" +
-//                        "1500&auto=format&s=3300e35739fb87a2a2b1383463bfcfdb | " +
-//                        "https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2F" +
-//                        "image%2F42388%2F107430HoneyGingerSalmonStepsFinal-4.jpg?ixlib=rails-1.1.0" +
-//                        "&w=1500&auto=format&s=182c362c41de7af2b89d353b2b1f3100 |" +
-//                        " https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fmeal%2Fplated" +
-//                        "%2F11144%2F107430.001.01Honey-GingerSalmon_Ecomm_1_of_1_.jpg?ixlib=rails-1.1.0" +
-//                        "&w=1500&auto=format&s=f265063222d6e92ffa3cf151c5067958",
-//                "Honey-Ginger Salmon");
-
-        CookingSteps cookingSteps1 = new CookingSteps(1, "Roast the Sweet Potatoes",
-                "Quarter sweet potato and cut into ½ pieces. Place sweet potato pieces on prepared" +
-                        " baking sheet and toss with 2 tsp. olive oil, ¼ tsp. salt, and ¼ tsp. pepper." +
-                        " Massage oil and seasoning into potatoes. Spread into a single layer and roast" +
-                        " in hot oven until tender, 18-20 minutes. While sweet potato roasts, prepare ingredients.");
-
-        CookingSteps cookingSteps2 = new CookingSteps(2, "Prepare the Ingredients",
-                "Remove any discolored outer leaves from bok choy and trim ends. " +
-                        "Cut stems into ½ slices and coarsely chop leaves. Stem mushrooms and cut caps into ¼ strips." +
-                        "In a mixing bowl, combine honey and ginger. Set aside. In another mixing bowl, " +
-                        "combine mayonnaise and Sriracha (to taste). Set aside. Pat salmon dry, and season " +
-                        "flesh side with a pinch of salt and pepper.");
-
-        CookingSteps cookingSteps3 = new CookingSteps(3, "Cook the Salmon",
-                "Place a medium non-stick pan over medium heat and add 2 tsp. olive oil. " +
-                        "Add salmon, skin side up, to hot pan and cook until golden brown and salmon reaches " +
-                        "a minimum internal temperature of 145 degrees, 4-6 minutes per side. " +
-                        "Remove from burner. Remove salmon to a plate and tent with foil. " +
-                        "While salmon cooks, cook vegetables.");
-
-        CookingSteps cookingSteps4 = new CookingSteps(4, "Cook the Vegetables",
-                "Place a large non-stick pan over medium-high heat and add 1 tsp. olive oil." +
-                        "Add mushrooms, bok choy, leaves and stems, soy sauce, and a pinch of pepper to hot pan. " +
-                        "Stir often until stems start to soften, 5-7 minutes. Remove from burner.");
-
-        CookingSteps cookingSteps5 = new CookingSteps(5, "Finish the Dish",
-                "Plate dish as pictured on front of card, topping salmon with honey-ginger sauce, " +
-                        "and sweet potatoes with Sriracha mayonnaise (to taste). Bon appétit!");
-
-        List<CookingSteps> cookingSteps = Arrays.asList(cookingSteps1, cookingSteps2, cookingSteps3,
-                cookingSteps4, cookingSteps5);
-
-        cookingStepsRepository.saveAll(cookingSteps);
+            mealBox.setMeal(mealList[i].get(0));
+            mealBoxRepository.save(mealBox);
+        }
 
 
-        Menu menu1 = new Menu(Date.valueOf("2020-12-23"), "dasda");
+        ArrayList<MealBoxNutrition>[] mealBoxNutritionList = new ArrayList[50];
 
-        menuRepository.save(menu1);
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            mealBoxNutritionList[i] = new ArrayList<MealBoxNutrition>();
+        }
+
+        for (int i = 0; i < 50; i++) {
+            MealBoxNutrition mealBoxNutrition = new MealBoxNutrition();
+            mealBoxNutrition.setCalories(842);
+            mealBoxNutrition.setProtein(63);
+            mealBoxNutrition.setCarbohydrates(46);
+            mealBoxNutrition.setFat(41);
+
+            mealBoxNutrition.setMeal(mealList[i].get(0));
+            mealBoxNutritionRepository.save(mealBoxNutrition);
+        }
+
+        ArrayList<RecipeSteps>[] recipeStepsList = new ArrayList[50];
+
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            recipeStepsList[i] = new ArrayList<RecipeSteps>();
+        }
+
+        for (int i = 0; i < 50; i++) {
+            RecipeSteps recipeSteps = new RecipeSteps();
+            recipeSteps.setMealUtensilsRow1("Olive Oil |" +
+                    " Salt  Pepper | Cooking Spray");
+            recipeSteps.setMealUtensilsRow2("1 Medium Non-Stick Pan |" +
+                    " 1 Baking Sheet | 2 Mixing Bowls" +
+                    " | 1 Large Non-Stick Pan");
+
+            recipeSteps.setMeal(mealList[i].get(0));
+            recipeStepsRepository.save(recipeSteps);
+        }
+
+        ArrayList<RecipeInstructions>[] recipeInstructionsList = new ArrayList[50];
+
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            recipeInstructionsList[i] = new ArrayList<RecipeInstructions>();
+        }
+
+        for (int i = 0; i < 50; i++) {
+            RecipeInstructions recipeInstructions = new RecipeInstructions();
+            recipeInstructions.setCookSteps("Preheat oven to 425 degrees |" +
+                    " If using any fresh produce, thoroughly rinse and pat dry |" +
+                    " Prepare a baking sheet with foil and cooking spray");
+            recipeInstructions.setGuidelines("Steak and Pork 145° F (rest cooked meat, 3 minutes) |" +
+                    " Seafood 145° F |" +
+                    " Chicken 165° F |" +
+                    " Ground Beef 160° F |" +
+                    " Ground Turkey 165° F |" +
+                    " Ground Pork 160° F");
+            recipeInstructions.setCustomizeInstructions("If using chicken breasts, pat dry and season " +
+                    "both sides with a pinch of salt and pepper." +
+                    " Follow same instructions as salmon in Step 3, cooking until chicken reaches" +
+                    " minimum internal temperature, 5-7 minutes per side." +
+                    " | If using sirloin steaks, pat dry and season both sides with a pinch of salt and pepper." +
+                    " Follow same instructions as salmon in Step 3, cooking until steak reaches minimum internal" +
+                    " temperature, 4-6 minutes per side.");
+
+            recipeInstructions.setMeal(mealList[i].get(0));
+            recipeInstructionsRepository.save(recipeInstructions);
+        }
+
+        ArrayList<CookingSteps>[] cookingStepsList = new ArrayList[50];
+
+        // initializing
+        for (int i = 0; i < 50; i++) {
+            cookingStepsList[i] = new ArrayList<CookingSteps>();
+        }
+
+        for (int i = 0; i < 50; i++) {
+            CookingSteps cookingSteps = new CookingSteps();
+
+            cookingSteps.setStepNumber(1);
+            cookingSteps.setStepTitle("Roast the Sweet Potatoes | Prepare the Ingredients " +
+                    "| Cook the Salmon | Cook the Vegetables | Finish the Dish");
+            cookingSteps.setStepDescription("Quarter sweet potato and cut into ½ pieces. " +
+                    "Place sweet potato pieces on prepared baking sheet and toss with 2 tsp. " +
+                    "olive oil, ¼ tsp. salt, and ¼ tsp. pepper. Massage oil and seasoning into potatoes." +
+                    " Spread into a single layer and roast in hot oven until tender, 18-20 minutes. " +
+                    "While sweet potato roasts, prepare ingredients. " +
+                    "| Remove any discolored outer leaves from bok choy and trim ends. " +
+                    "Cut stems into ½ slices and coarsely chop leaves. Stem mushrooms and cut caps into ¼ strips." +
+                    "In a mixing bowl, combine honey and ginger. Set aside. In another mixing bowl, " +
+                    "combine mayonnaise and Sriracha (to taste). Set aside. Pat salmon dry, and season " +
+                    "flesh side with a pinch of salt and pepper. | " + "Place a medium non-stick pan over " +
+                    "medium heat and add 2 tsp. olive oil. " +
+                    "Add salmon, skin side up, to hot pan and cook until golden brown and salmon reaches " +
+                    "a minimum internal temperature of 145 degrees, 4-6 minutes per side. " +
+                    "Remove from burner. Remove salmon to a plate and tent with foil. " +
+                    "While salmon cooks, cook vegetables. | " + "Place a large non-stick pan over medium-high " +
+                    "heat and add 1 tsp. olive oil." +
+                    "Add mushrooms, bok choy, leaves and stems, soy sauce, and a pinch of pepper to hot pan. " +
+                    "Stir often until stems start to soften, 5-7 minutes. Remove from burner." +
+                    "| Finish the Dish Plate dish as pictured on front of card, " +
+                    "topping salmon with honey-ginger sauce, " + "and sweet potatoes with Sriracha " +
+                    "mayonnaise (to taste). Bon appétit!");
+
+            cookingSteps.setMeal(mealList[i].get(0));
+            cookingStepsRepository.save(cookingSteps);
+        }
+
+
+//        Menu menu1 = new Menu(Date.valueOf("2020-12-23"), "dasda");
+//
+//        menuRepository.save(menu1);
 
         Image image1 = new Image("url", "alt", null, true, false);
         Image image2 = new Image("url", "alt", null, false, true);

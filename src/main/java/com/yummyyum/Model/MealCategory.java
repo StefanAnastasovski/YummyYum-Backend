@@ -22,7 +22,7 @@ public class MealCategory {
     @Column(name = "category")
     private String category;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "meal_category_id")
     private List<Meal> meals;

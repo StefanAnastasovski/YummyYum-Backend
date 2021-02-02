@@ -1,6 +1,7 @@
 package com.yummyyum.Controllers;
 
 
+import com.yummyyum.Model.DTO.MealDTO;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Services.Meal.MealService;
 import org.springframework.http.HttpStatus;
@@ -40,15 +41,15 @@ public class MealController {
     @PostMapping("/meals")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Meal createNewMeal(@RequestBody Meal meal,
+    public Meal createNewMeal(@RequestBody MealDTO mealDTO,
                               HttpServletResponse response,
                               UriComponentsBuilder builder) {
 
-        Meal meal1 = mealService.createNewMeal(meal.getMealName(), meal.getMealDescription(),
-                meal.getMealTimeTag(), meal.getMealIngredientTag(),
-                meal.getPrice(), meal.getMealCategory());
+        Meal meal1 = mealService.createNewMeal(mealDTO.getMealName(), mealDTO.getMealDescription(),
+                mealDTO.getMealTimeTag(), mealDTO.getMealIngredientTag(),
+                mealDTO.getPrice(), mealDTO.getMealCategory());
 
-        response.setHeader("Location", builder.path("/api/meals/" + meal.getId()).
+        response.setHeader("Location", builder.path("/api/meals/" + meal1.getId()).
                 buildAndExpand(meal1.getId()).toUriString());
 
         return meal1;

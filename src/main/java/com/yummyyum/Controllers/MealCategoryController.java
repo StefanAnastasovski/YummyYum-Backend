@@ -27,6 +27,11 @@ public class MealCategoryController {
         return mealCategoryService.getAllMealCategories();
     }
 
+    @GetMapping("/meal-category/meal-name/{mealName}")
+    public String getMealCategoryByMealName(@PathVariable String  mealName) {
+        return mealCategoryService.getMealCategoryByMealName(mealName);
+    }
+
 
     @GetMapping("/meal-category/category/{category}")
     public Optional<MealCategory> findMealCategoryByCategory(@PathVariable String category) {

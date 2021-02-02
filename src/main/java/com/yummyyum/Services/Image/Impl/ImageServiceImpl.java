@@ -8,6 +8,7 @@ import com.yummyyum.Services.Image.ImageService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -25,14 +26,37 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.findAll();
     }
 
+    @Override
+    public List<Image> getImagesByMealName(String mealName) {
+        return imageRepository.getImagesByMealName(mealName);
+    }
+
+    @Override
+    public Optional<Image> getImageByMealNameAndIsChefImgTrue(String mealName) {
+        return imageRepository.getImageByMealNameAndIsChefImgTrue(mealName);
+    }
+
+    @Override
+    public Optional<Image> getImageByMealNameAndIsMainRecipeImgTrue(String mealName) {
+        return imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(mealName);
+    }
+
 
     @Override
     public Image createNewImage(String url, String alt,
                                 Integer stepOrderNumber,
                                 Boolean isChefImg,
-                                Boolean isMainRecipeImg) {
+                                Boolean isMainRecipeImg, Meal meal) {
 
         Image image = new Image(url, alt, stepOrderNumber, isChefImg, isMainRecipeImg);
+
+        System.out.println(meal.getMealName());
+
+        Optional<Meal> meal1 = mealRepository.getMealByMealName(meal.getMealName());
+
+        System.out.println(meal.getMealName());
+
+        image.setMeal(meal1.get());
 
         return imageRepository.save(image);
 

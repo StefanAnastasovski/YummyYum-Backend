@@ -1,5 +1,6 @@
 package com.yummyyum.Controllers.MealRecipe;
 
+import com.yummyyum.Model.DTO.RecipeComponents.CookingStepsDTO;
 import com.yummyyum.Model.MealRecipe.CookingSteps;
 import com.yummyyum.Services.MealRecipe.CookingSteps.CookingStepsService;
 import org.springframework.http.HttpStatus;
