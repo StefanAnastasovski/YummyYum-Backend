@@ -348,7 +348,7 @@ public class BootstrapData implements CommandLineRunner {
                     "While salmon cooks, cook vegetables. | " + "Place a large non-stick pan over medium-high " +
                     "heat and add 1 tsp. olive oil." +
                     "Add mushrooms, bok choy, leaves and stems, soy sauce, and a pinch of pepper to hot pan. " +
-                    "Stir often until stems start to soften, 5-7 minutes. Remove from burner." +
+                    "Stir often until stems start to soften, 5-7 minutes. Remove from burner. " +
                     "| Finish the Dish Plate dish as pictured on front of card, " +
                     "topping salmon with honey-ginger sauce, " + "and sweet potatoes with Sriracha " +
                     "mayonnaise (to taste). Bon appétit!");
