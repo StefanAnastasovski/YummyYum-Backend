@@ -1,11 +1,14 @@
 package com.yummyyum.Controllers;
 
 
+import com.yummyyum.Model.DTO.ImageDTO;
+import com.yummyyum.Model.DTO.ImageRecipeDTO;
 import com.yummyyum.Model.DTO.RecipeComponents.*;
 import com.yummyyum.Model.DTO.RecipeDTO;
+import com.yummyyum.Model.Image;
 import com.yummyyum.Model.Meal;
-import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.MealRecipe.*;
+import com.yummyyum.Repositories.ImageRepository;
 import com.yummyyum.Repositories.MealCategoryRepository;
 import com.yummyyum.Repositories.MealRecipe.*;
 import com.yummyyum.Repositories.MealRepository;
@@ -29,6 +32,7 @@ public class RecipeController {
     private final CookingStepsRepository cookingStepsRepository;
     private final RecipeStepsRepository recipeStepsRepository;
     private final RecipeInstructionsRepository recipeInstructionsRepository;
+    private final ImageRepository imageRepository;
 
     public RecipeController(MealRepository mealRepository,
                             MealCategoryRepository mealCategoryRepository, MealOverviewRepository mealOverviewRepository,
@@ -37,7 +41,7 @@ public class RecipeController {
                             MealBoxNutritionRepository mealBoxNutritionRepository,
                             CookingStepsRepository cookingStepsRepository,
                             RecipeStepsRepository recipeStepsRepository,
-                            RecipeInstructionsRepository recipeInstructionsRepository) {
+                            RecipeInstructionsRepository recipeInstructionsRepository, ImageRepository imageRepository) {
         this.mealRepository = mealRepository;
         this.mealCategoryRepository = mealCategoryRepository;
         this.mealOverviewRepository = mealOverviewRepository;
@@ -47,6 +51,7 @@ public class RecipeController {
         this.cookingStepsRepository = cookingStepsRepository;
         this.recipeStepsRepository = recipeStepsRepository;
         this.recipeInstructionsRepository = recipeInstructionsRepository;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/recipe/meal-name/{mealName}")
@@ -61,6 +66,9 @@ public class RecipeController {
         Optional<RecipeSteps> recipeSteps = recipeStepsRepository.findRecipeStepsByMealName(mealName);
         Optional<RecipeInstructions> recipeInstructions = recipeInstructionsRepository.findRecipeInstructionsByMealName(mealName);
         String mealCategory = mealCategoryRepository.getMealCategoryByMealName(mealName);
+        List<Image> images = imageRepository.getImagesByMealName(mealName);
+        Optional<Image> chefImg = imageRepository.getImageByMealNameAndIsChefImgTrue(mealName);
+        Optional<Image> mainMealImg = imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(mealName);
 
         RecipeDTO recipeDTO = new RecipeDTO();
 
@@ -121,28 +129,60 @@ public class RecipeController {
 
         }
 
-        for (int i = 0; i < cookingSteps.size(); i++) {
-
-            System.out.println(cookingStepsList[i]);
-
-        }
+//        for (int i = 0; i < cookingSteps.size(); i++) {
+//
+//            System.out.println(cookingStepsList[i]);
+//
+//        }
 
 //        ------------------- Recipe Steps
         RecipeStepsDTO recipeStepsDTO = new RecipeStepsDTO();
-
         recipeStepsDTO.setMealUtensilsRow1(recipeSteps.get().getMealUtensilsRow1());
         recipeStepsDTO.setMealUtensilsRow2(recipeSteps.get().getMealUtensilsRow2());
 
 //        ------------------- Recipe Instructions
         RecipeInstructionsDTO recipeInstructionsDTO = new RecipeInstructionsDTO();
-
         recipeInstructionsDTO.setCustomizeInstructions(recipeInstructions.get().getCustomizeInstructions());
         recipeInstructionsDTO.setCookSteps(recipeInstructions.get().getCookSteps());
         recipeInstructionsDTO.setGuidelines(recipeInstructions.get().getGuidelines());
 
-//        ------------------- Meal Category
+//        ------------------- Cooking Steps Images
+        ImageRecipeDTO cookingStepsImages = new ImageRecipeDTO();
+        if (images.isEmpty()) {
+            cookingStepsImages = null;
+        } else {
+            cookingStepsImages.setAlt(images.get(0).getAlt());
+            cookingStepsImages.setIsChefImg(images.get(0).getIsChefImg());
+            cookingStepsImages.setIsMainRecipeImg(images.get(0).getIsMainRecipeImg());
+            cookingStepsImages.setUrl(images.get(0).getUrl());
+        }
 
 
+//        ------------------- Main Meal Images
+        ImageRecipeDTO mainRecipeImage = new ImageRecipeDTO();
+        if (images.isEmpty()) {
+            mainRecipeImage = null;
+        } else {
+            mainRecipeImage.setAlt(mainMealImg.get().getAlt());
+            mainRecipeImage.setIsChefImg(mainMealImg.get().getIsChefImg());
+            mainRecipeImage.setIsMainRecipeImg(mainMealImg.get().getIsMainRecipeImg());
+            mainRecipeImage.setUrl(mainMealImg.get().getUrl());
+        }
+
+
+//        ------------------- Chef Image
+        ImageRecipeDTO chefImage = new ImageRecipeDTO();
+        if (images.isEmpty()) {
+            chefImage = null;
+        } else {
+            chefImage.setAlt(chefImg.get().getAlt());
+            chefImage.setIsChefImg(chefImg.get().getIsChefImg());
+            chefImage.setIsMainRecipeImg(chefImg.get().getIsMainRecipeImg());
+            chefImage.setUrl(chefImg.get().getUrl());
+        }
+
+
+//        -------------------------------------------------
         recipeDTO.setMealBox(mealBoxDTO);
         recipeDTO.setRecipeSteps(recipeStepsDTO);
         recipeDTO.setMealBoxNutrition(mealBoxNutritionDTO);
@@ -150,9 +190,13 @@ public class RecipeController {
         recipeDTO.setRecipeInstructions(recipeInstructionsDTO);
         recipeDTO.setMealChef(mealChefDTO);
         recipeDTO.setMealCategory(mealCategory);
+        recipeDTO.setCookingStepsImages(cookingStepsImages);
+        recipeDTO.setChefImg(chefImage);
+        recipeDTO.setMainRecipeImage(mainRecipeImage);
+
         for (int i = 0; i < cookingSteps.size(); i++) {
 
-              recipeDTO.setCookingSteps(cookingStepsList[i].get(i));
+            recipeDTO.setCookingSteps(cookingStepsList[i].get(i));
 
         }
 

@@ -1,7 +1,9 @@
 package com.yummyyum.Model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import com.yummyyum.Model.DTO.RecipeComponents.*;
+import com.yummyyum.Model.Image;
 import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.MealRecipe.*;
 import lombok.Getter;
@@ -51,6 +53,15 @@ public class RecipeDTO {
     @NotNull
     private RecipeInstructionsDTO recipeInstructions;
 
+    @NotNull
+    private com.yummyyum.Model.DTO.ImageRecipeDTO cookingStepsImages;
+
+    @NotNull
+    private com.yummyyum.Model.DTO.ImageRecipeDTO mainRecipeImage;
+
+    @NotNull
+    private com.yummyyum.Model.DTO.ImageRecipeDTO chefImg;
+
     public RecipeDTO() {
     }
 
@@ -60,7 +71,8 @@ public class RecipeDTO {
                      MealOverviewDTO mealOverview, MealChefDTO mealChef,
                      MealBoxDTO mealBox, MealBoxNutritionDTO mealBoxNutrition,
                      CookingStepsDTO cookingSteps, RecipeStepsDTO recipeSteps,
-                     RecipeInstructionsDTO recipeInstructions) {
+                     RecipeInstructionsDTO recipeInstructions, com.yummyyum.Model.DTO.ImageRecipeDTO cookingStepsImages,
+                     com.yummyyum.Model.DTO.ImageRecipeDTO mainRecipeImage, com.yummyyum.Model.DTO.ImageRecipeDTO chefImg) {
         this.mealName = mealName;
         this.mealDescription = mealDescription;
         this.mealTimeTag = mealTimeTag;
@@ -74,5 +86,8 @@ public class RecipeDTO {
         this.cookingSteps = cookingSteps;
         this.recipeSteps = recipeSteps;
         this.recipeInstructions = recipeInstructions;
+        this.cookingStepsImages = cookingStepsImages;
+        this.mainRecipeImage = mainRecipeImage;
+        this.chefImg = chefImg;
     }
 }

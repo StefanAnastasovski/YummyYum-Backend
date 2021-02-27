@@ -362,9 +362,9 @@ public class BootstrapData implements CommandLineRunner {
 //
 //        menuRepository.save(menu1);
 
-        Image image1 = new Image("url", "alt", null, true, false);
-        Image image2 = new Image("url", "alt", null, false, true);
-        Image image3 = new Image("url", "alt", 1, false, false);
+        Image image1 = new Image("url", "alt", true, false);
+        Image image2 = new Image("url", "alt",  false, true);
+        Image image3 = new Image("url", "alt", false, false);
 
         List<Image> images = Arrays.asList(image1, image2, image3);
         imageRepository.saveAll(images);

@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -93,9 +94,12 @@ public class MenuController {
 
     @GetMapping("/menus/date/{releasedate}")
     public MenuDTO getMenuByReleaseDate(@PathVariable("releasedate")
-                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                LocalDate releaseDate) {
-        Optional<Menu> menu1 = menuService.getMenuByReleaseDate(releaseDate);
+//                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                String releaseDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(releaseDate, formatter);
+        System.out.println(date);
+        Optional<Menu> menu1 = menuService.getMenuByReleaseDate(date);
 
         List<Meal> allMeals = menu1.get().getMeals();
 

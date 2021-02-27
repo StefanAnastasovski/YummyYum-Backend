@@ -16,9 +16,7 @@ public interface ImageService {
 
     Optional<Image> getImageByMealNameAndIsMainRecipeImgTrue(String mealName);
 
-
     Image createNewImage(String url, String alt,
-                         Integer stepOrderNumber,
                          Boolean isChefImg,
                          Boolean isMainRecipeImg, Meal meal);
 }

@@ -12,7 +12,7 @@ import javax.persistence.Lob;
 
 @Getter
 @Setter
-public class ImageDTO {
+public class ImageRecipeDTO {
 
     @NotNull
     @Lob
@@ -27,20 +27,17 @@ public class ImageDTO {
     @NotNull
     private Boolean isMainRecipeImg;
 
-    @NotNull
-    private Meal meal;
-
-    public ImageDTO() {
+    public ImageRecipeDTO() {
     }
 
-    public ImageDTO(String url, String alt,
+    public ImageRecipeDTO(String url, String alt,
                     Boolean isChefImg,
-                    Boolean isMainRecipeImg, Meal meal) {
+                    Boolean isMainRecipeImg) {
+
         this.url = url;
         this.alt = alt;
         this.isChefImg = isChefImg;
         this.isMainRecipeImg = isMainRecipeImg;
-        this.meal = meal;
     }
 
 }

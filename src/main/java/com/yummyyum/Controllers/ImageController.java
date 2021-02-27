@@ -56,7 +56,7 @@ public class ImageController {
                                 UriComponentsBuilder builder) {
 
         Image image1 = imageService.createNewImage(imageDTO.getUrl(), imageDTO.getAlt(),
-                imageDTO.getStepOrderNumber(), imageDTO.getIsChefImg(),
+                imageDTO.getIsChefImg(),
                 imageDTO.getIsMainRecipeImg(), imageDTO.getMeal());
 
         response.setHeader("Location", builder.path("/api/images/" + image1.getId()).

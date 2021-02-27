@@ -23,10 +23,8 @@ public class Image {
     private String url;
 
     @Column
+    @Lob
     private String alt;
-
-    @Column(name = "step_order_number")
-    private Integer stepOrderNumber;
 
     @Column(name = "is_chef_img", nullable = false)
     private Boolean isChefImg;
@@ -43,10 +41,9 @@ public class Image {
 
     }
 
-    public Image(String url, String alt, Integer stepOrderNumber, Boolean isChefImg, Boolean isMainRecipeImg) {
+    public Image(String url, String alt, Boolean isChefImg, Boolean isMainRecipeImg) {
         this.url = url;
         this.alt = alt;
-        this.stepOrderNumber = stepOrderNumber;
         this.isChefImg = isChefImg;
         this.isMainRecipeImg = isMainRecipeImg;
     }

@@ -44,17 +44,12 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image createNewImage(String url, String alt,
-                                Integer stepOrderNumber,
                                 Boolean isChefImg,
                                 Boolean isMainRecipeImg, Meal meal) {
 
-        Image image = new Image(url, alt, stepOrderNumber, isChefImg, isMainRecipeImg);
-
-        System.out.println(meal.getMealName());
+        Image image = new Image(url, alt, isChefImg, isMainRecipeImg);
 
         Optional<Meal> meal1 = mealRepository.getMealByMealName(meal.getMealName());
-
-        System.out.println(meal.getMealName());
 
         image.setMeal(meal1.get());
 
