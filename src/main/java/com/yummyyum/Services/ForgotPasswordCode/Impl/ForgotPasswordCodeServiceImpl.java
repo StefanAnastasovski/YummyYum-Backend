@@ -1,8 +1,11 @@
 package com.yummyyum.Services.ForgotPasswordCode.Impl;
 
 
+import com.yummyyum.Services.SendEmailService.SendEmailService;
 import com.yummyyum.Model.ForgotPasswordCode;
+import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.ForgotPasswordCodeRepository;
+import com.yummyyum.Repositories.UserRepository;
 import com.yummyyum.Services.ForgotPasswordCode.ForgotPasswordCodeService;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +19,14 @@ import java.util.Random;
 public class ForgotPasswordCodeServiceImpl implements ForgotPasswordCodeService {
 
     private final ForgotPasswordCodeRepository forgotPasswordCodeRepository;
+    private final UserRepository userRepository;
+    private final SendEmailService sendEmailService;
 
-    public ForgotPasswordCodeServiceImpl(ForgotPasswordCodeRepository forgotPasswordCodeRepository) {
+    public ForgotPasswordCodeServiceImpl(ForgotPasswordCodeRepository forgotPasswordCodeRepository,
+                                         UserRepository userRepository, SendEmailService sendEmailService) {
         this.forgotPasswordCodeRepository = forgotPasswordCodeRepository;
+        this.userRepository = userRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     @Override
@@ -32,22 +40,31 @@ public class ForgotPasswordCodeServiceImpl implements ForgotPasswordCodeService 
     }
 
     @Override
-    public ForgotPasswordCode createNewForgotPasswordCode(String email, Timestamp codeSentDate, Boolean isExist) {
+    public ForgotPasswordCode createNewForgotPasswordCode(String email, Timestamp codeSentDate, Boolean isExist) throws Exception {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
 
         // this will convert any number sequence into 6 character.
-        String num = String.format("%06d", number);
-        ForgotPasswordCode forgotPasswordCode = new ForgotPasswordCode(email, num, codeSentDate);
+        String code = String.format("%06d", number);
+
+        ForgotPasswordCode forgotPasswordCode = new ForgotPasswordCode(email, code, codeSentDate);
+        ForgotPasswordCode result;
+
+        Optional<User> user = userRepository.findUserByEmail(email);
 
         if (!isExist) {
-            return forgotPasswordCodeRepository.save(forgotPasswordCode);
+            result = forgotPasswordCodeRepository.save(forgotPasswordCode);
         } else {
             Optional<ForgotPasswordCode> forgotPasswordCode1 =
                     forgotPasswordCodeRepository.getForgotPasswordCodeByEmail(email);
             forgotPasswordCode.setId(forgotPasswordCode1.get().getId());
-            return forgotPasswordCodeRepository.saveAndFlush(forgotPasswordCode);
+            result = forgotPasswordCodeRepository.saveAndFlush(forgotPasswordCode);
         }
+
+        String fullName = user.get().getFirstName() + " " + user.get().getLastName();
+        sendEmailService.sendMimeMail(email, fullName, code);
+
+        return result;
 
 
     }

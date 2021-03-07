@@ -13,7 +13,7 @@ public interface ForgotPasswordCodeService {
 
     Optional<ForgotPasswordCode> getCodeByEmail(String email);
 
-    ForgotPasswordCode createNewForgotPasswordCode(String email, Timestamp codeSentDate, Boolean isExist);
+    ForgotPasswordCode createNewForgotPasswordCode(String email, Timestamp codeSentDate, Boolean isExist) throws Exception;
 
 
 }

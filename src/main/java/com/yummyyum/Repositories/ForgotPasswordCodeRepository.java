@@ -10,3 +10,4 @@ public interface ForgotPasswordCodeRepository extends JpaRepository<ForgotPasswo
 
     Optional<ForgotPasswordCode> getForgotPasswordCodeByEmail(String email);
 
+}
