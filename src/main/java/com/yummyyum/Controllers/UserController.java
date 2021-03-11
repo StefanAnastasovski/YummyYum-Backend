@@ -1,5 +1,6 @@
 package com.yummyyum.Controllers;
 
+import com.yummyyum.Model.DTO.UserDTO;
 import com.yummyyum.Model.User;
 import com.yummyyum.Services.User.UserService;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,16 @@ public class UserController {
 
         return userService.createNewUser(user.getFirstName(), user.getLastName(),
                 user.getUsername(), user.getPassword(), user.getSignUpDate(), user.getEmail());
+    }
+
+    @PutMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User updateUser(@RequestBody UserDTO user,
+                              HttpServletResponse response,
+                              UriComponentsBuilder builder) {
+
+        return userService.updateUser(user.getPassword(), user.getEmail());
     }
 
 }

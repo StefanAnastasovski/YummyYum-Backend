@@ -58,15 +58,15 @@ public class ForgotPasswordCodeController {
 
         ForgotPasswordCode forgotPasswordCode1 = null;
 
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
         if (!email.isEmpty()) {
             if (forgotPasswordCode2.isEmpty()) {
 
                 forgotPasswordCode1 = forgotPasswordCodeService.createNewForgotPasswordCode(
-                        forgotPasswordCode.getEmail(), forgotPasswordCode.getCodeSentDate(), false);
+                        forgotPasswordCode.getEmail(), timestamp, false);
 
             } else {
-
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
                 forgotPasswordCode1 = forgotPasswordCodeService.createNewForgotPasswordCode(
                         forgotPasswordCode2.get().getEmail(), timestamp, true);

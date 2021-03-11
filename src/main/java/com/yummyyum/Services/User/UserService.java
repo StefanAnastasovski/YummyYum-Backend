@@ -21,4 +21,6 @@ public interface UserService {
                        String username, String password,
                        Timestamp signUpDate, Email email);
 
+    User updateUser(String newPassword, String email);
+
 }
