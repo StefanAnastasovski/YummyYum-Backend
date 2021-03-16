@@ -1,7 +1,7 @@
 package com.yummyyum.Controllers;
 
 
-import com.yummyyum.Model.DTO.MealDTO;
+
 import com.yummyyum.Model.DTO.MealExampleDTO;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Services.Meal.MealService;
@@ -39,22 +39,6 @@ public class MealController {
         return mealService.getMealsByMealCategory(category);
     }
 
-//    @PostMapping("/meals")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @ResponseBody
-//    public Meal createNewMeal(@RequestBody MealDTO mealDTO,
-//                              HttpServletResponse response,
-//                              UriComponentsBuilder builder) {
-//
-//        Meal meal1 = mealService.createNewMeal(mealDTO.getMealName(), mealDTO.getMealDescription(),
-//                mealDTO.getMealTimeTag(), mealDTO.getMealIngredientTag(),
-//                mealDTO.getPrice(), mealDTO.getMealCategory());
-//
-//        response.setHeader("Location", builder.path("/api/meals/" + meal1.getId()).
-//                buildAndExpand(meal1.getId()).toUriString());
-//
-//        return meal1;
-//    }
 
     @PostMapping("/meals")
     @ResponseStatus(HttpStatus.CREATED)

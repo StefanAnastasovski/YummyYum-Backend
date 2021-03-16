@@ -147,14 +147,15 @@ public class RecipeController {
         recipeInstructionsDTO.setGuidelines(recipeInstructions.get().getGuidelines());
 
 //        ------------------- Cooking Steps Images
-        ImageRecipeDTO cookingStepsImages = new ImageRecipeDTO();
-        if (images.isEmpty()) {
-            cookingStepsImages = null;
-        } else {
-            cookingStepsImages.setAlt(images.get(0).getAlt());
-            cookingStepsImages.setIsChefImg(images.get(0).getIsChefImg());
-            cookingStepsImages.setIsMainRecipeImg(images.get(0).getIsMainRecipeImg());
-            cookingStepsImages.setUrl(images.get(0).getUrl());
+        List<ImageRecipeDTO> cookingStepsImages = new ArrayList<>();
+        ImageRecipeDTO cookingStepsImage = new ImageRecipeDTO();
+
+        for (int i = 0; i < images.size(); i++) {
+            cookingStepsImage.setAlt(images.get(i).getAlt());
+            cookingStepsImage.setIsChefImg(images.get(i).getIsChefImg());
+            cookingStepsImage.setIsMainRecipeImg(images.get(i).getIsMainRecipeImg());
+            cookingStepsImage.setUrl(images.get(i).getUrl());
+            cookingStepsImages.add(cookingStepsImage);
         }
 
 

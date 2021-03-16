@@ -1,24 +1,21 @@
 package com.yummyyum.Controllers;
 
-import com.yummyyum.Model.DTO.CategoryDTO;
-import com.yummyyum.Model.DTO.MenuCategoryDTO;
-import com.yummyyum.Model.DTO.MenuDTO;
+import com.yummyyum.Model.DTO.*;
+import com.yummyyum.Model.Image;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.Menu;
+import com.yummyyum.Repositories.ImageRepository;
 import com.yummyyum.Repositories.MenuRepository;
 import com.yummyyum.Services.Meal.MealService;
 import com.yummyyum.Services.MealCategory.MealCategoryService;
 import com.yummyyum.Services.Menu.MenuService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -30,12 +27,15 @@ public class MenuController {
     private final MealCategoryService mealCategoryService;
     private final MealService mealService;
     private final MenuRepository menuRepository;
+    private final ImageRepository imageRepository;
 
-    public MenuController(MenuService menuService, MealCategoryService mealCategoryService, MealService mealService, MenuRepository menuRepository) {
+    public MenuController(MenuService menuService, MealCategoryService mealCategoryService,
+                          MealService mealService, MenuRepository menuRepository, ImageRepository imageRepository) {
         this.menuService = menuService;
         this.mealCategoryService = mealCategoryService;
         this.mealService = mealService;
         this.menuRepository = menuRepository;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/menus")
@@ -43,207 +43,207 @@ public class MenuController {
         return menuService.getAllMenus();
     }
 
-    @GetMapping("/menus/menu-name/{menuname}")
-    public MenuDTO getMenuByMenuName(@PathVariable("menuname") String menuName) {
-
-        Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
-
-        List<Meal> allMeals = menu1.get().getMeals();
-
-        String mealCategory;
-        int n = menu1.get().getMealCategories().size() + 1;
-
-        Meal meal;
-
-
-        MenuDTO menuDTO = new MenuDTO();
-        menuDTO.setMenuName(menu1.get().getMenuName());
-        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
-
-        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-
-        ArrayList<Meal>[] mealList1 = new ArrayList[n];
-        List<Meal> mealListTemp = new ArrayList<>();
-
-        // initializing
-        for (int i = 0; i < n; i++) {
-            mealList1[i] = new ArrayList<Meal>();
-        }
-
-
-        for (int i = 0; i < n - 1; i++) {
-
-            CategoryDTO categoryDTO = new CategoryDTO();
-            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
-            categoryDTO.setCategory(mealCategory);
-
-            for (Meal allMeal : allMeals) {
-                meal = allMeal;
-                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
-                    mealList1[i].add(meal);
-                }
-            }
-
-            categoryDTO.setMeals(mealList1[i]);
-            categoryDTOs.add(categoryDTO);
-
-        }
-
-        Random randomNumberToGetOnlyOneMealFromMealCategory = new Random();
-        int randomInt = randomNumberToGetOnlyOneMealFromMealCategory.nextInt(2);
-
-        Random randomNUmberToGetAMeal = new Random();
-        int randomMealInt;
-
-        int previousMealIndex = 9999;
-
-        CategoryDTO tempCategoryDTO = new CategoryDTO();
-
-        for (int j = 0; j < 5; j++) {
-
-            tempCategoryDTO.setCategory("Mix");
-
-            if (j != randomInt) {
-
-                for (int q = 0; q < 2; q++) {
-
-                    randomMealInt = randomNUmberToGetAMeal.nextInt(9);
-                    if (previousMealIndex == randomMealInt) {
-                        q--;
-                        continue;
-                    } else {
-                        previousMealIndex = randomMealInt;
-                    }
-
-                    meal = mealList1[j].get(randomMealInt);
-                    mealListTemp.add(meal);
-
-                }
-
-            } else {
-                meal = mealList1[j].get(randomInt);
-                mealListTemp.add(meal);
-            }
-
-
-        }
-
-        tempCategoryDTO.setMeals(mealListTemp);
-        categoryDTOs.add(0, tempCategoryDTO);
-
-        for (Meal value : mealListTemp) System.out.println(value);
-
-        for (CategoryDTO value : categoryDTOs) System.out.println(value);
-
-
-        menuDTO.setMealCategories(categoryDTOs);
-
-        return menuDTO;
-    }
-
-    @GetMapping("/menus/menu-name/{menuname}/top-4-meals")
-    public MenuDTO getTop4MealsMenuByMenuName(@PathVariable("menuname") String menuName) {
-
-        Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
-
-        List<Meal> allMeals = menu1.get().getMeals();
-
-        String mealCategory;
-        int n = menu1.get().getMealCategories().size();
-
-        Meal meal;
-
-
-        MenuDTO menuDTO = new MenuDTO();
-        menuDTO.setMenuName(menu1.get().getMenuName());
-        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
-
-        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-
-        ArrayList<Meal>[] mealList1 = new ArrayList[n];
-        List<Meal> mealListTemp = new ArrayList<>();
-
-        // initializing
-        for (int i = 0; i < n; i++) {
-            mealList1[i] = new ArrayList<Meal>();
-        }
-
-
-        for (int i = 0; i < n ; i++) {
-
-            CategoryDTO categoryDTO = new CategoryDTO();
-            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
-            categoryDTO.setCategory(mealCategory);
-
-            for (Meal allMeal : allMeals) {
-                meal = allMeal;
-                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
-                    mealList1[i].add(meal);
-                }
-            }
-
-            categoryDTO.setMeals(mealList1[i]);
-            categoryDTOs.add(categoryDTO);
-
-        }
-
-        menuDTO.setMealCategories(categoryDTOs);
-
-        return menuDTO;
-    }
-
-    @GetMapping("/menus/date/{releasedate}")
-    public MenuDTO getMenuByReleaseDate(@PathVariable("releasedate")
-//                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                String releaseDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(releaseDate, formatter);
-        System.out.println(date);
-        Optional<Menu> menu1 = menuService.getMenuByReleaseDate(date);
-
-        List<Meal> allMeals = menu1.get().getMeals();
-
-        String mealCategory;
-        int n = menu1.get().getMealCategories().size();
-
-        Meal meal;
-
-
-        MenuDTO menuDTO = new MenuDTO();
-        menuDTO.setMenuName(menu1.get().getMenuName());
-        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
-
-        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-
-        ArrayList<Meal>[] mealList1 = new ArrayList[n];
-
-        // initializing
-        for (int i = 0; i < n; i++) {
-            mealList1[i] = new ArrayList<Meal>();
-        }
-
-        for (int i = 0; i < n; i++) {
-
-            CategoryDTO categoryDTO = new CategoryDTO();
-            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
-            categoryDTO.setCategory(mealCategory);
-
-            for (Meal allMeal : allMeals) {
-                meal = allMeal;
-                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
-                    mealList1[i].add(meal);
-                }
-            }
-
-            categoryDTO.setMeals(mealList1[i]);
-            categoryDTOs.add(categoryDTO);
-
-        }
-
-        menuDTO.setMealCategories(categoryDTOs);
-
-        return menuDTO;
-    }
+//    @GetMapping("/menus/menu-name/{menuname}")
+//    public MenuDTO getMenuByMenuName(@PathVariable("menuname") String menuName) {
+//
+//        Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
+//
+//        List<Meal> allMeals = menu1.get().getMeals();
+//
+//        String mealCategory;
+//        int n = menu1.get().getMealCategories().size() + 1;
+//
+//        Meal meal;
+//
+//
+//        MenuDTO menuDTO = new MenuDTO();
+//        menuDTO.setMenuName(menu1.get().getMenuName());
+//        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
+//
+//        List<CategoryDTO> categoryDTOs = new ArrayList<>();
+//
+//        ArrayList<Meal>[] mealList1 = new ArrayList[n];
+//        List<Meal> mealListTemp = new ArrayList<>();
+//
+//        // initializing
+//        for (int i = 0; i < n; i++) {
+//            mealList1[i] = new ArrayList<Meal>();
+//        }
+//
+//
+//        for (int i = 0; i < n - 1; i++) {
+//
+//            CategoryDTO categoryDTO = new CategoryDTO();
+//            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
+//            categoryDTO.setCategory(mealCategory);
+//
+//            for (Meal allMeal : allMeals) {
+//                meal = allMeal;
+//                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
+//                    mealList1[i].add(meal);
+//                }
+//            }
+//
+//            categoryDTO.setMeals(mealList1[i]);
+//            categoryDTOs.add(categoryDTO);
+//
+//        }
+//
+//        Random randomNumberToGetOnlyOneMealFromMealCategory = new Random();
+//        int randomInt = randomNumberToGetOnlyOneMealFromMealCategory.nextInt(2);
+//
+//        Random randomNUmberToGetAMeal = new Random();
+//        int randomMealInt;
+//
+//        int previousMealIndex = 9999;
+//
+//        CategoryDTO tempCategoryDTO = new CategoryDTO();
+//
+//        for (int j = 0; j < 5; j++) {
+//
+//            tempCategoryDTO.setCategory("Mix");
+//
+//            if (j != randomInt) {
+//
+//                for (int q = 0; q < 2; q++) {
+//
+//                    randomMealInt = randomNUmberToGetAMeal.nextInt(9);
+//                    if (previousMealIndex == randomMealInt) {
+//                        q--;
+//                        continue;
+//                    } else {
+//                        previousMealIndex = randomMealInt;
+//                    }
+//
+//                    meal = mealList1[j].get(randomMealInt);
+//                    mealListTemp.add(meal);
+//
+//                }
+//
+//            } else {
+//                meal = mealList1[j].get(randomInt);
+//                mealListTemp.add(meal);
+//            }
+//
+//
+//        }
+//
+//        tempCategoryDTO.setMeals(mealListTemp);
+//        categoryDTOs.add(0, tempCategoryDTO);
+//
+//        for (Meal value : mealListTemp) System.out.println(value);
+//
+//        for (CategoryDTO value : categoryDTOs) System.out.println(value);
+//
+//
+//        menuDTO.setMealCategories(categoryDTOs);
+//
+//        return menuDTO;
+//    }
+
+//    @GetMapping("/menus/menu-name/{menuname}/top-4-meals")
+//    public MenuDTO getTop4MealsMenuByMenuName(@PathVariable("menuname") String menuName) {
+//
+//        Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
+//
+//        List<Meal> allMeals = menu1.get().getMeals();
+//
+//        String mealCategory;
+//        int n = menu1.get().getMealCategories().size();
+//
+//        Meal meal;
+//
+//
+//        MenuDTO menuDTO = new MenuDTO();
+//        menuDTO.setMenuName(menu1.get().getMenuName());
+//        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
+//
+//        List<CategoryDTO> categoryDTOs = new ArrayList<>();
+//
+//        ArrayList<Meal>[] mealList1 = new ArrayList[n];
+//        List<Meal> mealListTemp = new ArrayList<>();
+//
+//        // initializing
+//        for (int i = 0; i < n; i++) {
+//            mealList1[i] = new ArrayList<Meal>();
+//        }
+//
+//
+//        for (int i = 0; i < n; i++) {
+//
+//            CategoryDTO categoryDTO = new CategoryDTO();
+//            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
+//            categoryDTO.setCategory(mealCategory);
+//
+//            for (Meal allMeal : allMeals) {
+//                meal = allMeal;
+//                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
+//                    mealList1[i].add(meal);
+//                }
+//            }
+//
+//            categoryDTO.setMeals(mealList1[i]);
+//            categoryDTOs.add(categoryDTO);
+//
+//        }
+//
+//        menuDTO.setMealCategories(categoryDTOs);
+//
+//        return menuDTO;
+//    }
+
+//    @GetMapping("/menus/date/{releasedate}")
+//    public MenuDTO getMenuByReleaseDate(@PathVariable("releasedate")
+////                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
+//                                                String releaseDate) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        LocalDate date = LocalDate.parse(releaseDate, formatter);
+//        System.out.println(date);
+//        Optional<Menu> menu1 = menuService.getMenuByReleaseDate(date);
+//
+//        List<Meal> allMeals = menu1.get().getMeals();
+//
+//        String mealCategory;
+//        int n = menu1.get().getMealCategories().size();
+//
+//        Meal meal;
+//
+//
+//        MenuDTO menuDTO = new MenuDTO();
+//        menuDTO.setMenuName(menu1.get().getMenuName());
+//        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
+//
+//        List<CategoryDTO> categoryDTOs = new ArrayList<>();
+//
+//        ArrayList<Meal>[] mealList1 = new ArrayList[n];
+//
+//        // initializing
+//        for (int i = 0; i < n; i++) {
+//            mealList1[i] = new ArrayList<Meal>();
+//        }
+//
+//        for (int i = 0; i < n; i++) {
+//
+//            CategoryDTO categoryDTO = new CategoryDTO();
+//            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
+//            categoryDTO.setCategory(mealCategory);
+//
+//            for (Meal allMeal : allMeals) {
+//                meal = allMeal;
+//                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
+//                    mealList1[i].add(meal);
+//                }
+//            }
+//
+//            categoryDTO.setMeals(mealList1[i]);
+//            categoryDTOs.add(categoryDTO);
+//
+//        }
+//
+//        menuDTO.setMealCategories(categoryDTOs);
+//
+//        return menuDTO;
+//    }
 
     @PostMapping("/menus")
     @ResponseStatus(HttpStatus.CREATED)
@@ -341,4 +341,110 @@ public class MenuController {
         return menu;
 
     }
+
+    @GetMapping("/menus/menu-name/{menuname}")
+    public MenuDTO2 getMenuByMenuName(@PathVariable("menuname") String menuName) {
+
+        Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
+
+        List<Meal> allMeals = menu1.get().getMeals();
+
+        String mealCategory;
+        int n = menu1.get().getMealCategories().size() + 1;
+
+        MealDTO meal = new MealDTO();
+
+        MenuDTO2 menuDTO = new MenuDTO2();
+        menuDTO.setMenuName(menu1.get().getMenuName());
+        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
+
+        List<CategoryDTO2> categoryDTOs = new ArrayList<>();
+
+        ArrayList<MealDTO>[] mealList1 = new ArrayList[n];
+        List<MealDTO> mealListTemp = new ArrayList<>();
+
+        // initializing
+        for (int i = 0; i < n; i++) {
+            mealList1[i] = new ArrayList<MealDTO>();
+        }
+
+
+        for (int i = 0; i < n - 1; i++) {
+
+            CategoryDTO2 categoryDTO = new CategoryDTO2();
+            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
+            categoryDTO.setCategory(mealCategory);
+
+            for (Meal allMeal : allMeals) {
+                Optional<Image> image = imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(allMeal.getMealName());
+
+                meal.setMealName(allMeal.getMealName());
+                meal.setMealCategory(allMeal.getMealCategory());
+                meal.setMealDescription(allMeal.getMealDescription());
+                meal.setMealIngredientTag(allMeal.getMealIngredientTag());
+                meal.setMealTimeTag(allMeal.getMealTimeTag());
+                meal.setPrice(allMeal.getPrice());
+                meal.setImage(image.get());
+                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
+                    mealList1[i].add(meal);
+                }
+            }
+
+            categoryDTO.setMeals(mealList1[i]);
+            categoryDTOs.add(categoryDTO);
+
+        }
+
+        Random randomNumberToGetOnlyOneMealFromMealCategory = new Random();
+        int randomInt = randomNumberToGetOnlyOneMealFromMealCategory.nextInt(2);
+
+        Random randomNUmberToGetAMeal = new Random();
+        int randomMealInt;
+
+        int previousMealIndex = 9999;
+
+        CategoryDTO2 tempCategoryDTO2 = new CategoryDTO2();
+
+        for (int j = 0; j < 5; j++) {
+
+            tempCategoryDTO2.setCategory("Mix");
+
+            if (j != randomInt) {
+
+                for (int q = 0; q < 2; q++) {
+
+                    randomMealInt = randomNUmberToGetAMeal.nextInt(9);
+                    if (previousMealIndex == randomMealInt) {
+                        q--;
+                        continue;
+                    } else {
+                        previousMealIndex = randomMealInt;
+                    }
+
+                    meal = mealList1[j].get(randomMealInt);
+                    mealListTemp.add(meal);
+
+                }
+
+            } else {
+                meal = mealList1[j].get(randomInt);
+                mealListTemp.add(meal);
+            }
+
+
+        }
+
+        tempCategoryDTO2.setMeals(mealListTemp);
+        categoryDTOs.add(0, tempCategoryDTO2);
+
+        for (MealDTO value : mealListTemp) System.out.println(value);
+
+        for (CategoryDTO2 value : categoryDTOs) System.out.println(value);
+
+
+        menuDTO.setMealCategories(categoryDTOs);
+
+        return menuDTO;
+    }
+
 }

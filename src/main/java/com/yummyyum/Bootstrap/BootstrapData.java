@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BootstrapData implements CommandLineRunner {
@@ -370,12 +371,38 @@ public class BootstrapData implements CommandLineRunner {
 //
 //        menuRepository.save(menu1);
 
-        Image image1 = new Image("url", "alt", true, false);
-        Image image2 = new Image("url", "alt", false, true);
-        Image image3 = new Image("url", "alt", false, false);
+//        Image image1 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fmeal%2Fplated%2F5152%2F5152BBQTeriyakiandWasabiSlawBurgersReshoot__1_of_1_-c3e05e47403944539aa528a1579db1db-c3e05e47403944539aa528a1579db1db.jpg?ixlib=rails-1.1.0&w=850&auto=format&s=882bb21ade9f5fce4e3996f3dfe761f8", "alt", false, true, 9999);
+//        Image image2 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fchef%2Fchef_photo%2F21%2FDavid_Padilla-347235bc049404479e28cea9bb7ef597.jpg?ixlib=rails-1.1.0&w=110&auto=format&s=aa17086bc447d792377fea5507f30575", "alt", true, false, 9999);
+//        Image image3 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24771%2F5152_BBQ_Teriyaki_and_Sriracha_Slaw_Burgers__5_of_5_-db642c886b4bde3ffd7d196cecc3e14d-db642c886b4bde3ffd7d196cecc3e14d.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=70a97293bee204b8489a181cb7d7fbcb", "alt", false, false, 1);
+//        Image image4 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24772%2F5152_BBQ_Teriyaki_and_Sriracha_Slaw_Burgers__2_of_5_-9f6042e3691d59e2cb92727501294ba1-9f6042e3691d59e2cb92727501294ba1.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=a68e3f7f2452d6b30bf4d4d0c8669750", "alt", false, false, 2);
+//        Image image5 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24774%2F5152_BBQ_Teriyaki_and_Sriracha_Slaw_Burgers__4_of_5_-46bada133f5299106049a1e727fb7b4d-46bada133f5299106049a1e727fb7b4d.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=230c45a4585159103e01c43254c28546", "alt", false, false, 3);
+//        Image image6 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24773%2F5152JapaneseBBQBurgerFinal__1_of_1_-ce093bc28b876653663a30d5d40a0d4e-ce093bc28b876653663a30d5d40a0d4e.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=940a544ec0ada35e656ddeff0fe443cb", "alt", false, false, 4);
+//        Image image7 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fmeal%2Fplated%2F5152%2F5152BBQTeriyakiandWasabiSlawBurgersReshoot__1_of_1_-c3e05e47403944539aa528a1579db1db-c3e05e47403944539aa528a1579db1db.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=d26b427b836dd651c1546ec54ba7d04d", "alt", false, false, 5);
 
-        List<Image> images = Arrays.asList(image1, image2, image3);
-        imageRepository.saveAll(images);
+
+        for (int i = 1; i <= 50; i++) {
+            Image image1 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fmeal%2Fplated%2F5152%2F5152BBQTeriyakiandWasabiSlawBurgersReshoot__1_of_1_-c3e05e47403944539aa528a1579db1db-c3e05e47403944539aa528a1579db1db.jpg?ixlib=rails-1.1.0&w=850&auto=format&s=882bb21ade9f5fce4e3996f3dfe761f8", "alt", false, true, 9999);
+            Image image2 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fchef%2Fchef_photo%2F21%2FDavid_Padilla-347235bc049404479e28cea9bb7ef597.jpg?ixlib=rails-1.1.0&w=110&auto=format&s=aa17086bc447d792377fea5507f30575", "alt", true, false, 9999);
+            Image image3 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24771%2F5152_BBQ_Teriyaki_and_Sriracha_Slaw_Burgers__5_of_5_-db642c886b4bde3ffd7d196cecc3e14d-db642c886b4bde3ffd7d196cecc3e14d.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=70a97293bee204b8489a181cb7d7fbcb", "alt", false, false, 1);
+            Image image4 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24772%2F5152_BBQ_Teriyaki_and_Sriracha_Slaw_Burgers__2_of_5_-9f6042e3691d59e2cb92727501294ba1-9f6042e3691d59e2cb92727501294ba1.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=a68e3f7f2452d6b30bf4d4d0c8669750", "alt", false, false, 2);
+            Image image5 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24774%2F5152_BBQ_Teriyaki_and_Sriracha_Slaw_Burgers__4_of_5_-46bada133f5299106049a1e727fb7b4d-46bada133f5299106049a1e727fb7b4d.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=230c45a4585159103e01c43254c28546", "alt", false, false, 3);
+            Image image6 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Frecipe%2Fimage%2F24773%2F5152JapaneseBBQBurgerFinal__1_of_1_-ce093bc28b876653663a30d5d40a0d4e-ce093bc28b876653663a30d5d40a0d4e.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=940a544ec0ada35e656ddeff0fe443cb", "alt", false, false, 4);
+            Image image7 = new Image("https://homechef.imgix.net/https%3A%2F%2Fasset.homechef.com%2Fuploads%2Fmeal%2Fplated%2F5152%2F5152BBQTeriyakiandWasabiSlawBurgersReshoot__1_of_1_-c3e05e47403944539aa528a1579db1db-c3e05e47403944539aa528a1579db1db.jpg?ixlib=rails-1.1.0&w=1500&auto=format&s=d26b427b836dd651c1546ec54ba7d04d", "alt", false, false, 5);
+            String name = "Honey-Ginger Salmon" + i;
+            name = name.toString();
+            Optional<Meal> mealOne = mealRepository.getMealByMealName(name);
+            mealOne.ifPresent(meal -> {image1.setMeal(meal);
+            image2.setMeal(meal);
+            image3.setMeal(meal);
+            image4.setMeal(meal);
+            image5.setMeal(meal);
+            image6.setMeal(meal);
+            image7.setMeal(meal);});
+
+            List<Image> images = Arrays.asList(image1, image2, image3, image4, image5, image6, image7);
+            imageRepository.saveAll(images);
+        }
+
 
         System.out.println("Sending Email...");
 

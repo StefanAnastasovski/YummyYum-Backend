@@ -22,6 +22,9 @@ public class ImageDTO {
     private String alt;
 
     @NotNull
+    private int cookingStep;
+
+    @NotNull
     private Boolean isChefImg;
 
     @NotNull
@@ -33,14 +36,12 @@ public class ImageDTO {
     public ImageDTO() {
     }
 
-    public ImageDTO(String url, String alt,
-                    Boolean isChefImg,
-                    Boolean isMainRecipeImg, Meal meal) {
+    public ImageDTO(String url, String alt, int cookingStep, Boolean isChefImg, Boolean isMainRecipeImg, Meal meal) {
         this.url = url;
         this.alt = alt;
+        this.cookingStep = cookingStep;
         this.isChefImg = isChefImg;
         this.isMainRecipeImg = isMainRecipeImg;
         this.meal = meal;
     }
-
 }

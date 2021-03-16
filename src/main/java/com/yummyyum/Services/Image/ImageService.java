@@ -18,5 +18,5 @@ public interface ImageService {
 
     Image createNewImage(String url, String alt,
                          Boolean isChefImg,
-                         Boolean isMainRecipeImg, Meal meal);
+                         Boolean isMainRecipeImg, int cookingStep, Meal meal);
 }

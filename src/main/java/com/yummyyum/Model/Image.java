@@ -26,6 +26,9 @@ public class Image {
     @Lob
     private String alt;
 
+    @Column
+    private int cookingStep;
+
     @Column(name = "is_chef_img", nullable = false)
     private Boolean isChefImg;
 
@@ -41,9 +44,10 @@ public class Image {
 
     }
 
-    public Image(String url, String alt, Boolean isChefImg, Boolean isMainRecipeImg) {
+    public Image(String url, String alt, Boolean isChefImg, Boolean isMainRecipeImg, int cookingStep) {
         this.url = url;
         this.alt = alt;
+        this.cookingStep = cookingStep;
         this.isChefImg = isChefImg;
         this.isMainRecipeImg = isMainRecipeImg;
     }

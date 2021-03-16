@@ -57,7 +57,7 @@ public class ImageController {
 
         Image image1 = imageService.createNewImage(imageDTO.getUrl(), imageDTO.getAlt(),
                 imageDTO.getIsChefImg(),
-                imageDTO.getIsMainRecipeImg(), imageDTO.getMeal());
+                imageDTO.getIsMainRecipeImg(),imageDTO.getCookingStep(), imageDTO.getMeal());
 
         response.setHeader("Location", builder.path("/api/images/" + image1.getId()).
                 buildAndExpand(image1.getId()).toUriString());

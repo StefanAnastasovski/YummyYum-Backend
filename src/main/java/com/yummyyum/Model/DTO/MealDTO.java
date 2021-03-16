@@ -1,6 +1,7 @@
 package com.yummyyum.Model.DTO;
 
 import com.sun.istack.NotNull;
+import com.yummyyum.Model.Image;
 import com.yummyyum.Model.MealCategory;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,9 @@ public class MealDTO {
 
     @NotNull
     private MealCategory mealCategory;
+
+    @NotNull
+    private Image image;
 
     public MealDTO() {
     }

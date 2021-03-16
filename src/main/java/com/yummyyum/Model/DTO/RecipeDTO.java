@@ -9,6 +9,8 @@ import com.yummyyum.Model.MealRecipe.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -54,7 +56,7 @@ public class RecipeDTO {
     private RecipeInstructionsDTO recipeInstructions;
 
     @NotNull
-    private com.yummyyum.Model.DTO.ImageRecipeDTO cookingStepsImages;
+    private List<ImageRecipeDTO> cookingStepsImages;
 
     @NotNull
     private com.yummyyum.Model.DTO.ImageRecipeDTO mainRecipeImage;
@@ -65,14 +67,14 @@ public class RecipeDTO {
     public RecipeDTO() {
     }
 
-    public RecipeDTO(String mealName, String mealDescription,
-                     String mealTimeTag, String mealIngredientTag,
-                     Double price, String mealCategory,
-                     MealOverviewDTO mealOverview, MealChefDTO mealChef,
-                     MealBoxDTO mealBox, MealBoxNutritionDTO mealBoxNutrition,
-                     CookingStepsDTO cookingSteps, RecipeStepsDTO recipeSteps,
-                     RecipeInstructionsDTO recipeInstructions, com.yummyyum.Model.DTO.ImageRecipeDTO cookingStepsImages,
-                     com.yummyyum.Model.DTO.ImageRecipeDTO mainRecipeImage, com.yummyyum.Model.DTO.ImageRecipeDTO chefImg) {
+    public RecipeDTO(String mealName, String mealDescription, String mealTimeTag,
+                     String mealIngredientTag, Double price,
+                     String mealCategory, MealOverviewDTO mealOverview,
+                     MealChefDTO mealChef, MealBoxDTO mealBox,
+                     MealBoxNutritionDTO mealBoxNutrition, CookingStepsDTO cookingSteps,
+                     RecipeStepsDTO recipeSteps, RecipeInstructionsDTO recipeInstructions,
+                     List<ImageRecipeDTO> cookingStepsImages, ImageRecipeDTO mainRecipeImage,
+                     ImageRecipeDTO chefImg) {
         this.mealName = mealName;
         this.mealDescription = mealDescription;
         this.mealTimeTag = mealTimeTag;

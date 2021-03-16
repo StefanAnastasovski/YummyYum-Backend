@@ -45,9 +45,9 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image createNewImage(String url, String alt,
                                 Boolean isChefImg,
-                                Boolean isMainRecipeImg, Meal meal) {
+                                Boolean isMainRecipeImg, int cookingStep, Meal meal) {
 
-        Image image = new Image(url, alt, isChefImg, isMainRecipeImg);
+        Image image = new Image(url, alt, isChefImg, isMainRecipeImg, cookingStep);
 
         Optional<Meal> meal1 = mealRepository.getMealByMealName(meal.getMealName());
 
