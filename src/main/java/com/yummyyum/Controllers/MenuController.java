@@ -352,8 +352,6 @@ public class MenuController {
         String mealCategory;
         int n = menu1.get().getMealCategories().size() + 1;
 
-        MealDTO meal = new MealDTO();
-
         MenuDTO2 menuDTO = new MenuDTO2();
         menuDTO.setMenuName(menu1.get().getMenuName());
         menuDTO.setReleaseDate(menu1.get().getReleaseDate());
@@ -376,6 +374,7 @@ public class MenuController {
             categoryDTO.setCategory(mealCategory);
 
             for (Meal allMeal : allMeals) {
+                MealDTO meal = new MealDTO();
                 Optional<Image> image = imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(allMeal.getMealName());
 
                 meal.setMealName(allMeal.getMealName());
@@ -404,7 +403,7 @@ public class MenuController {
         int previousMealIndex = 9999;
 
         CategoryDTO2 tempCategoryDTO2 = new CategoryDTO2();
-
+        MealDTO meal = new MealDTO();
         for (int j = 0; j < 5; j++) {
 
             tempCategoryDTO2.setCategory("Mix");
