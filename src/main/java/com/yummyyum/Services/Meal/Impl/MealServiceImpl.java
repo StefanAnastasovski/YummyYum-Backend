@@ -94,24 +94,24 @@ public class MealServiceImpl implements MealService {
 
         MealOverview mealOverview1 = new MealOverview(mealOverview.getDifficultyLevel(), mealOverview.getSpiceLevel(),
                 mealOverview.getPrepCookTime(), mealOverview.getCookWithin());
-        mealOverview.setMeal(meal);
+        mealOverview1.setMeal(meal);
 
         mealOverviewRepository.save(mealOverview1);
 
         MealChef mealChef1 = new MealChef(mealChef.getFullName(), mealChef.getChefMealDescription());
-        mealChef1.setMeal(meal);;
+        mealChef1.setMeal(meal);
 
         mealChefRepository.save(mealChef1);
 
         MealBox mealBox1 = new MealBox(mealBox.getServeQuantity(), mealBox.getMealIngredients());
-        mealBox1.setMeal(meal);;
+        mealBox1.setMeal(meal);
 
         mealBoxRepository.save(mealBox1);
 
 
         MealBoxNutrition mealBoxNutrition1 = new MealBoxNutrition(mealBoxNutrition.getCalories(),
                 mealBoxNutrition.getProtein(), mealBoxNutrition.getCarbohydrates(), mealBoxNutrition.getFat());
-        mealBoxNutrition1.setMeal(meal);;
+        mealBoxNutrition1.setMeal(meal);
 
         mealBoxNutritionRepository.save(mealBoxNutrition1);
 
@@ -123,16 +123,15 @@ public class MealServiceImpl implements MealService {
 
         RecipeInstructions recipeInstructions1 = new RecipeInstructions(recipeInstructions.getCookSteps(),
                 recipeInstructions.getGuidelines(), recipeInstructions.getCustomizeInstructions());
-        recipeInstructions1.setMeal(meal);;
+        recipeInstructions1.setMeal(meal);
 
         recipeInstructionsRepository.save(recipeInstructions1);
 
         CookingSteps cookingSteps1 = new CookingSteps(cookingSteps.getStepNumber(),
                 cookingSteps.getStepTitle(), cookingSteps.getStepDescription());
-        cookingSteps1.setMeal(meal);;
+        cookingSteps1.setMeal(meal);
 
         cookingStepsRepository.save(cookingSteps1);
-
 
 
         return null;
