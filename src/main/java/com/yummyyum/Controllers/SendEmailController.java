@@ -23,7 +23,7 @@ public class SendEmailController {
         this.sendEmailToSubscribersService = sendEmailToSubscribersService;
     }
 
-    @GetMapping("/subscribe/email/")
+    @GetMapping("/subscribe/email")
     public List<SendEmail> getAllEmails() {
         return sendEmailToSubscribersService.getAllSendEmails();
     }
