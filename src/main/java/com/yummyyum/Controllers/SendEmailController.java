@@ -23,18 +23,18 @@ public class SendEmailController {
         this.sendEmailToSubscribersService = sendEmailToSubscribersService;
     }
 
-    @GetMapping("/subscribe/email/send")
+    @GetMapping("/subscribe/email/")
     public List<SendEmail> getAllEmails() {
         return sendEmailToSubscribersService.getAllSendEmails();
     }
 
 
-    @GetMapping("/subscribe/email={email}/send")
+    @GetMapping("/subscribe/email={email}")
     public Optional<SendEmail> getSendEmailByRecipient(@PathVariable("email") String email) {
         return sendEmailToSubscribersService.getSendEmailByEmail(email);
     }
 
-    @PostMapping("/subscribe/email/send")
+    @PostMapping("/subscribe/email")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public SendEmailDTO createNewSendEmail(@RequestBody SendEmailDTO sendEmailDTO,

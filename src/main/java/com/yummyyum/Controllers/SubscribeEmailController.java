@@ -23,17 +23,17 @@ public class SubscribeEmailController {
         this.subscribeEmailService = subscribeEmailService;
     }
 
-    @GetMapping("/subscribes")
+    @GetMapping("/subscribe")
     public List<SubscribeEmail> getAllSubscribeEmails() {
         return subscribeEmailService.getAllSubscribeEmails();
     }
 
-    @GetMapping("/subscribes/email/{email}")
+    @GetMapping("/subscribe/email/{email}")
     public Optional<SubscribeEmail> getSubscribeEmailByEmail(@PathVariable("email") String email) {
         return subscribeEmailService.getSubscribeEmailByEmail(email);
     }
 
-    @PostMapping("/subscribes")
+    @PostMapping("/subscribe")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public SubscribeEmail createNewSubscribeEmail(@RequestBody SubscribeEmail subscribeEmail,
@@ -43,7 +43,7 @@ public class SubscribeEmailController {
         SubscribeEmail subscribeEmail1 = subscribeEmailService.createNewSubscribeEmail(
                 subscribeEmail.getSubscribeDate(), subscribeEmail.getEmail());
 
-        response.setHeader("Location", builder.path("/api/subscribes/" + subscribeEmail1.getId()).
+        response.setHeader("Location", builder.path("/api/subscribe/" + subscribeEmail1.getId()).
                 buildAndExpand(subscribeEmail1.getId()).toUriString());
 
         return subscribeEmail1;
