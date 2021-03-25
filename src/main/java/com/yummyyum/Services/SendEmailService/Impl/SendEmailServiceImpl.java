@@ -2,12 +2,15 @@ package com.yummyyum.Services.SendEmailService.Impl;
 
 import com.yummyyum.Services.SendEmailService.SendEmailService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.*;
@@ -43,7 +46,38 @@ public class SendEmailServiceImpl implements SendEmailService {
             }
 
         });
+
         Message message = prepareMessage(session, myAccountEmail, recipient, fullName, code);
+
+        Transport.send(message);
+        System.out.println("Message sent successfully!");
+    }
+
+    Session setEmailPropertiesAndSession() {
+        Properties properties = System.getProperties();
+
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        return Session.getDefaultInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(myAccountEmail, password);
+            }
+
+        });
+    }
+
+    @Override
+    public void sendMimeMailToSubscribers(String subject, String text, List<String> recipients) throws Exception {
+        System.out.println("Preparing to send an email to subscribers");
+
+
+        Session session = this.setEmailPropertiesAndSession();
+
+        Message message = prepareSubscribeMessage(session, myAccountEmail, subject, text, recipients);
 
         Transport.send(message);
         System.out.println("Message sent successfully!");
@@ -66,6 +100,33 @@ public class SendEmailServiceImpl implements SendEmailService {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("Test");
             message.setContent(emailBody, "text/html");
+            return message;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Message prepareSubscribeMessage(Session session, String myAccountEmail,
+                                           String subject, String text, List<String> recipients) {
+
+        Message message = new MimeMessage(session);
+
+        InternetAddress[] addressTo = new InternetAddress[recipients.size()];
+        for (int i = 0; i < recipients.size(); i++) {
+            try {
+                addressTo[i] = new InternetAddress(recipients.get(i));
+            } catch (AddressException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipients(Message.RecipientType.TO, addressTo);
+            message.setSubject("Test");
+            message.setContent(text, "text/html");
             return message;
         } catch (Exception e) {
             e.printStackTrace();

@@ -152,6 +152,7 @@ public class BootstrapData implements CommandLineRunner {
         loginRepository.save(login1);
 
         SubscribeEmail subscribeEmail1 = new SubscribeEmail(Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
+        subscribeEmail1.setEmail(email2);
         subscribeEmailRepository.save(subscribeEmail1);
         MealCategory mealCategory1 = new MealCategory("Adventurous");
         MealCategory mealCategory2 = new MealCategory("Quick and Simple");
