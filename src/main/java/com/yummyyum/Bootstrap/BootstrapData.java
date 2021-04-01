@@ -7,16 +7,12 @@ import com.yummyyum.Model.MealRecipe.*;
 import com.yummyyum.Repositories.*;
 import com.yummyyum.Repositories.MealRecipe.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -151,7 +147,8 @@ public class BootstrapData implements CommandLineRunner {
         Login login1 = new Login(Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
         loginRepository.save(login1);
 
-        SubscribeEmail subscribeEmail1 = new SubscribeEmail(Timestamp.valueOf("2018-11-12 01:02:03.123456789"));
+        Date date = new Date();
+        SubscribeEmail subscribeEmail1 = new SubscribeEmail(date);
         subscribeEmail1.setEmail(email2);
         subscribeEmailRepository.save(subscribeEmail1);
         MealCategory mealCategory1 = new MealCategory("Adventurous");

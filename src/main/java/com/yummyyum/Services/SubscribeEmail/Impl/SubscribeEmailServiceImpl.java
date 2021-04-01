@@ -7,7 +7,7 @@ import com.yummyyum.Repositories.SubscribeEmailRepository;
 import com.yummyyum.Services.SubscribeEmail.SubscribeEmailService;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +33,14 @@ public class SubscribeEmailServiceImpl implements SubscribeEmailService {
     }
 
     @Override
-    public SubscribeEmail createNewSubscribeEmail(Timestamp subscribeDate, Email email) {
+    public SubscribeEmail createNewSubscribeEmail(Email email) {
 
-        SubscribeEmail subscribeEmail = new SubscribeEmail(subscribeDate);
+        Date date = new Date();
+
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        SubscribeEmail subscribeEmail = new SubscribeEmail(sqlDate);
+
         Email email1 = new Email(email.getEmail(), false);
         emailRepository.save(email1);
         subscribeEmail.setEmail(email1);

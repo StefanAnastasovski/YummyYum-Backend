@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity(name = "subscribe_email")
 @Getter
@@ -18,7 +18,8 @@ public class SubscribeEmail {
     private Long id;
 
     @Column(name = "subscribe_date")
-    private Timestamp subscribeDate;
+//    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date subscribeDate;
 
     @OneToOne
     @JoinColumn(name = "email_id", referencedColumnName = "id")
@@ -27,7 +28,7 @@ public class SubscribeEmail {
     public SubscribeEmail() {
     }
 
-    public SubscribeEmail(Timestamp subscribeDate) {
+    public SubscribeEmail(Date subscribeDate) {
         this.subscribeDate = subscribeDate;
     }
 

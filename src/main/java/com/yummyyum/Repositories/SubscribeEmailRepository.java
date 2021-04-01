@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface SubscribeEmailRepository extends JpaRepository<SubscribeEmail, Long> {
 
-    @Query(value = "SELECT * FROM subscribe_email as se join email e on e.id = se.email_id",
+    @Query(value = "SELECT * FROM subscribe_email as se join email e on e.id = se.email_id WHERE e.email=:email",
             nativeQuery = true)
     Optional<SubscribeEmail> getSubscribeEmailByEmail(String email);
 
