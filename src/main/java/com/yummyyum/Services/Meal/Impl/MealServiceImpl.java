@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Meal.Impl;
 
 import com.yummyyum.Model.DTO.MealExampleDTO;
+import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.MealRecipe.*;
@@ -10,6 +11,7 @@ import com.yummyyum.Repositories.MealRepository;
 import com.yummyyum.Services.Meal.MealService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ public class MealServiceImpl implements MealService {
     private final CookingStepsRepository cookingStepsRepository;
     private final RecipeStepsRepository recipeStepsRepository;
     private final RecipeInstructionsRepository recipeInstructionsRepository;
+    private final MealCustomizeOptionRepository mealCustomizeOptionRepository;
 
     public MealServiceImpl(MealRepository mealRepository,
                            MealCategoryRepository mealCategoryRepository,
@@ -34,7 +37,8 @@ public class MealServiceImpl implements MealService {
                            MealBoxNutritionRepository mealBoxNutritionRepository,
                            CookingStepsRepository cookingStepsRepository,
                            RecipeStepsRepository recipeStepsRepository,
-                           RecipeInstructionsRepository recipeInstructionsRepository) {
+                           RecipeInstructionsRepository recipeInstructionsRepository,
+                           MealCustomizeOptionRepository mealCustomizeOptionRepository) {
         this.mealRepository = mealRepository;
         this.mealCategoryRepository = mealCategoryRepository;
         this.mealOverviewRepository = mealOverviewRepository;
@@ -44,6 +48,7 @@ public class MealServiceImpl implements MealService {
         this.cookingStepsRepository = cookingStepsRepository;
         this.recipeStepsRepository = recipeStepsRepository;
         this.recipeInstructionsRepository = recipeInstructionsRepository;
+        this.mealCustomizeOptionRepository = mealCustomizeOptionRepository;
     }
 
     @Override
@@ -82,7 +87,7 @@ public class MealServiceImpl implements MealService {
                                      MealOverview mealOverview, MealChef mealChef,
                                      MealBox mealBox, MealBoxNutrition mealBoxNutrition,
                                      RecipeSteps recipeSteps, RecipeInstructions recipeInstructions,
-                                     CookingSteps cookingSteps) {
+                                     CookingSteps cookingSteps, List<MealCustomizeOptionDTO> mealCustomizeOptions) {
 
         Meal meal = new Meal(mealName, mealDescription,
                 mealTimeTag, mealIngredientTag, price);
@@ -132,6 +137,22 @@ public class MealServiceImpl implements MealService {
         cookingSteps1.setMeal(meal);
 
         cookingStepsRepository.save(cookingSteps1);
+
+
+        List<MealCustomizeOption> mealCustomizeOptionList = new ArrayList<>();
+
+        for (MealCustomizeOptionDTO mealCustomizeOption : mealCustomizeOptions) {
+            MealCustomizeOption mealCustomizeOption1 = new MealCustomizeOption();
+
+            mealCustomizeOption1.setMealCustomizeOption(mealCustomizeOption.getMealCustomizeOption());
+            mealCustomizeOption1.setMeal(meal);
+            System.out.println(mealCustomizeOption.getMealCustomizeOption());
+            System.out.println(mealCustomizeOption1.getMealCustomizeOption());
+
+            mealCustomizeOptionList.add(mealCustomizeOption1);
+        }
+
+        mealCustomizeOptionRepository.saveAll(mealCustomizeOptionList);
 
 
         return null;

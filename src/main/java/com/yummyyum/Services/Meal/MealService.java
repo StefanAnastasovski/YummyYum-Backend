@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Meal;
 
 import com.yummyyum.Model.DTO.MealExampleDTO;
+import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.MealRecipe.*;
@@ -25,5 +26,5 @@ public interface MealService {
                               MealCategory mealCategory, MealOverview mealOverview,
                               MealChef mealChef, MealBox mealBox, MealBoxNutrition mealBoxNutrition,
                               RecipeSteps recipeSteps, RecipeInstructions recipeInstructions,
-                              CookingSteps cookingSteps);
+                              CookingSteps cookingSteps, List<MealCustomizeOptionDTO> mealCustomizeOptions);
 }

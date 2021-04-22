@@ -1,7 +1,6 @@
 package com.yummyyum.Controllers;
 
 
-import com.yummyyum.Model.DTO.ImageDTO;
 import com.yummyyum.Model.DTO.ImageRecipeDTO;
 import com.yummyyum.Model.DTO.RecipeComponents.*;
 import com.yummyyum.Model.DTO.RecipeDTO;
@@ -33,6 +32,7 @@ public class RecipeController {
     private final RecipeStepsRepository recipeStepsRepository;
     private final RecipeInstructionsRepository recipeInstructionsRepository;
     private final ImageRepository imageRepository;
+    private final MealCustomizeOptionRepository mealCustomizeOptionRepository;
 
     public RecipeController(MealRepository mealRepository,
                             MealCategoryRepository mealCategoryRepository, MealOverviewRepository mealOverviewRepository,
@@ -41,7 +41,8 @@ public class RecipeController {
                             MealBoxNutritionRepository mealBoxNutritionRepository,
                             CookingStepsRepository cookingStepsRepository,
                             RecipeStepsRepository recipeStepsRepository,
-                            RecipeInstructionsRepository recipeInstructionsRepository, ImageRepository imageRepository) {
+                            RecipeInstructionsRepository recipeInstructionsRepository, ImageRepository imageRepository,
+                            MealCustomizeOptionRepository mealCustomizeOptionRepository) {
         this.mealRepository = mealRepository;
         this.mealCategoryRepository = mealCategoryRepository;
         this.mealOverviewRepository = mealOverviewRepository;
@@ -52,6 +53,7 @@ public class RecipeController {
         this.recipeStepsRepository = recipeStepsRepository;
         this.recipeInstructionsRepository = recipeInstructionsRepository;
         this.imageRepository = imageRepository;
+        this.mealCustomizeOptionRepository = mealCustomizeOptionRepository;
     }
 
     @GetMapping("/recipe/meal-name/{mealName}")
@@ -69,6 +71,8 @@ public class RecipeController {
         List<Image> images = imageRepository.getImagesByMealName(mealName);
         Optional<Image> chefImg = imageRepository.getImageByMealNameAndIsChefImgTrue(mealName);
         Optional<Image> mainMealImg = imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(mealName);
+
+        List<MealCustomizeOption> customizeOptions = mealCustomizeOptionRepository.getMealCustomizeOptionByMealName(mealName);
 
         RecipeDTO recipeDTO = new RecipeDTO();
 
@@ -182,7 +186,15 @@ public class RecipeController {
             chefImage.setUrl(chefImg.get().getUrl());
         }
 
+//        ------------------- Customize Options
 
+        List<MealCustomizeOptionDTO> mealCustomizeOptions = new ArrayList<>();
+
+        for (MealCustomizeOption customizeOption : customizeOptions) {
+            MealCustomizeOptionDTO mealCustomizeOption = new MealCustomizeOptionDTO();
+            mealCustomizeOption.setMealCustomizeOption(customizeOption.getMealCustomizeOption());
+            mealCustomizeOptions.add(mealCustomizeOption);
+        }
 //        -------------------------------------------------
         recipeDTO.setMealBox(mealBoxDTO);
         recipeDTO.setRecipeSteps(recipeStepsDTO);
@@ -194,6 +206,7 @@ public class RecipeController {
         recipeDTO.setCookingStepsImages(cookingStepsImages);
         recipeDTO.setChefImg(chefImage);
         recipeDTO.setMainRecipeImage(mainRecipeImage);
+        recipeDTO.setMealCustomizeOptions(mealCustomizeOptions);
 
         for (int i = 0; i < cookingSteps.size(); i++) {
 
@@ -204,6 +217,9 @@ public class RecipeController {
         return recipeDTO;
 
     }
+//1,Option 1,1
+//2,Option 2,1
+//3,Option 3,1
 
 
 }

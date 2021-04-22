@@ -64,17 +64,19 @@ public class RecipeDTO {
     @NotNull
     private com.yummyyum.Model.DTO.ImageRecipeDTO chefImg;
 
+    @NotNull
+    private List<MealCustomizeOptionDTO> mealCustomizeOptions;
+
     public RecipeDTO() {
     }
 
     public RecipeDTO(String mealName, String mealDescription, String mealTimeTag,
-                     String mealIngredientTag, Double price,
-                     String mealCategory, MealOverviewDTO mealOverview,
-                     MealChefDTO mealChef, MealBoxDTO mealBox,
+                     String mealIngredientTag, Double price, String mealCategory,
+                     MealOverviewDTO mealOverview, MealChefDTO mealChef, MealBoxDTO mealBox,
                      MealBoxNutritionDTO mealBoxNutrition, CookingStepsDTO cookingSteps,
                      RecipeStepsDTO recipeSteps, RecipeInstructionsDTO recipeInstructions,
                      List<ImageRecipeDTO> cookingStepsImages, ImageRecipeDTO mainRecipeImage,
-                     ImageRecipeDTO chefImg) {
+                     ImageRecipeDTO chefImg, List<MealCustomizeOptionDTO> mealCustomizeOptions) {
         this.mealName = mealName;
         this.mealDescription = mealDescription;
         this.mealTimeTag = mealTimeTag;
@@ -91,5 +93,6 @@ public class RecipeDTO {
         this.cookingStepsImages = cookingStepsImages;
         this.mainRecipeImage = mainRecipeImage;
         this.chefImg = chefImg;
+        this.mealCustomizeOptions = mealCustomizeOptions;
     }
 }

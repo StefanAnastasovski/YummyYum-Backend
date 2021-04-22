@@ -1,10 +1,13 @@
 package com.yummyyum.Model.DTO;
 
 import com.sun.istack.NotNull;
+import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.MealRecipe.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -51,16 +54,18 @@ public class MealExampleDTO {
     @NotNull
     private CookingSteps cookingSteps;
 
+    @NotNull
+    private List<MealCustomizeOptionDTO> mealCustomizeOptions;
+
     public MealExampleDTO() {
     }
 
     public MealExampleDTO(String mealName, String mealDescription, String mealTimeTag,
-                          String mealIngredientTag, Double price,
-                          MealCategory mealCategory, MealOverview mealOverview,
-                          MealChef mealChef, MealBox mealBox, MealBoxNutrition mealBoxNutrition,
-                          RecipeSteps recipeSteps, RecipeInstructions recipeInstructions,
-                          CookingSteps cookingSteps) {
-
+                          String mealIngredientTag, Double price, MealCategory mealCategory,
+                          MealOverview mealOverview, MealChef mealChef, MealBox mealBox,
+                          MealBoxNutrition mealBoxNutrition, RecipeSteps recipeSteps,
+                          RecipeInstructions recipeInstructions, CookingSteps cookingSteps,
+                          List<MealCustomizeOptionDTO> mealCustomizeOptions) {
         this.mealName = mealName;
         this.mealDescription = mealDescription;
         this.mealTimeTag = mealTimeTag;
@@ -74,7 +79,6 @@ public class MealExampleDTO {
         this.recipeSteps = recipeSteps;
         this.recipeInstructions = recipeInstructions;
         this.cookingSteps = cookingSteps;
+        this.mealCustomizeOptions = mealCustomizeOptions;
     }
-
-
 }

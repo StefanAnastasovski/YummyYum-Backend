@@ -53,7 +53,9 @@ public class MealController {
                 mealExampleDTO.getMealCategory(), mealExampleDTO.getMealOverview(),
                 mealExampleDTO.getMealChef(), mealExampleDTO.getMealBox(),
                 mealExampleDTO.getMealBoxNutrition(), mealExampleDTO.getRecipeSteps(),
-                mealExampleDTO.getRecipeInstructions(), mealExampleDTO.getCookingSteps());
+                mealExampleDTO.getRecipeInstructions(), mealExampleDTO.getCookingSteps(),
+                mealExampleDTO.getMealCustomizeOptions());
+
     }
 
 }

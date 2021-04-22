@@ -64,6 +64,11 @@ public class Meal {
     @OneToOne(mappedBy = "meal")
     private CookingSteps cookingSteps;
 
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "meal_customize_option_id")
+    private List<MealCustomizeOption> mealCustomizeOption;
+
     //Meal Category RS
 
     @JsonIgnore
@@ -71,7 +76,7 @@ public class Meal {
     @JoinColumn(name = "meal_category_id", nullable = true)
     private MealCategory mealCategory;
 
-    //    @JsonIgnore
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "image_id")
     private List<Image> images;
