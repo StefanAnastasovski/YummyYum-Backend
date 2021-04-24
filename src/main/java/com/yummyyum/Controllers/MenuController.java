@@ -1,11 +1,14 @@
 package com.yummyyum.Controllers;
 
 import com.yummyyum.Model.DTO.*;
+import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.Image;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealCategory;
+import com.yummyyum.Model.MealRecipe.MealCustomizeOption;
 import com.yummyyum.Model.Menu;
 import com.yummyyum.Repositories.ImageRepository;
+import com.yummyyum.Repositories.MealRecipe.MealCustomizeOptionRepository;
 import com.yummyyum.Repositories.MenuRepository;
 import com.yummyyum.Services.Meal.MealService;
 import com.yummyyum.Services.MealCategory.MealCategoryService;
@@ -28,14 +31,17 @@ public class MenuController {
     private final MealService mealService;
     private final MenuRepository menuRepository;
     private final ImageRepository imageRepository;
+    private final MealCustomizeOptionRepository mealCustomizeOptionRepository;
 
     public MenuController(MenuService menuService, MealCategoryService mealCategoryService,
-                          MealService mealService, MenuRepository menuRepository, ImageRepository imageRepository) {
+                          MealService mealService, MenuRepository menuRepository, ImageRepository imageRepository,
+                          MealCustomizeOptionRepository mealCustomizeOptionRepository) {
         this.menuService = menuService;
         this.mealCategoryService = mealCategoryService;
         this.mealService = mealService;
         this.menuRepository = menuRepository;
         this.imageRepository = imageRepository;
+        this.mealCustomizeOptionRepository = mealCustomizeOptionRepository;
     }
 
     @GetMapping("/menus")
@@ -273,6 +279,20 @@ public class MenuController {
             for (Meal allMeal : allMeals) {
                 MealDTO meal = new MealDTO();
                 Optional<Image> image = imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(allMeal.getMealName());
+                List<MealCustomizeOption> mealCustomizeOptions = mealCustomizeOptionRepository.getMealCustomizeOptionByMealName(allMeal.getMealName());
+                List<MealCustomizeOptionDTO> mealCustomizeOptionsTemp = new ArrayList<>();
+                for (MealCustomizeOption customizeOption : mealCustomizeOptions) {
+                    MealCustomizeOptionDTO temp = new MealCustomizeOptionDTO(customizeOption.getMealCustomizeOption());
+                    mealCustomizeOptionsTemp.add(temp);
+                }
+
+                for (MealCustomizeOption mealCustomizeOption : mealCustomizeOptions) {
+                    System.out.println(mealCustomizeOption);
+                }
+
+                for (MealCustomizeOptionDTO mealCustomizeOptionTemp : mealCustomizeOptionsTemp) {
+                    System.out.println(mealCustomizeOptionTemp);
+                }
 
                 meal.setMealName(allMeal.getMealName());
                 meal.setMealCategory(allMeal.getMealCategory());
@@ -281,6 +301,7 @@ public class MenuController {
                 meal.setMealTimeTag(allMeal.getMealTimeTag());
                 meal.setPrice(allMeal.getPrice());
                 meal.setImage(image.get());
+                meal.setMealCustomizeOptions(mealCustomizeOptionsTemp);
                 if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
                     mealList1[i].add(meal);
                 }
