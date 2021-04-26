@@ -3,7 +3,7 @@ package com.yummyyum.Services.SendEmailToSubscribers.Impl;
 import com.yummyyum.Model.DTO.SendEmailDTO;
 import com.yummyyum.Model.SendEmail;
 import com.yummyyum.Repositories.SendEmailRepository;
-import com.yummyyum.Services.SendEmailService.SendEmailService;
+import com.yummyyum.Services.SendEmail.SendEmailService;
 import com.yummyyum.Services.SendEmailToSubscribers.SendEmailToSubscribersService;
 import org.springframework.stereotype.Service;
 

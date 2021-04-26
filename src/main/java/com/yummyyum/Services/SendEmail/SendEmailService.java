@@ -1,4 +1,4 @@
-package com.yummyyum.Services.SendEmailService;
+package com.yummyyum.Services.SendEmail;
 
 
 import javax.mail.Session;

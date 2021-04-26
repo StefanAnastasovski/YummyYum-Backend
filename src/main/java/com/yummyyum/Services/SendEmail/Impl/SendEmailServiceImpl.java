@@ -1,15 +1,13 @@
-package com.yummyyum.Services.SendEmailService.Impl;
+package com.yummyyum.Services.SendEmail.Impl;
 
-import com.yummyyum.Services.SendEmailService.SendEmailService;
+import com.yummyyum.Services.SendEmail.SendEmailService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 

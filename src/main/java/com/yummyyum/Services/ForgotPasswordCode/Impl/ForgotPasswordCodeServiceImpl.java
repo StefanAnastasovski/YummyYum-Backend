@@ -1,7 +1,7 @@
 package com.yummyyum.Services.ForgotPasswordCode.Impl;
 
 
-import com.yummyyum.Services.SendEmailService.SendEmailService;
+import com.yummyyum.Services.SendEmail.SendEmailService;
 import com.yummyyum.Model.ForgotPasswordCode;
 import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.ForgotPasswordCodeRepository;
