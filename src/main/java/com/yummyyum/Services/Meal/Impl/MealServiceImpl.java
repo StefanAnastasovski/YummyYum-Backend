@@ -146,8 +146,6 @@ public class MealServiceImpl implements MealService {
 
             mealCustomizeOption1.setMealCustomizeOption(mealCustomizeOption.getMealCustomizeOption());
             mealCustomizeOption1.setMeal(meal);
-            System.out.println(mealCustomizeOption.getMealCustomizeOption());
-            System.out.println(mealCustomizeOption1.getMealCustomizeOption());
 
             mealCustomizeOptionList.add(mealCustomizeOption1);
         }

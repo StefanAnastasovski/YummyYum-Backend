@@ -41,7 +41,6 @@ public class SubscribeEmailController {
                                   UriComponentsBuilder builder) {
 
         SubscribeEmail subscribeEmail1 = subscribeEmailService.createNewSubscribeEmail(subscribeEmail.getEmail());
-        System.out.println(subscribeEmail.getEmail().getEmail());
         response.setHeader("Location", builder.path("/api/subscribe/" + subscribeEmail1.getId()).
                 buildAndExpand(subscribeEmail1.getId()).toUriString());
 

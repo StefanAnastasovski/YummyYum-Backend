@@ -49,105 +49,6 @@ public class MenuController {
         return menuService.getAllMenus();
     }
 
-//    @GetMapping("/menus/menu-name/{menuname}")
-//    public MenuDTO getMenuByMenuName(@PathVariable("menuname") String menuName) {
-//
-//        Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
-//
-//        List<Meal> allMeals = menu1.get().getMeals();
-//
-//        String mealCategory;
-//        int n = menu1.get().getMealCategories().size() + 1;
-//
-//        Meal meal;
-//
-//
-//        MenuDTO menuDTO = new MenuDTO();
-//        menuDTO.setMenuName(menu1.get().getMenuName());
-//        menuDTO.setReleaseDate(menu1.get().getReleaseDate());
-//
-//        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-//
-//        ArrayList<Meal>[] mealList1 = new ArrayList[n];
-//        List<Meal> mealListTemp = new ArrayList<>();
-//
-//        // initializing
-//        for (int i = 0; i < n; i++) {
-//            mealList1[i] = new ArrayList<Meal>();
-//        }
-//
-//
-//        for (int i = 0; i < n - 1; i++) {
-//
-//            CategoryDTO categoryDTO = new CategoryDTO();
-//            mealCategory = menu1.get().getMealCategories().get(i).getCategory();
-//            categoryDTO.setCategory(mealCategory);
-//
-//            for (Meal allMeal : allMeals) {
-//                meal = allMeal;
-//                if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
-//                    mealList1[i].add(meal);
-//                }
-//            }
-//
-//            categoryDTO.setMeals(mealList1[i]);
-//            categoryDTOs.add(categoryDTO);
-//
-//        }
-//
-//        Random randomNumberToGetOnlyOneMealFromMealCategory = new Random();
-//        int randomInt = randomNumberToGetOnlyOneMealFromMealCategory.nextInt(2);
-//
-//        Random randomNUmberToGetAMeal = new Random();
-//        int randomMealInt;
-//
-//        int previousMealIndex = 9999;
-//
-//        CategoryDTO tempCategoryDTO = new CategoryDTO();
-//
-//        for (int j = 0; j < 5; j++) {
-//
-//            tempCategoryDTO.setCategory("Mix");
-//
-//            if (j != randomInt) {
-//
-//                for (int q = 0; q < 2; q++) {
-//
-//                    randomMealInt = randomNUmberToGetAMeal.nextInt(9);
-//                    if (previousMealIndex == randomMealInt) {
-//                        q--;
-//                        continue;
-//                    } else {
-//                        previousMealIndex = randomMealInt;
-//                    }
-//
-//                    meal = mealList1[j].get(randomMealInt);
-//                    mealListTemp.add(meal);
-//
-//                }
-//
-//            } else {
-//                meal = mealList1[j].get(randomInt);
-//                mealListTemp.add(meal);
-//            }
-//
-//
-//        }
-//
-//        tempCategoryDTO.setMeals(mealListTemp);
-//        categoryDTOs.add(0, tempCategoryDTO);
-//
-//        for (Meal value : mealListTemp) System.out.println(value);
-//
-//        for (CategoryDTO value : categoryDTOs) System.out.println(value);
-//
-//
-//        menuDTO.setMealCategories(categoryDTOs);
-//
-//        return menuDTO;
-//    }
-
-
     @PostMapping("/menus")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -229,8 +130,6 @@ public class MenuController {
                                      HttpServletResponse response,
                                      UriComponentsBuilder builder) {
 
-        System.out.println(menuCategoryDTO.getMealCategory());
-        System.out.println(menuCategoryDTO.getMenu());
         Menu menu = menuCategoryDTO.getMenu();
         Optional<MealCategory> mealCategory =
                 mealCategoryService.findMealCategoryByCategory(menuCategoryDTO.getMealCategory().getCategory());
@@ -284,14 +183,6 @@ public class MenuController {
                 for (MealCustomizeOption customizeOption : mealCustomizeOptions) {
                     MealCustomizeOptionDTO temp = new MealCustomizeOptionDTO(customizeOption.getMealCustomizeOption());
                     mealCustomizeOptionsTemp.add(temp);
-                }
-
-                for (MealCustomizeOption mealCustomizeOption : mealCustomizeOptions) {
-                    System.out.println(mealCustomizeOption);
-                }
-
-                for (MealCustomizeOptionDTO mealCustomizeOptionTemp : mealCustomizeOptionsTemp) {
-                    System.out.println(mealCustomizeOptionTemp);
                 }
 
                 meal.setMealName(allMeal.getMealName());
@@ -353,11 +244,6 @@ public class MenuController {
 
         tempCategoryDTO2.setMeals(mealListTemp);
         categoryDTOs.add(0, tempCategoryDTO2);
-
-        for (MealDTO value : mealListTemp) System.out.println(value);
-
-        for (CategoryDTO2 value : categoryDTOs) System.out.println(value);
-
 
         menuDTO.setMealCategories(categoryDTOs);
 

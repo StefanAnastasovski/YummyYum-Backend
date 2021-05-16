@@ -133,12 +133,6 @@ public class RecipeController {
 
         }
 
-//        for (int i = 0; i < cookingSteps.size(); i++) {
-//
-//            System.out.println(cookingStepsList[i]);
-//
-//        }
-
 //        ------------------- Recipe Steps
         RecipeStepsDTO recipeStepsDTO = new RecipeStepsDTO();
         recipeStepsDTO.setMealUtensilsRow1(recipeSteps.get().getMealUtensilsRow1());
