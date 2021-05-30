@@ -1,27 +1,21 @@
 package com.yummyyum.Model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.*;
 
-@Entity(name = "payment")
+@Entity(name = "credit_card")
 @Getter
 @Setter
 @AllArgsConstructor
-public class Payment {
+public class CreditCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "payment_date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date paymentDate;
 
     @Column(name = "name_on_card")
     private String nameOnCard;
@@ -38,24 +32,31 @@ public class Payment {
     @Column(name = "security_code")
     private String securityCode;
 
-    public Payment() {
+    @Column
+    private Boolean isActive;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+
+    public CreditCard() {
     }
 
-    public Payment(Date paymentDate, String nameOnCard, String cardNumber,
-                   String expirationDateMonth, String expirationDateYear,
-                   String securityCode) {
-        this.paymentDate = paymentDate;
+    public CreditCard(String nameOnCard, String cardNumber,
+                      String expirationDateMonth, String expirationDateYear,
+                      String securityCode, Boolean isActive) {
         this.nameOnCard = nameOnCard;
         this.cardNumber = cardNumber;
         this.expirationDateMonth = expirationDateMonth;
         this.expirationDateYear = expirationDateYear;
         this.securityCode = securityCode;
+        this.isActive = isActive;
     }
 
     @Override
     public String toString() {
         return "Payment{" +
-                "paymentDate=" + paymentDate +
                 ", nameOnCard='" + nameOnCard + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", expirationDateMonth='" + expirationDateMonth + '\'' +
@@ -69,9 +70,9 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Payment payment = (Payment) o;
+        CreditCard creditCard = (CreditCard) o;
 
-        return id != null ? id.equals(payment.id) : payment.id == null;
+        return id != null ? id.equals(creditCard.id) : creditCard.id == null;
     }
 
     @Override

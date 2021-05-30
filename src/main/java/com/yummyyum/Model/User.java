@@ -41,6 +41,11 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<OrderInfo> OrderInfo;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private CreditCard creditCard;
+
+
     public User() {
     }
 
