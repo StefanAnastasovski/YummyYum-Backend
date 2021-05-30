@@ -1,7 +1,7 @@
 package com.yummyyum.Controllers;
 
 import com.yummyyum.Model.CreditCard;
-import com.yummyyum.Services.Payment.CreditCardService;
+import com.yummyyum.Services.CreditCard.CreditCardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -58,6 +58,19 @@ public class CreditCardController {
                 buildAndExpand(creditCard.getId()).toUriString());
 
         return creditCard1;
+    }
+
+    @PutMapping("/credit-card/username/{username}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public CreditCard updateUser(@RequestBody CreditCard creditCard,
+                                      @PathVariable("username") String username,
+                                      HttpServletResponse response,
+                                      UriComponentsBuilder builder) {
+
+        return creditCardService.updateCreditCard(creditCard.getNameOnCard(),
+                creditCard.getCardNumber(), creditCard.getExpirationDateMonth(), creditCard.getExpirationDateYear(),
+                creditCard.getSecurityCode(), creditCard.getIsActive(), username);
     }
 
 }
