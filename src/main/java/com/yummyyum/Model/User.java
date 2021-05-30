@@ -45,6 +45,10 @@ public class User {
     @OneToOne(mappedBy = "user")
     private CreditCard creditCard;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private ShippingAddress shippingAddress;
+
 
     public User() {
     }
