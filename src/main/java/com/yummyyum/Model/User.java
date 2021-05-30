@@ -1,11 +1,13 @@
 package com.yummyyum.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity(name = "user")
 @Getter
@@ -33,6 +35,11 @@ public class User {
     @OneToOne
     @JoinColumn(name = "email_id", referencedColumnName = "id")
     private Email email;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<OrderInfo> OrderInfo;
 
     public User() {
     }

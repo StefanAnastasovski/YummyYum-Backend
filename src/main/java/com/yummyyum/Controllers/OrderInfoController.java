@@ -48,7 +48,7 @@ public class OrderInfoController {
 
         OrderInfo orderInfo1 = orderInfoService.createNewOrder(orderInfo.getOrderId(), orderInfo.getMealNumber(),
                 orderInfo.getServingNumber(), orderInfo.getSubtotal(),
-                orderInfo.getShippingCost(), orderInfo.getTotal());
+                orderInfo.getShippingCost(), orderInfo.getTotal(), orderInfo.getUser());
 
         response.setHeader("Location", builder.path("/api/order-inf/" + orderInfo.getId()).
                 buildAndExpand(orderInfo.getId()).toUriString());

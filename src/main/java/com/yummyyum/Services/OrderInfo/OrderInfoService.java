@@ -2,6 +2,7 @@ package com.yummyyum.Services.OrderInfo;
 
 import com.yummyyum.Model.DTO.OrderInfoMeals;
 import com.yummyyum.Model.OrderInfo;
+import com.yummyyum.Model.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,6 @@ public interface OrderInfoService {
 
     OrderInfo createNewOrder(String orderId, int mealNumber,
                                        int servingNumber, float subtotal,
-                                       float shippingCost, float total);
+                                       float shippingCost, float total, User user);
 
 }

@@ -3,8 +3,10 @@ package com.yummyyum.Services.OrderInfo.Impl;
 import com.yummyyum.Model.DTO.OrderInfoMeals;
 import com.yummyyum.Model.OrderInfo;
 import com.yummyyum.Model.OrderMeals;
+import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.OrderInfoRepository;
 import com.yummyyum.Repositories.OrderMealsRepository;
+import com.yummyyum.Repositories.UserRepository;
 import com.yummyyum.Services.OrderInfo.OrderInfoService;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     private final OrderInfoRepository orderInfoRepository;
     private final OrderMealsRepository orderMealsRepository;
+    private final UserRepository userRepository;
 
     public OrderInfoServiceImpl(OrderInfoRepository orderInfoRepository,
-                                OrderMealsRepository orderMealsRepository) {
+                                OrderMealsRepository orderMealsRepository, UserRepository userRepository) {
         this.orderInfoRepository = orderInfoRepository;
         this.orderMealsRepository = orderMealsRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -56,12 +60,17 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public OrderInfo createNewOrder(String orderId, int mealNumber,
                                     int servingNumber, float subtotal,
-                                    float shippingCost, float total) {
+                                    float shippingCost, float total, User user) {
 
         Date date = new Date();
 
+        Optional<User> user1 = userRepository.getUserByUsername(user.getUsername());
+
+
         OrderInfo orderInfo = new OrderInfo(orderId, mealNumber, servingNumber,
                 subtotal, shippingCost, total, date);
+
+        orderInfo.setUser(user1.get());
 
         return orderInfoRepository.save(orderInfo);
     }

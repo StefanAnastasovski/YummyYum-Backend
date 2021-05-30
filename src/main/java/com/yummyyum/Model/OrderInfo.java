@@ -45,6 +45,12 @@ public class OrderInfo {
     @JoinColumn(name = "order_info_id")
     private List<OrderMeals> orderMeals;
 
+//    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
     public OrderInfo() {
     }
 
