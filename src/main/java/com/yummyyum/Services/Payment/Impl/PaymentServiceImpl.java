@@ -38,6 +38,11 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     @Override
+    public Optional<Payment> findPaymentById(Long id) {
+        return paymentRepository.findById(id);
+    }
+
+    @Override
     public Optional<Payment> getPaymentByPaymentNumberID(String paymentNumberId) {
         return paymentRepository.getPaymentByPaymentNumberID(paymentNumberId);
     }

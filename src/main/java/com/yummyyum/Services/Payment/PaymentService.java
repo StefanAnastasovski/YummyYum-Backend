@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface PaymentService {
 
+    Optional<Payment> findPaymentById(Long id);
+
     Optional<Payment> getPaymentByPaymentNumberID(String paymentNumberId);
 
     List<Payment> getAllPaymentsByPaymentDate(String date);

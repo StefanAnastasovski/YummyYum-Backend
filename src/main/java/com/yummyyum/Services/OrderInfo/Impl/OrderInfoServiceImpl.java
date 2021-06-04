@@ -29,6 +29,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
+    public Optional<OrderInfo> findOrderInfoByID(Long id) {
+        return orderInfoRepository.findById(id);
+    }
+
+    @Override
     public Optional<OrderInfo> getOrderInfoByOrderId(String orderId) {
         return orderInfoRepository.getOrderInfoByOrderId(orderId);
     }

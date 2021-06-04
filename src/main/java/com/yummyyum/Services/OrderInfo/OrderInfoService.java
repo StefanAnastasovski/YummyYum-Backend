@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface OrderInfoService {
 
+    Optional<OrderInfo> findOrderInfoByID(Long id);
+
     Optional<OrderInfo> getOrderInfoByOrderId(String orderId);
 
     List<OrderInfo> getOrderInfoByOrderDate(String date);
@@ -16,7 +18,7 @@ public interface OrderInfoService {
     OrderInfoMeals getOrderInfoAndOrderMealsByOrderId(String orderId);
 
     OrderInfo createNewOrder(String orderId, int mealNumber,
-                                       int servingNumber, float subtotal,
-                                       float shippingCost, float total, User user);
+                             int servingNumber, float subtotal,
+                             float shippingCost, float total, User user);
 
 }
