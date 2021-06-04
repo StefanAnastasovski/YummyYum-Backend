@@ -1,5 +1,6 @@
 package com.yummyyum.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class DeliveryAddress {
     @Column
     private String zipCode;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;

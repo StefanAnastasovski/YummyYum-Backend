@@ -25,23 +25,24 @@ public class UserOrderInfoPaymentDTO {
     @NotNull
     private String username;
 
+    //delivery address
     @NotNull
-    private String address;
+    private String deliveryAddress;
 
     @NotNull
-    private String zipCode;
+    private String deliveryZipCode;
 
     //payment
     @NotNull
-    private Payment payment;
+    private PaymentInvoiceDTO payment;
 
     //order info
     @NotNull
-    private OrderInfo orderInfo;
+    private OrderInfoDTO orderInfo;
 
     //order meals
     @NotNull
-    private List<OrderMeals> orderMeals;
+    private List<OrderMealDTO> orderMeals;
 
     public UserOrderInfoPaymentDTO() {
     }
