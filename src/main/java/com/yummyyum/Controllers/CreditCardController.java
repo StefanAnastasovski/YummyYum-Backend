@@ -31,7 +31,7 @@ public class CreditCardController {
         return creditCardService.getCreditCardByName(name);
     }
 
-    @GetMapping("/credit-card/cardNumber/{cardNumber}")
+    @GetMapping("/credit-card/card-number/{cardNumber}")
     public Optional<CreditCard> getCreditCardBCardNumber(@PathVariable("cardNumber")
                                                                  String cardNumber) {
         return creditCardService.getCreditCardByCardNumber(cardNumber);
