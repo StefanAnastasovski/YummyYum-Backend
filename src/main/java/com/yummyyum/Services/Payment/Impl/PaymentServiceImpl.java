@@ -67,9 +67,6 @@ public class PaymentServiceImpl implements PaymentService {
         Optional<User> user = userRepository.getUserByUsername(username);
 
         Optional<OrderInfo> orderInfo = orderInfoRepository.getOrderInfoByOrderId(orderInfoId);
-        System.out.println(createdPayment.get().getId());
-        System.out.println(user.get().getId());
-        System.out.println(orderInfo.get().getId());
         UserOrderInfoPaymentId userOrderInfoPaymentId = new UserOrderInfoPaymentId(user.get().getId(),
                 orderInfo.get().getId(),
                 createdPayment.get().getId());
