@@ -79,7 +79,7 @@ public class PaymentController {
 
         return paymentService.createNewPayment(paymentID, payment.getCardNumber(),
                 new Date(), payment.getTotalAmount(), payment.getAddress(), payment.getZipCode(),
-                payment.getUsername(), payment.getOrderInfoId());
+                payment.getUsername(), payment.getOrderInfoId(), payment.getCouponName());
     }
 
 }

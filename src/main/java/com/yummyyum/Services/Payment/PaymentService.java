@@ -17,6 +17,6 @@ public interface PaymentService {
 
     PaymentInfoDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
                                     String address, String zipCode,
-                                    String username, String orderInfoId);
+                                    String username, String orderInfoId, String couponName);
 
 }

@@ -30,6 +30,8 @@ public class PaymentInfoDTO {
 
     private String paymentNumberId;
 
+    private String couponName;
+
     public PaymentInfoDTO() {
     }
 

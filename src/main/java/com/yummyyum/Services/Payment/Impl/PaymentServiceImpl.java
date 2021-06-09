@@ -1,12 +1,9 @@
 package com.yummyyum.Services.Payment.Impl;
 
+import com.yummyyum.Model.*;
 import com.yummyyum.Model.DTO.PaymentInfoDTO;
-import com.yummyyum.Model.DeliveryAddress;
 import com.yummyyum.Model.EmbeddedIDs.UserOrderInfoPaymentId;
-import com.yummyyum.Model.OrderInfo;
-import com.yummyyum.Model.Payment;
 import com.yummyyum.Model.TernaryRelationships.UserOrderPaymentRelationship.UserOrderInfoPayment;
-import com.yummyyum.Model.User;
 import com.yummyyum.Repositories.*;
 import com.yummyyum.Services.Payment.PaymentService;
 import org.springframework.stereotype.Service;
@@ -23,17 +20,19 @@ public class PaymentServiceImpl implements PaymentService {
     private final OrderInfoRepository orderInfoRepository;
     private final UserOrderInfoPaymentRepository userOrderInfoPaymentRepository;
     private final DeliveryAddressRepository deliveryAddressRepository;
+    private final CouponRepository couponRepository;
 
 
     public PaymentServiceImpl(PaymentRepository paymentRepository, UserRepository userRepository,
                               OrderInfoRepository orderInfoRepository,
                               UserOrderInfoPaymentRepository userOrderInfoPaymentRepository,
-                              DeliveryAddressRepository deliveryAddressRepository) {
+                              DeliveryAddressRepository deliveryAddressRepository, CouponRepository couponRepository) {
         this.paymentRepository = paymentRepository;
         this.userRepository = userRepository;
         this.orderInfoRepository = orderInfoRepository;
         this.userOrderInfoPaymentRepository = userOrderInfoPaymentRepository;
         this.deliveryAddressRepository = deliveryAddressRepository;
+        this.couponRepository = couponRepository;
     }
 
 
@@ -54,8 +53,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentInfoDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
-                                    String address, String zipCode,
-                                    String username, String orderInfoId) {
+                                           String address, String zipCode,
+                                           String username, String orderInfoId, String couponName) {
 
         Payment payment = new Payment(paymentID, cardNumber, paymentDate, totalAmount);
         paymentRepository.save(payment);
@@ -74,9 +73,17 @@ public class PaymentServiceImpl implements PaymentService {
         userOrderInfoPayment.setId(userOrderInfoPaymentId);
         userOrderInfoPaymentRepository.save(userOrderInfoPayment);
 
+        PaymentInfoDTO newPaymentInfoDTO = new PaymentInfoDTO(cardNumber, totalAmount, address,
+                zipCode, username, orderInfoId, paymentID, couponName);
 
-        return new PaymentInfoDTO(cardNumber, totalAmount, address,
-                zipCode, username, orderInfoId, paymentID);
+        if (couponName != null) {
+            Optional<Coupon> coupon = couponRepository.getCouponByCouponName(couponName);
+            payment.setCoupon(coupon.get());
+
+            newPaymentInfoDTO.setCouponName(coupon.get().getCouponName());
+        }
+
+        return newPaymentInfoDTO;
 
     }
 }

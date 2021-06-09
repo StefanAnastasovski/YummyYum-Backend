@@ -34,6 +34,11 @@ public class Payment {
     @OneToOne(mappedBy = "payment")
     private DeliveryAddress deliveryAddress;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
     public Payment() {
     }
 
