@@ -1,6 +1,9 @@
 package com.yummyyum.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yummyyum.Model.History.CreditCardHistory;
+import com.yummyyum.Model.History.ShippingAddressHistory;
+import com.yummyyum.Model.History.SubscriptionHistory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,6 +51,21 @@ public class User {
     @JsonIgnore
     @OneToOne(mappedBy = "user")
     private ShippingAddress shippingAddress;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<CreditCardHistory> creditCardHistories;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<ShippingAddressHistory> shippingAddressHistories;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<SubscriptionHistory> subscriptionHistories;
 
 
     public User() {
