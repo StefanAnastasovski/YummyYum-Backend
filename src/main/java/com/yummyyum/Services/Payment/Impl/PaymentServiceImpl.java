@@ -57,21 +57,12 @@ public class PaymentServiceImpl implements PaymentService {
                                            String username, String orderInfoId, String couponName) {
 
         Payment payment = new Payment(paymentID, cardNumber, paymentDate, totalAmount);
-        paymentRepository.save(payment);
         DeliveryAddress deliveryAddress = new DeliveryAddress(address, zipCode);
-        Optional<Payment> createdPayment = paymentRepository.getPaymentByPaymentNumberID(paymentID);
-        deliveryAddress.setPayment(createdPayment.get());
-        deliveryAddressRepository.save(deliveryAddress);
+
 
         Optional<User> user = userRepository.getUserByUsername(username);
 
         Optional<OrderInfo> orderInfo = orderInfoRepository.getOrderInfoByOrderId(orderInfoId);
-        UserOrderInfoPaymentId userOrderInfoPaymentId = new UserOrderInfoPaymentId(user.get().getId(),
-                orderInfo.get().getId(),
-                createdPayment.get().getId());
-        UserOrderInfoPayment userOrderInfoPayment = new UserOrderInfoPayment();
-        userOrderInfoPayment.setId(userOrderInfoPaymentId);
-        userOrderInfoPaymentRepository.save(userOrderInfoPayment);
 
         PaymentInfoDTO newPaymentInfoDTO = new PaymentInfoDTO(cardNumber, totalAmount, address,
                 zipCode, username, orderInfoId, paymentID, couponName);
@@ -82,6 +73,18 @@ public class PaymentServiceImpl implements PaymentService {
 
             newPaymentInfoDTO.setCouponName(coupon.get().getCouponName());
         }
+
+        paymentRepository.save(payment);
+
+        Optional<Payment> createdPayment = paymentRepository.getPaymentByPaymentNumberID(paymentID);
+        UserOrderInfoPaymentId userOrderInfoPaymentId = new UserOrderInfoPaymentId(user.get().getId(),
+                orderInfo.get().getId(),
+                createdPayment.get().getId());
+        UserOrderInfoPayment userOrderInfoPayment = new UserOrderInfoPayment();
+        userOrderInfoPayment.setId(userOrderInfoPaymentId);
+        userOrderInfoPaymentRepository.save(userOrderInfoPayment);
+        deliveryAddress.setPayment(createdPayment.get());
+        deliveryAddressRepository.save(deliveryAddress);
 
         return newPaymentInfoDTO;
 
