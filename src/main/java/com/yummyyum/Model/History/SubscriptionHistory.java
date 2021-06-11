@@ -31,7 +31,7 @@ public class SubscriptionHistory {
     @Column(name = "subscription_type")
     private String subscriptionType;
 
-    @Column(name = "weekly_delivery_date")
+    @Column(name = "weekly_delivery_day")
     private String weeklyDeliveryDay;
 
     @Column(name = "weekly_delivery_time")
