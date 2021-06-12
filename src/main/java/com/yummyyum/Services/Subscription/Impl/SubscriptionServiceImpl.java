@@ -1,27 +1,41 @@
 package com.yummyyum.Services.Subscription.Impl;
 
+import com.yummyyum.Model.*;
 import com.yummyyum.Model.DTO.SubscriptionDTO;
-import com.yummyyum.Model.Subscription;
-import com.yummyyum.Model.SubscriptionPlan;
-import com.yummyyum.Repositories.SubscriptionPlanRepository;
-import com.yummyyum.Repositories.SubscriptionRepository;
+import com.yummyyum.Model.EmbeddedIDs.UserSubscriptionPaymentId;
+import com.yummyyum.Model.TernaryRelationships.UserSubscriptionPaymentRelationship.UserSubscriptionPayment;
+import com.yummyyum.Repositories.*;
 import com.yummyyum.Services.Subscription.SubscriptionService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
     private final SubscriptionPlanRepository subscriptionPlanRepository;
+    private final UserRepository userRepository;
+    private final PaymentRepository paymentRepository;
+    private final DeliveryAddressRepository deliveryAddressRepository;
+    private final UserSubscriptionPaymentRepository userSubscriptionPaymentRepository;
 
     public SubscriptionServiceImpl(SubscriptionRepository subscriptionRepository,
-                                   SubscriptionPlanRepository subscriptionPlanRepository) {
+                                   SubscriptionPlanRepository subscriptionPlanRepository,
+                                   UserRepository userRepository, PaymentRepository paymentRepository,
+                                   DeliveryAddressRepository deliveryAddressRepository,
+                                   UserSubscriptionPaymentRepository userSubscriptionPaymentRepository) {
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionPlanRepository = subscriptionPlanRepository;
+        this.userRepository = userRepository;
+        this.paymentRepository = paymentRepository;
+        this.deliveryAddressRepository = deliveryAddressRepository;
+        this.userSubscriptionPaymentRepository = userSubscriptionPaymentRepository;
     }
 
     @Override
@@ -71,18 +85,95 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Subscription createNewSubscription(int numberOfWeeklyMeals, int servingsPerMeal, String subscriptionType,
-                                              String weeklyDeliveryDay, String weeklyDeliveryTime, Boolean isCanceled,
-                                              LocalDate activationDate, LocalDate canceledDate, String subscriptionPlanName) {
+    public Optional<Subscription> getSubscriptionByUsername(String username) {
+        return subscriptionRepository.getSubscriptionByUsername(username);
+    }
 
-        Subscription subscription = new Subscription(
-                numberOfWeeklyMeals, servingsPerMeal, subscriptionType, weeklyDeliveryDay,
-                weeklyDeliveryTime, isCanceled, activationDate, canceledDate);
+    @Override
+    public Subscription createNewSubscription(SubscriptionDTO subscriptionDTO, String subscriptionPlanName,
+                                              String username, String cardNumber, Float totalAmount,
+                                              String address, String zipCode) {
+
+        Optional<Subscription> oldSubscription = subscriptionRepository.getSubscriptionByUsername(username);
+        Subscription newSubscription = null;
+
+        if (!oldSubscription.isPresent()) {
+            newSubscription = new Subscription(
+                    subscriptionDTO.getNumberOfWeeklyMeals(),
+                    subscriptionDTO.getServingsPerMeal(),
+                    subscriptionDTO.getSubscriptionType(),
+                    subscriptionDTO.getWeeklyDeliveryDay(),
+                    subscriptionDTO.getWeeklyDeliveryTime(),
+                    subscriptionDTO.getIsCanceled(),
+                    subscriptionDTO.getActivationDate(),
+                    subscriptionDTO.getCanceledDate());
+        } else {
+            newSubscription = new Subscription(
+                    subscriptionDTO.getNumberOfWeeklyMeals(),
+                    subscriptionDTO.getServingsPerMeal(),
+                    subscriptionDTO.getSubscriptionType(),
+                    subscriptionDTO.getWeeklyDeliveryDay(),
+                    subscriptionDTO.getWeeklyDeliveryTime(),
+                    subscriptionDTO.getIsCanceled(),
+                    subscriptionDTO.getActivationDate(),
+                    subscriptionDTO.getCanceledDate());
+            newSubscription.setId(oldSubscription.get().getId());
+        }
+
+
         Optional<SubscriptionPlan> subscriptionPlan =
-                subscriptionPlanRepository.getSubscriptionPlanByName(subscriptionPlanName);
-        subscription.setSubscriptionPlan(subscriptionPlan.get());
+                subscriptionPlanRepository.getSubscriptionPlanByName(subscriptionDTO.getName());
+        newSubscription.setSubscriptionPlan(subscriptionPlan.get());
+        subscriptionRepository.save(newSubscription);
 
-        return subscriptionRepository.save(subscription);
+        String paymentID;
+        boolean isExist = false;
+        LocalDateTime newDate = LocalDateTime.now();
+
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+//        // this will convert any number sequence into 6 character.
+        String code = String.format("%06d", number);
+
+        String stringTest1 = String.valueOf(newDate.getYear());
+        String stringTest2 = String.valueOf(newDate.getMonthValue());
+        String stringTest3 = String.valueOf(newDate.getDayOfMonth());
+
+        paymentID = stringTest1 + stringTest2 + stringTest3 + code;
+
+        Optional<Payment> paymentValues = paymentRepository.getPaymentByPaymentNumberID(paymentID);
+        if (!paymentValues.isEmpty()) {
+            isExist = true;
+        }
+
+        while (isExist) {
+            number = rnd.nextInt(999999);
+            code = String.format("%06d", number);
+            paymentID = stringTest1 + stringTest2 + stringTest3 + code;
+            Optional<Payment> paymentValues2 = paymentRepository.getPaymentByPaymentNumberID(paymentID);
+            if (paymentValues2.isEmpty()) {
+                isExist = false;
+            }
+        }
+        Payment payment = new Payment(paymentID, cardNumber, new Date(), totalAmount);
+        paymentRepository.save(payment);
+        Optional<Payment> getPayment = paymentRepository.getPaymentByPaymentNumberID(paymentID);
+
+        DeliveryAddress deliveryAddress = new DeliveryAddress(address, zipCode);
+        deliveryAddress.setPayment(getPayment.get());
+        deliveryAddressRepository.save(deliveryAddress);
+
+
+        Optional<User> user = userRepository.getUserByUsername(username);
+        Optional<Subscription> subscriptionObj =
+                subscriptionRepository.getSubscriptionBySubscriptionPlanName(subscriptionDTO.getName());
+        UserSubscriptionPaymentId userSubscriptionPaymentId = new UserSubscriptionPaymentId(user.get().getId(),
+                subscriptionObj.get().getId(), getPayment.get().getId());
+
+        UserSubscriptionPayment userSubscriptionPayment = new UserSubscriptionPayment(userSubscriptionPaymentId);
+        userSubscriptionPaymentRepository.save(userSubscriptionPayment);
+
+        return newSubscription;
     }
 
     @Override

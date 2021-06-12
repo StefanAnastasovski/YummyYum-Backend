@@ -1,6 +1,7 @@
 package com.yummyyum.Controllers;
 
 import com.yummyyum.Model.DTO.SubscriptionDTO;
+import com.yummyyum.Model.DTO.UserSubscriptionPaymentDTO;
 import com.yummyyum.Model.Subscription;
 import com.yummyyum.Services.Subscription.SubscriptionService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -26,6 +28,11 @@ public class SubscriptionController {
     @GetMapping("/subscription")
     public List<Subscription> getAllSubscriptions() {
         return subscriptionService.getAllSubscriptions();
+    }
+
+    @GetMapping("/subscription/username={username}")
+    public Optional<Subscription> getSubscriptionByUsername(@PathVariable("username") String username) {
+        return subscriptionService.getSubscriptionByUsername(username);
     }
 
     @GetMapping("/subscription/subscription-plan-name={name}")
@@ -58,23 +65,57 @@ public class SubscriptionController {
         return subscriptionService.getAllSubscriptionsByCanceledDate(canceledDate);
     }
 
-    @PostMapping("/subscription/subscription-plan-name={name}")
+    @PostMapping("/subscription")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Subscription createNewSubscription(@RequestBody Subscription subscription,
-                                              @PathVariable("name") String subscriptionPlanName,
+    public Subscription createNewSubscription(@RequestBody UserSubscriptionPaymentDTO userSubscriptionPaymentDTO,
                                               HttpServletResponse response,
                                               UriComponentsBuilder builder) {
 
-        return subscriptionService.createNewSubscription(subscription.getNumberOfWeeklyMeals(),
-                subscription.getServingsPerMeal(),
-                subscription.getSubscriptionType(),
-                subscription.getWeeklyDeliveryDay(),
-                subscription.getWeeklyDeliveryTime(),
-                subscription.getIsCanceled(),
-                subscription.getActivationDate(),
-                subscription.getCanceledDate(), subscriptionPlanName);
+        return subscriptionService.createNewSubscription(userSubscriptionPaymentDTO.getSubscription(),
+                userSubscriptionPaymentDTO.getSubscriptionPlan(), userSubscriptionPaymentDTO.getUsername(),
+                userSubscriptionPaymentDTO.getCardNumber(), userSubscriptionPaymentDTO.getTotalAmount(),
+                userSubscriptionPaymentDTO.getAddress(), userSubscriptionPaymentDTO.getZipCode());
     }
+
+//    @Override
+//    public PaymentInfoDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
+//                                           String address, String zipCode,
+//                                           String username, String orderInfoId, String couponName) {
+//
+//        Payment payment = new Payment(paymentID, cardNumber, paymentDate, totalAmount);
+//        DeliveryAddress deliveryAddress = new DeliveryAddress(address, zipCode);
+//
+//
+//        Optional<User> user = userRepository.getUserByUsername(username);
+//
+//        Optional<OrderInfo> orderInfo = orderInfoRepository.getOrderInfoByOrderId(orderInfoId);
+//
+//        PaymentInfoDTO newPaymentInfoDTO = new PaymentInfoDTO(cardNumber, totalAmount, address,
+//                zipCode, username, orderInfoId, paymentID, couponName);
+//
+//        if (couponName != null) {
+//            Optional<Coupon> coupon = couponRepository.getCouponByCouponName(couponName);
+//            payment.setCoupon(coupon.get());
+//
+//            newPaymentInfoDTO.setCouponName(coupon.get().getCouponName());
+//        }
+//
+//        paymentRepository.save(payment);
+//
+//        Optional<Payment> createdPayment = paymentRepository.getPaymentByPaymentNumberID(paymentID);
+//        UserOrderInfoPaymentId userOrderInfoPaymentId = new UserOrderInfoPaymentId(user.get().getId(),
+//                orderInfo.get().getId(),
+//                createdPayment.get().getId());
+//        UserOrderInfoPayment userOrderInfoPayment = new UserOrderInfoPayment();
+//        userOrderInfoPayment.setId(userOrderInfoPaymentId);
+//        userOrderInfoPaymentRepository.save(userOrderInfoPayment);
+//        deliveryAddress.setPayment(createdPayment.get());
+//        deliveryAddressRepository.save(deliveryAddress);
+//
+//        return newPaymentInfoDTO;
+//
+//    }
 
     @PutMapping("/subscription/subscription-plan-name={name}")
     @ResponseStatus(HttpStatus.CREATED)

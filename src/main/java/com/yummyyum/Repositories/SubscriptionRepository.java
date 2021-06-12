@@ -29,4 +29,12 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
     List<Subscription> getAllSubscriptionsByCanceledDate(LocalDate canceledDate);
 
+    @Query(value = "SELECT s.* FROM subscription as s " +
+            "JOIN user_subscription_payment usp on s.id = usp.subscription_id " +
+            "JOIN user u on usp.user_id = u.id " +
+            "JOIN subscription_plan as sp on sp.id = s.id " +
+            "WHERE u.username = :username",
+            nativeQuery = true)
+    Optional<Subscription> getSubscriptionByUsername(String username);
+
 }

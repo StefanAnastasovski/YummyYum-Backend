@@ -13,8 +13,10 @@ public interface SubscriptionPlanService {
 
     List<SubscriptionPlan> getAllSubscriptionPlansByIsActive(Boolean isActive);
 
-    SubscriptionPlan createNewSubscriptionPlan(String name, Boolean isActive);
+    SubscriptionPlan createNewSubscriptionPlan(String name, int numberOfWeeklyMealsLimit,
+                            int servingsPerMealLimit, int weeklyDeliveryDayLimit, Boolean isActive);
 
-    SubscriptionPlan updateSubscriptionPlan(String newName, Boolean isActive, String oldName);
+    SubscriptionPlan updateSubscriptionPlan(String name, int numberOfWeeklyMealsLimit,
+                            int servingsPerMealLimit, int weeklyDeliveryDayLimit, Boolean isActive, String oldName);
 
 }

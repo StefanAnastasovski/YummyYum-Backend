@@ -33,24 +33,33 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
     }
 
     @Override
-    public SubscriptionPlan createNewSubscriptionPlan(String name, Boolean isActive) {
+    public SubscriptionPlan createNewSubscriptionPlan(String name, int numberOfWeeklyMealsLimit,
+                            int servingsPerMealLimit, int weeklyDeliveryDayLimit, Boolean isActive) {
 
-        SubscriptionPlan subscriptionPlan = new SubscriptionPlan(name, isActive);
+        SubscriptionPlan subscriptionPlan = new SubscriptionPlan(name, numberOfWeeklyMealsLimit, servingsPerMealLimit
+                , weeklyDeliveryDayLimit, isActive);
 
         return subscriptionPlanRepository.save(subscriptionPlan);
 
     }
 
     @Override
-    public SubscriptionPlan updateSubscriptionPlan(String newName, Boolean isActive, String oldName) {
+    public SubscriptionPlan updateSubscriptionPlan(String newName, int numberOfWeeklyMealsLimit,
+                            int servingsPerMealLimit, int weeklyDeliveryDayLimit, Boolean isActive, String oldName) {
         Optional<SubscriptionPlan> subscriptionPlan = subscriptionPlanRepository.getSubscriptionPlanByName(oldName);
         SubscriptionPlan newSubscriptionPlan = new SubscriptionPlan();
         if (subscriptionPlan.isPresent()) {
             newSubscriptionPlan.setName(newName);
+            newSubscriptionPlan.setNumberOfWeeklyMealsLimit(numberOfWeeklyMealsLimit);
+            newSubscriptionPlan.setServingsPerMealLimit(servingsPerMealLimit);
+            newSubscriptionPlan.setWeeklyDeliveryDayLimit(weeklyDeliveryDayLimit);
             newSubscriptionPlan.setIsActive(isActive);
             newSubscriptionPlan.setId(subscriptionPlan.get().getId());
         } else {
             newSubscriptionPlan.setName(newName);
+            newSubscriptionPlan.setNumberOfWeeklyMealsLimit(numberOfWeeklyMealsLimit);
+            newSubscriptionPlan.setServingsPerMealLimit(servingsPerMealLimit);
+            newSubscriptionPlan.setWeeklyDeliveryDayLimit(weeklyDeliveryDayLimit);
             newSubscriptionPlan.setIsActive(isActive);
         }
 

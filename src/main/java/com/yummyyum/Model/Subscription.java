@@ -28,7 +28,7 @@ public class Subscription {
     @Column(name = "subscription_type")
     private String subscriptionType;
 
-    @Column(name = "weekly_delivery_dau")
+    @Column(name = "weekly_delivery_day")
     private String weeklyDeliveryDay;
 
     @Column(name = "weekly_delivery_time")

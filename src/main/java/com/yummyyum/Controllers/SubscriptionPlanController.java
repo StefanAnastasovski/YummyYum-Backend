@@ -45,7 +45,8 @@ public class SubscriptionPlanController {
                                                       UriComponentsBuilder builder) {
 
         return subscriptionPlanService.createNewSubscriptionPlan(subscriptionPlan.getName(),
-                subscriptionPlan.getIsActive());
+                subscriptionPlan.getNumberOfWeeklyMealsLimit(), subscriptionPlan.getServingsPerMealLimit(),
+                subscriptionPlan.getWeeklyDeliveryDayLimit(), subscriptionPlan.getIsActive());
     }
 
     @PutMapping("/subscription-plan/name={name}")
@@ -57,7 +58,8 @@ public class SubscriptionPlanController {
                                                    UriComponentsBuilder builder) {
 
         return subscriptionPlanService.updateSubscriptionPlan(subscriptionPlan.getName(),
-                subscriptionPlan.getIsActive(), name);
+                subscriptionPlan.getNumberOfWeeklyMealsLimit(), subscriptionPlan.getServingsPerMealLimit(),
+                subscriptionPlan.getWeeklyDeliveryDayLimit(), subscriptionPlan.getIsActive(), name);
     }
 
 }
