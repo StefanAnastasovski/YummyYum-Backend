@@ -402,7 +402,6 @@ public class BootstrapData implements CommandLineRunner {
         }
 
 
-        System.out.println("Sending Email...");
 
 
 //        sendEmail();

@@ -44,6 +44,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
+    public List<OrderInfo> getOrderInfoBetweenStartAndEndDate(String startDate, String endDate) {
+        return orderInfoRepository.getOrderInfoByStartAndEndDates(startDate, endDate);
+    }
+
+    @Override
     public OrderInfoMeals getOrderInfoAndOrderMealsByOrderId(String orderId) {
 
         Optional<OrderInfo> orderInfo = orderInfoRepository.getOrderInfoByOrderId(orderId);

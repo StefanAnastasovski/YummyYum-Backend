@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
 
+    @Query(value = "SELECT * FROM menu as m WHERE m.menu_name = :menuName",
+            nativeQuery = true)
     Optional<Menu> getMenuByMenuName(String menuName);
 
     @Query(value = "SELECT * FROM menu WHERE release_date LIKE %:releaseDate%",

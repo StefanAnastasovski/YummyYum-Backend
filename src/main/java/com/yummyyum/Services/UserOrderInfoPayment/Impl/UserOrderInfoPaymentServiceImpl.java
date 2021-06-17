@@ -29,6 +29,11 @@ public class UserOrderInfoPaymentServiceImpl implements UserOrderInfoPaymentServ
     }
 
     @Override
+    public List<UserOrderInfoPayment> getUserOrderInfoPaymentByBetweenDates(String startDate, String endDate) {
+        return null;
+    }
+
+    @Override
     public List<UserOrderInfoPayment> getUserOrderInfoPaymentByOrderDate(String orderDate) {
         return userOrderInfoPaymentRepository.getUserOrderInfoPaymentByOrderDate(orderDate);
     }

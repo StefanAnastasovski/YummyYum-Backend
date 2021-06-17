@@ -11,6 +11,8 @@ public interface UserOrderInfoPaymentService {
 
     List<UserOrderInfoPayment> getUserOrderInfoPaymentByUsernameBetweenDates(String username, String startDate, String endDate);
 
+    List<UserOrderInfoPayment> getUserOrderInfoPaymentByBetweenDates(String startDate, String endDate);
+
     List<UserOrderInfoPayment> getUserOrderInfoPaymentByOrderDate(String orderDate);
 
     List<UserOrderInfoPayment> getUserOrderInfoPaymentBetweenDates(String startDate, String endDate);

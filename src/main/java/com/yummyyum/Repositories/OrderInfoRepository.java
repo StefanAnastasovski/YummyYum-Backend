@@ -17,5 +17,13 @@ public interface OrderInfoRepository extends JpaRepository<OrderInfo, Long> {
             nativeQuery = true)
     List<OrderInfo> getOrderInfoByOrderDate(String date);
 
+//    SELECT * FROM order_info as oi WHERE DATE_FORMAT(oi.order_date,'%Y-%m-%d') BETWEEN '2021-06-10' AND '2021-06-14'
+
+
+    @Query(value = "SELECT * FROM order_info as oi WHERE DATE_FORMAT(oi.order_date,'%Y-%m-%d') BETWEEN :startDate AND :endDate",
+            nativeQuery = true)
+    List<OrderInfo> getOrderInfoByStartAndEndDates(String startDate, String endDate);
+
+
 }
 

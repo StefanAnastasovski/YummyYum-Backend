@@ -148,7 +148,6 @@ public class MenuController {
     public MenuDTO2 getMenuByMenuName(@PathVariable("menuname") String menuName) {
 
         Optional<Menu> menu1 = menuService.getMenuByMenuName(menuName);
-
         List<Meal> allMeals = menu1.get().getMeals();
 
         String mealCategory;
@@ -184,14 +183,16 @@ public class MenuController {
                     MealCustomizeOptionDTO temp = new MealCustomizeOptionDTO(customizeOption.getMealCustomizeOption());
                     mealCustomizeOptionsTemp.add(temp);
                 }
-
                 meal.setMealName(allMeal.getMealName());
                 meal.setMealCategory(allMeal.getMealCategory());
                 meal.setMealDescription(allMeal.getMealDescription());
                 meal.setMealIngredientTag(allMeal.getMealIngredientTag());
                 meal.setMealTimeTag(allMeal.getMealTimeTag());
                 meal.setPrice(allMeal.getPrice());
-                meal.setImage(image.get());
+
+                if (image.isPresent()) {
+                    meal.setImage(image.get());
+                }
                 meal.setMealCustomizeOptions(mealCustomizeOptionsTemp);
                 if (allMeal.getMealCategory().getCategory().equals(mealCategory)) {
                     mealList1[i].add(meal);
@@ -246,6 +247,7 @@ public class MenuController {
         categoryDTOs.add(0, tempCategoryDTO2);
 
         menuDTO.setMealCategories(categoryDTOs);
+
 
         return menuDTO;
     }

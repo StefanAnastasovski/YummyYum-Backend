@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public Boolean existsUserByUsername(String username) {
         return userRepository.existsUserByUsername(username);
     }

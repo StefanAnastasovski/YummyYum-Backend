@@ -110,4 +110,139 @@ public class OrderInvoiceController {
         return invoices;
     }
 
+    @GetMapping("/user-order-invoice/order-id={orderId}")
+    public UserOrderInfoPaymentDTO getUserOrderInvoiceByUsernameAndOrderDate(@PathVariable("orderId") String orderId) {
+
+        Optional<OrderInfo> orderInfo = orderInfoService.getOrderInfoByOrderId(orderId);
+        Optional<UserOrderInfoPayment> userOrderInfoPayment = userOrderInfoPaymentService.getUserOrderInfoPaymentByOrderId(orderId);
+        Optional<User> user = userService.getUserByUsername(orderInfo.get().getUser().getUsername());
+        Optional<Payment> paymentInfo = paymentService.findPaymentById(userOrderInfoPayment.get().getId().getPaymentId());
+//        List<UserOrderInfoPayment> paymentInfo =
+//                userOrderInfoPaymentService.getUserOrderInfoPaymentByUsernameAndOrderDate(username, orderDate);
+
+
+        UserOrderInfoPaymentDTO obj = new UserOrderInfoPaymentDTO();
+
+        if (paymentInfo.isPresent()) {
+
+            List<OrderMeals> orderMeals = orderMealsService.getOrderMealsByOrderId(orderId);
+            Optional<DeliveryAddress> deliveryAddress =
+                    deliveryAddressService.getDeliveryAddressByCardNumberId(paymentInfo.get().getPaymentNumberID());
+
+            List<OrderMealDTO> orderMealsList = new ArrayList<>();
+
+            // Order Meals
+            for (OrderMeals orderMeal : orderMeals) {
+                OrderMealDTO orderMealDTO = new OrderMealDTO();
+                orderMealDTO.setDeliveryDate(orderMeal.getDeliveryDate());
+                orderMealDTO.setDeliveryTime(orderMeal.getDeliveryTime());
+                orderMealDTO.setMealName(orderMeal.getMealName());
+                orderMealDTO.setMenuName(orderMeal.getMenuName());
+                orderMealDTO.setCustomizeIt(orderMeal.getCustomizeIt());
+                orderMealDTO.setServings(orderMeal.getServings());
+                orderMealDTO.setPrice(orderMeal.getPrice());
+
+                orderMealsList.add(orderMealDTO);
+            }
+
+            // Order Info
+            OrderInfoDTO orderInfoDTO = new OrderInfoDTO();
+
+            orderInfoDTO.setOrderDate(orderInfo.get().getOrderDate());
+            orderInfoDTO.setOrderId(orderInfo.get().getOrderId());
+            orderInfoDTO.setMealNumber(orderInfo.get().getMealNumber());
+            orderInfoDTO.setServingNumber(orderInfo.get().getServingNumber());
+            orderInfoDTO.setSubtotal(orderInfo.get().getSubtotal());
+            orderInfoDTO.setTotal(orderInfo.get().getTotal());
+            orderInfoDTO.setShippingCost(orderInfo.get().getShippingCost());
+
+            // Payment
+            PaymentInvoiceDTO paymentInvoiceDTO = new PaymentInvoiceDTO(
+                    paymentInfo.get().getPaymentNumberID(), paymentInfo.get().getCardNumber(),
+                    paymentInfo.get().getPaymentDate(), paymentInfo.get().getTotalAmount());
+
+            //User OrderInfo Payment
+            obj.setFirstName(user.get().getFirstName());
+            obj.setLastName(user.get().getLastName());
+            obj.setUsername(user.get().getUsername());
+            obj.setDeliveryAddress(deliveryAddress.get().getAddress());
+            obj.setDeliveryZipCode(deliveryAddress.get().getZipCode());
+            obj.setOrderInfo(orderInfoDTO);
+            obj.setOrderMeals(orderMealsList);
+            obj.setPayment(paymentInvoiceDTO);
+
+        }
+
+        return obj;
+//        return null;
+    }
+
+    @GetMapping("/user-order-invoice/start-date={startDate}&end-date={endDate}")
+    public List<UserOrderInfoPaymentDTO> getUserOrderInvoiceBetweenStartAndEndDates(@PathVariable("startDate") String startDate,
+                                                                                    @PathVariable("endDate") String endDate) {
+
+        List<UserOrderInfoPayment> paymentInfo =
+                userOrderInfoPaymentService.getUserOrderInfoPaymentBetweenDates(startDate, endDate);
+
+        List<UserOrderInfoPaymentDTO> invoices = new ArrayList<>();
+
+
+        for (UserOrderInfoPayment userOrderInfoPayment : paymentInfo) {
+
+            UserOrderInfoPaymentDTO obj = new UserOrderInfoPaymentDTO();
+            Optional<OrderInfo> orderInfo = orderInfoService.findOrderInfoByID(userOrderInfoPayment.getId().getOrderInfoId());
+            List<OrderMeals> orderMeals = orderMealsService.getOrderMealsByOrderId(orderInfo.get().getOrderId());
+            Optional<Payment> payment = paymentService.findPaymentById(userOrderInfoPayment.getId().getPaymentId());
+            Optional<DeliveryAddress> deliveryAddress =
+                    deliveryAddressService.getDeliveryAddressByCardNumberId(payment.get().getPaymentNumberID());
+            Optional<User> user = userService.findUserById(userOrderInfoPayment.getId().getUserId());
+
+            List<OrderMealDTO> orderMealsList = new ArrayList<>();
+
+            // Order Meals
+            for (OrderMeals orderMeal : orderMeals) {
+                OrderMealDTO orderMealDTO = new OrderMealDTO();
+                orderMealDTO.setDeliveryDate(orderMeal.getDeliveryDate());
+                orderMealDTO.setDeliveryTime(orderMeal.getDeliveryTime());
+                orderMealDTO.setMealName(orderMeal.getMealName());
+                orderMealDTO.setMenuName(orderMeal.getMenuName());
+                orderMealDTO.setCustomizeIt(orderMeal.getCustomizeIt());
+                orderMealDTO.setServings(orderMeal.getServings());
+                orderMealDTO.setPrice(orderMeal.getPrice());
+
+                orderMealsList.add(orderMealDTO);
+            }
+
+            // Order Info
+            OrderInfoDTO orderInfoDTO = new OrderInfoDTO();
+
+            orderInfoDTO.setOrderDate(orderInfo.get().getOrderDate());
+            orderInfoDTO.setOrderId(orderInfo.get().getOrderId());
+            orderInfoDTO.setMealNumber(orderInfo.get().getMealNumber());
+            orderInfoDTO.setServingNumber(orderInfo.get().getServingNumber());
+            orderInfoDTO.setSubtotal(orderInfo.get().getSubtotal());
+            orderInfoDTO.setTotal(orderInfo.get().getTotal());
+            orderInfoDTO.setShippingCost(orderInfo.get().getShippingCost());
+
+            // Payment
+            PaymentInvoiceDTO paymentInvoiceDTO = new PaymentInvoiceDTO(
+                    payment.get().getPaymentNumberID(), payment.get().getCardNumber(),
+                    payment.get().getPaymentDate(), payment.get().getTotalAmount());
+
+            //User OrderInfo Payment
+            obj.setFirstName(user.get().getFirstName());
+            obj.setLastName(user.get().getLastName());
+            obj.setUsername(user.get().getUsername());
+            obj.setDeliveryAddress(deliveryAddress.get().getAddress());
+            obj.setDeliveryZipCode(deliveryAddress.get().getZipCode());
+            obj.setOrderInfo(orderInfoDTO);
+            obj.setOrderMeals(orderMealsList);
+            obj.setPayment(paymentInvoiceDTO);
+
+            invoices.add(obj);
+        }
+
+        return invoices;
+    }
+
 }

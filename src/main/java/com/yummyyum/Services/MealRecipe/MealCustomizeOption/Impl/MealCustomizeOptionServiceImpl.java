@@ -38,7 +38,6 @@ public class MealCustomizeOptionServiceImpl implements MealCustomizeOptionServic
         List<MealCustomizeOption> mealCustomizeOptionsList = new ArrayList<>();
 
         for (MealCustomizeOption mealCustomizeOption : mealCustomizeOptions) {
-            System.out.println(mealCustomizeOption.getMealCustomizeOption());
             MealCustomizeOption mealCustomizeOption1 = new MealCustomizeOption(mealCustomizeOption.getMealCustomizeOption());
             mealCustomizeOption1.setMeal(meal1.get());
             mealCustomizeOptionsList.add(mealCustomizeOption1);

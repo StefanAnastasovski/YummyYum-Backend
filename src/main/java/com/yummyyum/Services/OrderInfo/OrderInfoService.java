@@ -15,6 +15,8 @@ public interface OrderInfoService {
 
     List<OrderInfo> getOrderInfoByOrderDate(String date);
 
+    List<OrderInfo> getOrderInfoBetweenStartAndEndDate(String startDate, String endDate);
+
     OrderInfoMeals getOrderInfoAndOrderMealsByOrderId(String orderId);
 
     OrderInfo createNewOrder(String orderId, int mealNumber,

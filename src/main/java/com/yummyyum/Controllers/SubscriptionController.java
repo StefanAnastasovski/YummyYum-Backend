@@ -54,7 +54,6 @@ public class SubscriptionController {
     public List<Subscription> getAllSubscriptionsByActivationDate(@PathVariable("activationDate")
                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                           LocalDate activationDate) {
-        System.out.println(activationDate);
         return subscriptionService.getAllSubscriptionsByActivationDate(activationDate);
     }
 
