@@ -16,4 +16,6 @@ public interface EmailRepository extends JpaRepository<Email, Long> {
 
     List<Email> getEmailsByIsUser(Boolean isUser);
 
+    int countEmailByIsUser(Boolean isUser);
+
 }

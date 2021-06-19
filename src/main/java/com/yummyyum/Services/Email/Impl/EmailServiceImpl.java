@@ -51,4 +51,9 @@ public class EmailServiceImpl implements EmailService {
         return emailRepository.save(email1);
     }
 
+    @Override
+    public int countEmailByIsUser(Boolean isUser) {
+        return emailRepository.countEmailByIsUser(isUser);
+    }
+
 }

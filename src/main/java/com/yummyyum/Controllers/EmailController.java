@@ -56,6 +56,11 @@ public class EmailController {
         return emailService.getEmailByEmailAndIsUser(email, isUser);
     }
 
+        @GetMapping("/emails/number-of-users/is-user={isUser}")
+    public int countEmailByIsUser(@PathVariable("isUser") Boolean isUser) {
+        return emailService.countEmailByIsUser(isUser);
+    }
+
     @PostMapping("/emails")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody

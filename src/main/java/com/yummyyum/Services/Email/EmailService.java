@@ -19,4 +19,6 @@ public interface EmailService {
 
     Email createNewEmail(String email, Boolean isUser);
 
+    int countEmailByIsUser(Boolean isUser);
+
 }
