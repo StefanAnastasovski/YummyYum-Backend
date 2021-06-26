@@ -22,7 +22,7 @@ public interface SubscriptionService {
 
     List<Subscription> getAllSubscriptionsByCanceledDate(LocalDate canceledDate);
 
-    Optional<Subscription> getSubscriptionByUsername(String username);
+    SubscriptionDTO getSubscriptionByUsername(String username);
 
     Subscription createNewSubscription(SubscriptionDTO subscription, String subscriptionPlanName,
                                        String username, String cardNumber, Float totalAmount,

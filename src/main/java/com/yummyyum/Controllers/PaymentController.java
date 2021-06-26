@@ -1,6 +1,7 @@
 package com.yummyyum.Controllers;
 
 import com.yummyyum.Model.DTO.PaymentInfoDTO;
+import com.yummyyum.Model.DTO.PaymentWithCouponDTO;
 import com.yummyyum.Model.Payment;
 import com.yummyyum.Services.Payment.PaymentService;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,49 @@ public class PaymentController {
     @PostMapping("/payments")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public PaymentInfoDTO createNewPayment(@RequestBody PaymentInfoDTO payment,
+    public PaymentInfoDTO createNewPaymentForOrderInfo(@RequestBody PaymentInfoDTO payment,
+                                           HttpServletResponse response,
+                                           UriComponentsBuilder builder) {
+
+        String paymentID;
+        boolean isExist = false;
+        LocalDateTime newDate = LocalDateTime.now();
+
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+//        // this will convert any number sequence into 6 character.
+        String code = String.format("%06d", number);
+
+        String stringTest1 = String.valueOf(newDate.getYear());
+        String stringTest2 = String.valueOf(newDate.getMonthValue());
+        String stringTest3 = String.valueOf(newDate.getDayOfMonth());
+
+        paymentID = stringTest1 + stringTest2 + stringTest3 + code;
+
+        Optional<Payment> paymentValues = paymentService.getPaymentByPaymentNumberID(paymentID);
+        if (!paymentValues.isEmpty()) {
+            isExist = true;
+        }
+
+        while (isExist) {
+            number = rnd.nextInt(999999);
+            code = String.format("%06d", number);
+            paymentID = stringTest1 + stringTest2 + stringTest3 + code;
+            Optional<Payment> paymentValues2 = paymentService.getPaymentByPaymentNumberID(paymentID);
+            if (paymentValues2.isEmpty()) {
+                isExist = false;
+            }
+        }
+
+        return paymentService.createNewPaymentForOrderInfo(paymentID, payment.getCardNumber(),
+                new Date(), payment.getTotalAmount(), payment.getAddress(), payment.getZipCode(),
+                payment.getUsername(), payment.getOrderInfoId(), payment.getCouponName());
+    }
+
+    @PostMapping("/payments/subscription")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public PaymentWithCouponDTO createNewPayment(@RequestBody PaymentWithCouponDTO payment,
                                            HttpServletResponse response,
                                            UriComponentsBuilder builder) {
 
@@ -78,8 +121,8 @@ public class PaymentController {
         }
 
         return paymentService.createNewPayment(paymentID, payment.getCardNumber(),
-                new Date(), payment.getTotalAmount(), payment.getAddress(), payment.getZipCode(),
-                payment.getUsername(), payment.getOrderInfoId(), payment.getCouponName());
+                new Date(), payment.getTotalAmount(), payment.getUsername(),
+                payment.getCouponName(), payment.getAddress(), payment.getZipCode());
     }
 
 }

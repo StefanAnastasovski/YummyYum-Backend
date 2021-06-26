@@ -2,7 +2,9 @@ package com.yummyyum.Services.Payment.Impl;
 
 import com.yummyyum.Model.*;
 import com.yummyyum.Model.DTO.PaymentInfoDTO;
+import com.yummyyum.Model.DTO.PaymentWithCouponDTO;
 import com.yummyyum.Model.EmbeddedIDs.UserOrderInfoPaymentId;
+import com.yummyyum.Model.EmbeddedIDs.UserSubscriptionPaymentId;
 import com.yummyyum.Model.TernaryRelationships.UserOrderPaymentRelationship.UserOrderInfoPayment;
 import com.yummyyum.Repositories.*;
 import com.yummyyum.Services.Payment.PaymentService;
@@ -52,9 +54,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentInfoDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
-                                           String address, String zipCode,
-                                           String username, String orderInfoId, String couponName) {
+    public PaymentInfoDTO createNewPaymentForOrderInfo(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
+                                                       String address, String zipCode,
+                                                       String username, String orderInfoId, String couponName) {
 
         Payment payment = new Payment(paymentID, cardNumber, paymentDate, totalAmount);
         DeliveryAddress deliveryAddress = new DeliveryAddress(address, zipCode);
@@ -89,4 +91,37 @@ public class PaymentServiceImpl implements PaymentService {
         return newPaymentInfoDTO;
 
     }
+
+    @Override
+    public PaymentWithCouponDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
+                                                 String username, String couponName, String address, String zipCode) {
+
+        Payment payment = new Payment(paymentID, cardNumber, paymentDate, totalAmount);
+        DeliveryAddress deliveryAddress = new DeliveryAddress(address, zipCode);
+
+
+        Optional<User> user = userRepository.getUserByUsername(username);
+
+        PaymentWithCouponDTO newPaymentWithCoupon = new PaymentWithCouponDTO(cardNumber, totalAmount,
+                username, paymentID, couponName, address, zipCode);
+
+        if (couponName != null) {
+            Optional<Coupon> coupon = couponRepository.getCouponByCouponName(couponName);
+            payment.setCoupon(coupon.get());
+
+            newPaymentWithCoupon.setCouponName(coupon.get().getCouponName());
+        }
+
+        paymentRepository.save(payment);
+
+
+        Optional<Payment> createdPayment = paymentRepository.getPaymentByPaymentNumberID(paymentID);
+        deliveryAddress.setPayment(createdPayment.get());
+        deliveryAddressRepository.save(deliveryAddress);
+
+        return newPaymentWithCoupon;
+
+    }
+
+
 }

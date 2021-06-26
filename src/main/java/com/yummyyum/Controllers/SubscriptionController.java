@@ -31,7 +31,7 @@ public class SubscriptionController {
     }
 
     @GetMapping("/subscription/username={username}")
-    public Optional<Subscription> getSubscriptionByUsername(@PathVariable("username") String username) {
+    public SubscriptionDTO getSubscriptionByUsername(@PathVariable("username") String username) {
         return subscriptionService.getSubscriptionByUsername(username);
     }
 

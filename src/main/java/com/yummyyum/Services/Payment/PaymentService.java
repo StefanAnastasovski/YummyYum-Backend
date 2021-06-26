@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Payment;
 
 import com.yummyyum.Model.DTO.PaymentInfoDTO;
+import com.yummyyum.Model.DTO.PaymentWithCouponDTO;
 import com.yummyyum.Model.Payment;
 
 import java.util.Date;
@@ -15,8 +16,11 @@ public interface PaymentService {
 
     List<Payment> getAllPaymentsByPaymentDate(String date);
 
-    PaymentInfoDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
-                                    String address, String zipCode,
-                                    String username, String orderInfoId, String couponName);
+    PaymentInfoDTO createNewPaymentForOrderInfo(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
+                                                String address, String zipCode,
+                                                String username, String orderInfoId, String couponName);
+
+    PaymentWithCouponDTO createNewPayment(String paymentID, String cardNumber, Date paymentDate, Float totalAmount,
+                                          String username, String couponName, String address, String zipCode);
 
 }

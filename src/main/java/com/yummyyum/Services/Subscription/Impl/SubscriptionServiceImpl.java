@@ -85,8 +85,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Optional<Subscription> getSubscriptionByUsername(String username) {
-        return subscriptionRepository.getSubscriptionByUsername(username);
+    public SubscriptionDTO getSubscriptionByUsername(String username) {
+        Optional<Subscription> subscription = subscriptionRepository.getSubscriptionByUsername(username);
+
+        return new SubscriptionDTO(subscription.get().getSubscriptionPlan().getName(), !subscription.get().getIsCanceled(), subscription.get().getNumberOfWeeklyMeals(),
+                subscription.get().getServingsPerMeal(), subscription.get().getSubscriptionType(), subscription.get().getWeeklyDeliveryDay(),
+                subscription.get().getWeeklyDeliveryTime(), subscription.get().getIsCanceled(),
+                subscription.get().getActivationDate(), subscription.get().getCanceledDate());
     }
 
     @Override
