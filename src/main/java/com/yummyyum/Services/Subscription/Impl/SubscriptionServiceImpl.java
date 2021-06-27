@@ -102,29 +102,80 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Optional<Subscription> oldSubscription = subscriptionRepository.getSubscriptionByUsername(username);
         Subscription newSubscription = null;
 
-        if (!oldSubscription.isPresent()) {
-            newSubscription = new Subscription(
-                    subscriptionDTO.getNumberOfWeeklyMeals(),
-                    subscriptionDTO.getServingsPerMeal(),
-                    subscriptionDTO.getSubscriptionType(),
-                    subscriptionDTO.getWeeklyDeliveryDay(),
-                    subscriptionDTO.getWeeklyDeliveryTime(),
-                    subscriptionDTO.getIsCanceled(),
-                    subscriptionDTO.getActivationDate(),
-                    subscriptionDTO.getCanceledDate());
-        } else {
-            newSubscription = new Subscription(
-                    subscriptionDTO.getNumberOfWeeklyMeals(),
-                    subscriptionDTO.getServingsPerMeal(),
-                    subscriptionDTO.getSubscriptionType(),
-                    subscriptionDTO.getWeeklyDeliveryDay(),
-                    subscriptionDTO.getWeeklyDeliveryTime(),
-                    subscriptionDTO.getIsCanceled(),
-                    subscriptionDTO.getActivationDate(),
-                    subscriptionDTO.getCanceledDate());
-            newSubscription.setId(oldSubscription.get().getId());
-        }
+        LocalDate activationDate = subscriptionDTO.getActivationDate();
+        LocalDate canceledDate = subscriptionDTO.getCanceledDate();
 
+        if (!oldSubscription.isPresent()) {
+
+            if (activationDate == null) {
+                activationDate = LocalDate.now();
+                if (subscriptionDTO.getSubscriptionType().equals("Weekly")) {
+                    canceledDate = LocalDate.now().plusDays(7);
+                } else if (subscriptionDTO.getSubscriptionType().equals("Monthly")) {
+                    canceledDate = LocalDate.now().plusDays(30);
+                }
+                newSubscription = new Subscription(
+                        subscriptionDTO.getNumberOfWeeklyMeals(),
+                        subscriptionDTO.getServingsPerMeal(),
+                        subscriptionDTO.getSubscriptionType(),
+                        subscriptionDTO.getWeeklyDeliveryDay(),
+                        subscriptionDTO.getWeeklyDeliveryTime(),
+                        subscriptionDTO.getIsCanceled(),
+                        activationDate,
+                        canceledDate);
+            } else {
+                if (subscriptionDTO.getSubscriptionType().equals("Weekly")) {
+                    canceledDate = activationDate.plusDays(7);
+                } else if (subscriptionDTO.getSubscriptionType().equals("Monthly")) {
+                    canceledDate = activationDate.plusDays(30);
+                }
+
+                newSubscription = new Subscription(
+                        subscriptionDTO.getNumberOfWeeklyMeals(),
+                        subscriptionDTO.getServingsPerMeal(),
+                        subscriptionDTO.getSubscriptionType(),
+                        subscriptionDTO.getWeeklyDeliveryDay(),
+                        subscriptionDTO.getWeeklyDeliveryTime(),
+                        subscriptionDTO.getIsCanceled(),
+                        subscriptionDTO.getActivationDate(),
+                        canceledDate);
+            }
+        } else {
+            if (activationDate == null) {
+                activationDate = LocalDate.now();
+                if (subscriptionDTO.getSubscriptionType().equals("Weekly")) {
+                    canceledDate = LocalDate.now().plusDays(7);
+                } else if (subscriptionDTO.getSubscriptionType().equals("Monthly")) {
+                    canceledDate = LocalDate.now().plusDays(30);
+                }
+                newSubscription = new Subscription(
+                        subscriptionDTO.getNumberOfWeeklyMeals(),
+                        subscriptionDTO.getServingsPerMeal(),
+                        subscriptionDTO.getSubscriptionType(),
+                        subscriptionDTO.getWeeklyDeliveryDay(),
+                        subscriptionDTO.getWeeklyDeliveryTime(),
+                        subscriptionDTO.getIsCanceled(),
+                        activationDate,
+                        canceledDate);
+                newSubscription.setId(oldSubscription.get().getId());
+            } else {
+                if (subscriptionDTO.getSubscriptionType().equals("Weekly")) {
+                    canceledDate = activationDate.plusDays(7);
+                } else if (subscriptionDTO.getSubscriptionType().equals("Monthly")) {
+                    canceledDate = activationDate.plusDays(30);
+                }
+
+                newSubscription = new Subscription(
+                        subscriptionDTO.getNumberOfWeeklyMeals(),
+                        subscriptionDTO.getServingsPerMeal(),
+                        subscriptionDTO.getSubscriptionType(),
+                        subscriptionDTO.getWeeklyDeliveryDay(),
+                        subscriptionDTO.getWeeklyDeliveryTime(),
+                        subscriptionDTO.getIsCanceled(),
+                        subscriptionDTO.getActivationDate(),
+                        canceledDate);
+            }
+        }
 
         Optional<SubscriptionPlan> subscriptionPlan =
                 subscriptionPlanRepository.getSubscriptionPlanByName(subscriptionDTO.getName());
@@ -137,7 +188,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
-//        // this will convert any number sequence into 6 character.
+        //        // this will convert any number sequence into 6 character.
         String code = String.format("%06d", number);
 
         String stringTest1 = String.valueOf(newDate.getYear());
@@ -160,6 +211,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 isExist = false;
             }
         }
+
         Payment payment = new Payment(paymentID, cardNumber, new Date(), totalAmount);
         paymentRepository.save(payment);
         Optional<Payment> getPayment = paymentRepository.getPaymentByPaymentNumberID(paymentID);
@@ -170,8 +222,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 
         Optional<User> user = userRepository.getUserByUsername(username);
+        System.out.println(user.get().getUsername());
         Optional<Subscription> subscriptionObj =
                 subscriptionRepository.getSubscriptionBySubscriptionPlanName(subscriptionDTO.getName());
+        System.out.println(subscriptionObj.get().getSubscriptionPlan());
         UserSubscriptionPaymentId userSubscriptionPaymentId = new UserSubscriptionPaymentId(user.get().getId(),
                 subscriptionObj.get().getId(), getPayment.get().getId());
 

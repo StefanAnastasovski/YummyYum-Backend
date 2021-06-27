@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
 
     @Query(value = "SELECT s.* FROM subscription AS s JOIN subscription_plan AS sp on s.subscription_plan_id = sp.id " +
-            "WHERE sp.name = 'plan15'",
+            "WHERE sp.name = :subscriptionPlanName",
             nativeQuery = true)
     Optional<Subscription> getSubscriptionBySubscriptionPlanName(String subscriptionPlanName);
 
