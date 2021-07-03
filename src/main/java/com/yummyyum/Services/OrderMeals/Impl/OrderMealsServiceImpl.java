@@ -8,6 +8,7 @@ import com.yummyyum.Repositories.OrderMealsRepository;
 import com.yummyyum.Services.OrderMeals.OrderMealsService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,11 @@ public class OrderMealsServiceImpl implements OrderMealsService {
     }
 
     @Override
+    public List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(LocalDate startDate, LocalDate endDate, Boolean isSubscription) {
+        return orderMealsRepository.getOrderMealsBetweenDatesAndIsSubscription(startDate, endDate, isSubscription);
+    }
+
+    @Override
     public OrderMealsDTO createNewOrderMeals(List<OrderMeals> orderMeals, String orderId) {
 
         Optional<OrderInfo> orderInfo = orderInfoRepository.getOrderInfoByOrderId(orderId);
@@ -43,7 +49,7 @@ public class OrderMealsServiceImpl implements OrderMealsService {
                     new OrderMeals(orderMeal.getMealName(), orderMeal.getMenuName(),
                             orderMeal.getServings(), orderMeal.getCustomizeIt(),
                             orderMeal.getPrice(), orderMeal.getDeliveryDate(),
-                            orderMeal.getDeliveryTime());
+                            orderMeal.getDeliveryTime(), orderMeal.getIsSubscription());
             orderMeals1.setOrderInfo(orderInfo.get());
             orderMealsList.add(orderMeals1);
         }

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity(name = "order_meals")
 @Getter
@@ -34,10 +36,14 @@ public class OrderMeals {
     private float price;
 
     @Column(name = "delivery_date")
-    private String deliveryDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate deliveryDate;
 
     @Column(name = "delivery_time")
     private String deliveryTime;
+
+    @Column(name = "is_subscription")
+    private Boolean isSubscription;
 
     @JsonIgnore
     @ManyToOne
@@ -49,7 +55,7 @@ public class OrderMeals {
     }
 
     public OrderMeals(String mealName, String menuName, int servings,
-                      String customizeIt, float price, String deliveryDate, String deliveryTime) {
+                      String customizeIt, float price, LocalDate deliveryDate, String deliveryTime, Boolean isSubscription) {
         this.mealName = mealName;
         this.menuName = menuName;
         this.servings = servings;
@@ -57,6 +63,7 @@ public class OrderMeals {
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryTime = deliveryTime;
+        this.isSubscription = isSubscription;
     }
 
 }

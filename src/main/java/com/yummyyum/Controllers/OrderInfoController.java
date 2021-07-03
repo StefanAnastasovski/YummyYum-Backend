@@ -42,7 +42,7 @@ public class OrderInfoController {
     @PostMapping("/order-info")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public OrderInfo createNewLogin(@RequestBody OrderInfo orderInfo,
+    public OrderInfo createNewOrder(@RequestBody OrderInfo orderInfo,
                                     HttpServletResponse response,
                                     UriComponentsBuilder builder) {
 

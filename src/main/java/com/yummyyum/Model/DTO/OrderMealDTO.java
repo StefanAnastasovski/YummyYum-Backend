@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,7 +28,7 @@ public class OrderMealDTO {
     private float price;
 
     @NotNull
-    private String deliveryDate;
+    private LocalDate deliveryDate;
 
     @NotNull
     private String deliveryTime;

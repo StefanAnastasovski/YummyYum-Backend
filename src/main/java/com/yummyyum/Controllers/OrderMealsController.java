@@ -4,11 +4,13 @@ package com.yummyyum.Controllers;
 import com.yummyyum.Model.DTO.OrderMealsDTO;
 import com.yummyyum.Model.OrderMeals;
 import com.yummyyum.Services.OrderMeals.OrderMealsService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,13 +30,24 @@ public class OrderMealsController {
         return orderMealsService.getOrderMealsByOrderId(orderId);
     }
 
+    @GetMapping("/order-meals/subscription/startDate={startDate}&endDate={endDate}/subscription={isSubscription}")
+    public List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(@PathVariable("isSubscription") Boolean isSubscription,
+                                                   @PathVariable("startDate")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                           LocalDate startDate,
+                                                   @PathVariable("endDate")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                           LocalDate endDate) {
+        return orderMealsService.getOrderMealsBetweenDatesAndIsSubscription(startDate, endDate, isSubscription);
+    }
+
     @PostMapping("/order-meals/orderId={orderId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public OrderMealsDTO createNewOrderMeals(@RequestBody OrderMealsDTO orderMealsDTO,
-                                        @PathVariable("orderId") String orderId,
-                                        HttpServletResponse response,
-                                        UriComponentsBuilder builder) {
+                                             @PathVariable("orderId") String orderId,
+                                             HttpServletResponse response,
+                                             UriComponentsBuilder builder) {
 
         OrderMealsDTO orderMealsDTO1 = orderMealsService.createNewOrderMeals(orderMealsDTO.getOrderMeals(),
                 orderId);
