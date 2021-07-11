@@ -14,6 +14,8 @@ public interface OrderMealsService {
     List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(LocalDate startDate, LocalDate endDate,
                                                                 Boolean isSubscription);
 
+    List<OrderMeals> getOrderMealsBetweenDates(LocalDate startDate, LocalDate endDate);
+
     OrderMealsDTO createNewOrderMeals(List<OrderMeals> orderMeals, String orderId);
 
 }

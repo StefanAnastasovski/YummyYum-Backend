@@ -20,5 +20,10 @@ public interface OrderMealsRepository extends JpaRepository<OrderMeals, Long> {
     List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(LocalDate startDate, LocalDate endDate,
                                                                 Boolean isSubscription);
 
+    @Query(value = "SELECT om.* FROM order_info as oi JOIN order_meals om on oi.id = om.order_info_id " +
+            "WHERE DATE_FORMAT(om.delivery_date,'%Y-%m-%d') BETWEEN :startDate AND :endDate",
+            nativeQuery = true)
+    List<OrderMeals> getOrderMealsBetweenDates(LocalDate startDate, LocalDate endDate);
+
 }
 

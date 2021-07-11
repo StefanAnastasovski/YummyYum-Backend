@@ -36,6 +36,11 @@ public class OrderMealsServiceImpl implements OrderMealsService {
     }
 
     @Override
+    public List<OrderMeals> getOrderMealsBetweenDates(LocalDate startDate, LocalDate endDate) {
+        return orderMealsRepository.getOrderMealsBetweenDates(startDate, endDate);
+    }
+
+    @Override
     public OrderMealsDTO createNewOrderMeals(List<OrderMeals> orderMeals, String orderId) {
 
         Optional<OrderInfo> orderInfo = orderInfoRepository.getOrderInfoByOrderId(orderId);

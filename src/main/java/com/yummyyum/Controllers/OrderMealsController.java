@@ -32,13 +32,23 @@ public class OrderMealsController {
 
     @GetMapping("/order-meals/subscription/startDate={startDate}&endDate={endDate}/subscription={isSubscription}")
     public List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(@PathVariable("isSubscription") Boolean isSubscription,
-                                                   @PathVariable("startDate")
-                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                           LocalDate startDate,
-                                                   @PathVariable("endDate")
-                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                           LocalDate endDate) {
+                                                                       @PathVariable("startDate")
+                                                                       @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                               LocalDate startDate,
+                                                                       @PathVariable("endDate")
+                                                                       @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                               LocalDate endDate) {
         return orderMealsService.getOrderMealsBetweenDatesAndIsSubscription(startDate, endDate, isSubscription);
+    }
+
+    @GetMapping("/order-meals/subscription/startDate={startDate}&endDate={endDate}")
+    public List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(@PathVariable("startDate")
+                                                                       @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                               LocalDate startDate,
+                                                                       @PathVariable("endDate")
+                                                                       @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                               LocalDate endDate) {
+        return orderMealsService.getOrderMealsBetweenDates(startDate, endDate);
     }
 
     @PostMapping("/order-meals/orderId={orderId}")
