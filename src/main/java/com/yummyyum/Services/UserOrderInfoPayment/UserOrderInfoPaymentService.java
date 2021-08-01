@@ -20,4 +20,7 @@ public interface UserOrderInfoPaymentService {
     Optional<UserOrderInfoPayment> getUserOrderInfoPaymentByOrderId(String orderId);
 
     Optional<UserOrderInfoPayment> getUserOrderInfoPaymentByPaymentId(String paymentNumberId);
+
+    UserOrderInfoPayment createNewUserOrderInfoPayment(String username, String orderId);
+
 }

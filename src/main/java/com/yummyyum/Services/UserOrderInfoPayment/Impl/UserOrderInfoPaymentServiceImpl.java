@@ -1,7 +1,14 @@
 package com.yummyyum.Services.UserOrderInfoPayment.Impl;
 
+import com.yummyyum.Model.EmbeddedIDs.UserOrderInfoPaymentId;
+import com.yummyyum.Model.OrderInfo;
 import com.yummyyum.Model.TernaryRelationships.UserOrderPaymentRelationship.UserOrderInfoPayment;
+import com.yummyyum.Model.TernaryRelationships.UserSubscriptionPaymentRelationship.UserSubscriptionPayment;
+import com.yummyyum.Model.User;
+import com.yummyyum.Repositories.OrderInfoRepository;
 import com.yummyyum.Repositories.UserOrderInfoPaymentRepository;
+import com.yummyyum.Repositories.UserRepository;
+import com.yummyyum.Repositories.UserSubscriptionPaymentRepository;
 import com.yummyyum.Services.UserOrderInfoPayment.UserOrderInfoPaymentService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +19,18 @@ import java.util.Optional;
 public class UserOrderInfoPaymentServiceImpl implements UserOrderInfoPaymentService {
 
     private final UserOrderInfoPaymentRepository userOrderInfoPaymentRepository;
+    private final UserRepository userRepository;
+    private final UserSubscriptionPaymentRepository userSubscriptionPaymentRepository;
+    private final OrderInfoRepository orderInfoRepository;
 
-    public UserOrderInfoPaymentServiceImpl(UserOrderInfoPaymentRepository userOrderInfoPaymentRepository) {
+    public UserOrderInfoPaymentServiceImpl(UserOrderInfoPaymentRepository userOrderInfoPaymentRepository,
+                                           UserRepository userRepository,
+                                           UserSubscriptionPaymentRepository userSubscriptionPaymentRepository,
+                                           OrderInfoRepository orderInfoRepository) {
         this.userOrderInfoPaymentRepository = userOrderInfoPaymentRepository;
+        this.userRepository = userRepository;
+        this.userSubscriptionPaymentRepository = userSubscriptionPaymentRepository;
+        this.orderInfoRepository = orderInfoRepository;
     }
 
     @Override
@@ -52,6 +68,27 @@ public class UserOrderInfoPaymentServiceImpl implements UserOrderInfoPaymentServ
     @Override
     public Optional<UserOrderInfoPayment> getUserOrderInfoPaymentByPaymentId(String paymentNumberId) {
         return userOrderInfoPaymentRepository.getUserOrderInfoPaymentByPaymentId(paymentNumberId);
+    }
+
+    @Override
+    public UserOrderInfoPayment createNewUserOrderInfoPayment(String username, String orderId) {
+
+
+        List<UserSubscriptionPayment> userSubscriptionPayment =
+                userSubscriptionPaymentRepository.getUserSubscriptionPaymentByUsername(username);
+        Optional<User> user = userRepository.getUserByUsername(username);
+        Optional<OrderInfo> orderInfo1 = orderInfoRepository.getOrderInfoByOrderId(orderId);
+
+        UserOrderInfoPaymentId userOrderInfoPaymentId = new UserOrderInfoPaymentId(user.get().getId(),
+                orderInfo1.get().getId(),
+                userSubscriptionPayment.get(userSubscriptionPayment.size() - 1).getId().getPaymentId());
+
+        UserOrderInfoPayment userOrderInfoPayment = new UserOrderInfoPayment();
+
+        userOrderInfoPayment.setId(userOrderInfoPaymentId);
+
+
+        return userOrderInfoPaymentRepository.save(userOrderInfoPayment);
     }
 
 }

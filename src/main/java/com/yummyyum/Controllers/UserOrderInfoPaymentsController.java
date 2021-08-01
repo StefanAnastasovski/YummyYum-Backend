@@ -2,8 +2,11 @@ package com.yummyyum.Controllers;
 
 import com.yummyyum.Model.TernaryRelationships.UserOrderPaymentRelationship.UserOrderInfoPayment;
 import com.yummyyum.Services.UserOrderInfoPayment.UserOrderInfoPaymentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,4 +55,18 @@ public class UserOrderInfoPaymentsController {
         return userOrderInfoPaymentService.getUserOrderInfoPaymentByPaymentId(paymentId);
     }
 
+    @PostMapping("/order-invoice/username={username}/orderId={orderId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public UserOrderInfoPayment createNewUserOrderInfoPayment(
+            @PathVariable("username") String username,
+            @PathVariable("orderId") String orderId,
+            HttpServletResponse response,
+            UriComponentsBuilder builder) {
+
+
+        return userOrderInfoPaymentService.createNewUserOrderInfoPayment(username, orderId);
+    }
+
 }
+
