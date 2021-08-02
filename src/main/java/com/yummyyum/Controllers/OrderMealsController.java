@@ -41,6 +41,7 @@ public class OrderMealsController {
         return orderMealsService.getOrderMealsBetweenDatesAndIsSubscription(startDate, endDate, isSubscription);
     }
 
+    //    @GetMapping("/order-meals/startDate={startDate}&endDate={endDate}")
     @GetMapping("/order-meals/subscription/startDate={startDate}&endDate={endDate}")
     public List<OrderMeals> getOrderMealsBetweenDatesAndIsSubscription(@PathVariable("startDate")
                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
