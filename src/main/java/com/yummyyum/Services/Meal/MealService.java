@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Meal;
 
 import com.yummyyum.Model.DTO.MealExampleDTO;
+import com.yummyyum.Model.DTO.RecipeComponents.MealBoxNutritionDTO;
 import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealCategory;
@@ -24,7 +25,7 @@ public interface MealService {
     MealExampleDTO createMeal(String mealName, String mealDescription, String mealTimeTag,
                               String mealIngredientTag, Double price,
                               MealCategory mealCategory, MealOverview mealOverview,
-                              MealChef mealChef, MealBox mealBox, MealBoxNutrition mealBoxNutrition,
+                              MealChef mealChef, MealBox mealBox, MealBoxNutritionDTO mealBoxNutrition,
                               RecipeSteps recipeSteps, RecipeInstructions recipeInstructions,
                               CookingSteps cookingSteps, List<MealCustomizeOptionDTO> mealCustomizeOptions);
 

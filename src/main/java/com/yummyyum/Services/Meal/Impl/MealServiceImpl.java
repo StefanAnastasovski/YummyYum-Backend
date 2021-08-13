@@ -1,6 +1,7 @@
 package com.yummyyum.Services.Meal.Impl;
 
 import com.yummyyum.Model.DTO.MealExampleDTO;
+import com.yummyyum.Model.DTO.RecipeComponents.MealBoxNutritionDTO;
 import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.Meal;
 import com.yummyyum.Model.MealCategory;
@@ -85,7 +86,7 @@ public class MealServiceImpl implements MealService {
                                      String mealTimeTag, String mealIngredientTag,
                                      Double price, MealCategory mealCategory,
                                      MealOverview mealOverview, MealChef mealChef,
-                                     MealBox mealBox, MealBoxNutrition mealBoxNutrition,
+                                     MealBox mealBox, MealBoxNutritionDTO mealBoxNutrition,
                                      RecipeSteps recipeSteps, RecipeInstructions recipeInstructions,
                                      CookingSteps cookingSteps, List<MealCustomizeOptionDTO> mealCustomizeOptions) {
 

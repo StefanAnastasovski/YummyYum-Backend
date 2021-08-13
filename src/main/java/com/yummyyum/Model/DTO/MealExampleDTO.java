@@ -1,6 +1,7 @@
 package com.yummyyum.Model.DTO;
 
 import com.sun.istack.NotNull;
+import com.yummyyum.Model.DTO.RecipeComponents.MealBoxNutritionDTO;
 import com.yummyyum.Model.DTO.RecipeComponents.MealCustomizeOptionDTO;
 import com.yummyyum.Model.MealCategory;
 import com.yummyyum.Model.MealRecipe.*;
@@ -42,7 +43,7 @@ public class MealExampleDTO {
     private MealBox mealBox;
 
     @NotNull
-    private MealBoxNutrition mealBoxNutrition;
+    private MealBoxNutritionDTO mealBoxNutrition;
 
 
     @NotNull
@@ -63,7 +64,7 @@ public class MealExampleDTO {
     public MealExampleDTO(String mealName, String mealDescription, String mealTimeTag,
                           String mealIngredientTag, Double price, MealCategory mealCategory,
                           MealOverview mealOverview, MealChef mealChef, MealBox mealBox,
-                          MealBoxNutrition mealBoxNutrition, RecipeSteps recipeSteps,
+                          MealBoxNutritionDTO mealBoxNutrition, RecipeSteps recipeSteps,
                           RecipeInstructions recipeInstructions, CookingSteps cookingSteps,
                           List<MealCustomizeOptionDTO> mealCustomizeOptions) {
         this.mealName = mealName;
