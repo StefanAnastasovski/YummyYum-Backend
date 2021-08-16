@@ -57,7 +57,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/meal-name/{mealName}")
-    public RecipeDTO getMenuByMenuName(@PathVariable("mealName") String mealName) {
+    public RecipeDTO getMealRecipeByMealName(@PathVariable("mealName") String mealName) {
 
         Optional<Meal> meal = mealRepository.getMealByMealName(mealName);
         Optional<MealOverview> mealOverview = mealOverviewRepository.findMealOverviewByMealName(mealName);
@@ -71,7 +71,6 @@ public class RecipeController {
         List<Image> images = imageRepository.getImagesByMealName(mealName);
         Optional<Image> chefImg = imageRepository.getImageByMealNameAndIsChefImgTrue(mealName);
         Optional<Image> mainMealImg = imageRepository.getImageByMealNameAndIsMainRecipeImgTrue(mealName);
-
         List<MealCustomizeOption> customizeOptions = mealCustomizeOptionRepository.getMealCustomizeOptionByMealName(mealName);
 
         RecipeDTO recipeDTO = new RecipeDTO();
@@ -146,16 +145,15 @@ public class RecipeController {
 
 //        ------------------- Cooking Steps Images
         List<ImageRecipeDTO> cookingStepsImages = new ArrayList<>();
-        ImageRecipeDTO cookingStepsImage = new ImageRecipeDTO();
 
         for (int i = 0; i < images.size(); i++) {
+            ImageRecipeDTO cookingStepsImage = new ImageRecipeDTO();
             cookingStepsImage.setAlt(images.get(i).getAlt());
             cookingStepsImage.setIsChefImg(images.get(i).getIsChefImg());
             cookingStepsImage.setIsMainRecipeImg(images.get(i).getIsMainRecipeImg());
             cookingStepsImage.setUrl(images.get(i).getUrl());
             cookingStepsImages.add(cookingStepsImage);
         }
-
 
 //        ------------------- Main Meal Images
         ImageRecipeDTO mainRecipeImage = new ImageRecipeDTO();
@@ -171,14 +169,15 @@ public class RecipeController {
 
 //        ------------------- Chef Image
         ImageRecipeDTO chefImage = new ImageRecipeDTO();
-        if (images.isEmpty()) {
-            chefImage = null;
-        } else {
-            chefImage.setAlt(chefImg.get().getAlt());
-            chefImage.setIsChefImg(chefImg.get().getIsChefImg());
-            chefImage.setIsMainRecipeImg(chefImg.get().getIsMainRecipeImg());
-            chefImage.setUrl(chefImg.get().getUrl());
-        }
+        chefImage = null;
+//        if (images.isEmpty()) {
+//            chefImage = null;
+//        } else {
+//            chefImage.setAlt(chefImg.get().getAlt());
+//            chefImage.setIsChefImg(chefImg.get().getIsChefImg());
+//            chefImage.setIsMainRecipeImg(chefImg.get().getIsMainRecipeImg());
+//            chefImage.setUrl(chefImg.get().getUrl());
+//        }
 
 //        ------------------- Customize Options
 
