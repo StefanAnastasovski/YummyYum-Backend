@@ -1,7 +1,6 @@
 package com.yummyyum.Bootstrap;
 
 import com.yummyyum.Model.*;
-import com.yummyyum.Model.DTO.MealExampleDTO;
 import com.yummyyum.Model.MealOverviewEnum.DifficultyLevelEnum;
 import com.yummyyum.Model.MealOverviewEnum.SpiceLevelEnum;
 import com.yummyyum.Model.MealRecipe.*;
@@ -39,6 +38,7 @@ public class BootstrapData implements CommandLineRunner {
     private final MenuRepository menuRepository;
     private final ImageRepository imageRepository;
     private final MealService mealService;
+    private final MealCustomizeOptionRepository mealCustomizeOptionRepository;
 
     public BootstrapData(EmailRepository emailRepository, UserRepository userRepository, LoginRepository loginRepository,
                          SubscribeEmailRepository subscribeEmailRepository, MealRepository mealRepository,
@@ -47,7 +47,7 @@ public class BootstrapData implements CommandLineRunner {
                          RecipeStepsRepository recipeStepsRepository,
                          RecipeInstructionsRepository recipeInstructionsRepository,
                          CookingStepsRepository cookingStepsRepository,
-                         MealCategoryRepository mealCategoryRepository, MenuRepository menuRepository, ImageRepository imageRepository, MealService mealService) {
+                         MealCategoryRepository mealCategoryRepository, MenuRepository menuRepository, ImageRepository imageRepository, MealService mealService, MealCustomizeOptionRepository mealCustomizeOptionRepository) {
         this.emailRepository = emailRepository;
         this.userRepository = userRepository;
         this.loginRepository = loginRepository;
@@ -64,6 +64,7 @@ public class BootstrapData implements CommandLineRunner {
         this.menuRepository = menuRepository;
         this.imageRepository = imageRepository;
         this.mealService = mealService;
+        this.mealCustomizeOptionRepository = mealCustomizeOptionRepository;
     }
 
     @Autowired
@@ -890,6 +891,12 @@ public class BootstrapData implements CommandLineRunner {
 
             List<Image> images = Arrays.asList(mainImg, imageCookStep1, imageCookStep2, imageCookStep3, imageCookStep4, imageCookStep5);
             imageRepository.saveAll(images);
+
+            MealCustomizeOption option = new MealCustomizeOption();
+            option.setMealCustomizeOption(vegetarianCustomizeOptions[i]);
+            option.setMeal(meal);
+
+            mealCustomizeOptionRepository.save(option);
 
         }
 
